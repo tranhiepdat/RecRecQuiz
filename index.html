@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | personality_game</title>
+    <title>Unity WebGL Player | IOSTest</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=720 height=1280 tabindex="-1"></canvas>
+      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -20,7 +20,7 @@
       <div id="unity-footer">
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">personality_game</div>
+        <div id="unity-build-title">IOSTest</div>
       </div>
     </div>
     <script>
@@ -59,12 +59,12 @@
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/RecRecQuiz.loader.js";
       var config = {
-        dataUrl: buildUrl + "/RecRecQuiz.data",
-        frameworkUrl: buildUrl + "/RecRecQuiz.framework.js",
-        codeUrl: buildUrl + "/RecRecQuiz.wasm",
+        dataUrl: buildUrl + "/RecRecQuiz.data.br",
+        frameworkUrl: buildUrl + "/RecRecQuiz.framework.js.br",
+        codeUrl: buildUrl + "/RecRecQuiz.wasm.br",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
-        productName: "personality_game",
+        productName: "IOSTest",
         productVersion: "1.0",
         showBanner: unityShowBanner,
       };
@@ -94,8 +94,8 @@
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-        canvas.style.width = "720px";
-        canvas.style.height = "1280px";
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
       }
 
       loadingBar.style.display = "block";
