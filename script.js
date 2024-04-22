@@ -7,6 +7,8 @@ const aspectRatio = 9 / 16;
 let screenshotButtonVisible = false;
 let allAnswered = false;
 let riveAnimation;
+let isLoading = true;  
+
 
 // Create a separate canvas for Rive animation
 const riveCanvas = document.createElement('canvas');
@@ -17,6 +19,8 @@ function setCanvasSize() {
     const screenWidth = window.innerWidth * devicePixelRatio;
     const screenHeight = window.innerHeight * devicePixelRatio;
     let canvasWidth, canvasHeight;
+
+    
 
     // Calculate canvas size while maintaining aspect ratio
     if (screenWidth / screenHeight > aspectRatio) {
@@ -38,7 +42,7 @@ function setCanvasSize() {
     riveCanvas.style.height = (screenHeight / devicePixelRatio) + 'px'; // Set display height to full screen height
 
     // Redraw content after resizing
-    if (questionsData) {
+    if (questionsData && !isLoading) {  // Check isLoading flag
         if (currentQuestion < questionsData.length) {
             displayQuestion(currentQuestion);
         } else {
@@ -52,31 +56,45 @@ setCanvasSize();
 window.addEventListener('resize', setCanvasSize);
 
 const loadingscreenRive = new rive.Rive({
-    src: 'personalitytest.riv',  // Update this path to your Rive file
-    canvas: riveCanvas,
-    autoplay: true,
-
+    src: 'personalitytest.riv',
+    canvas: document.getElementById('quiz-canvas'),
+    autoplay: false,
+    shouldDisableRiveListeners: false,
+    artboard: 'Logo',
     stateMachines: 'Logo',
-      // This should match the entry animation for your loading artboard
     onLoad: () => {
-        
-        // Optionally handle the loading state machine here if needed
-        
-        console.log('Rive Loading screen loaded and state machine ready');
-        inputs = loadingscreenRive.stateMachineInputs('Logo');
-        loadingscreenRive.resizeDrawingSurfaceToCanvas();
+        console.log('Rive file loaded successfully.');
+        // Attempt to get the state machine instance
+
+        loadingscreenRive.on('riveevent', (event) => {
+            if (event.data.name === "Loadscreendone") {
+                console.log('Loading screen animation done.');
+
+                // Cleanup the Rive animation
+                loadingscreenRive.cleanup();
+
+                // Set the isLoading flag to false
+                isLoading = false;
+
+                // Proceed with showing quiz if ready
+                if (questionsData) {
+                    displayQuestion(currentQuestion);
+                }
+            }
+        });
         
     },
     onError: (error) => {
-        console.error('Error loading the loading screen Rive file:', error);
+        console.error('Error loading the Rive file:', error);
     }
 });
+
 
 
 // Fetch questions from JSON file
 function initialize() {
     // Fetch questions from JSON file
-
+    
     // Play the Rive animation corresponding to the result
     loadingscreenRive.resizeDrawingSurfaceToCanvas();
     loadingscreenRive.play("Logo");
@@ -85,7 +103,9 @@ function initialize() {
         .then(response => response.json())
         .then(data => {
             questionsData = data;
-            displayQuestion(currentQuestion);
+            if (!isLoading) {  // Ensure loading screen has finished
+                displayQuestion(currentQuestion);
+            }
             document.body.appendChild(riveCanvas);
             // Position the riveCanvas behind the canvas
             riveCanvas.style.position = 'absolute';
@@ -192,13 +212,14 @@ const riveInstance = new rive.Rive({
     src: 'personalitytest.riv',
     canvas: riveCanvas,
     autoplay: false,
-
+    artboard: 'Result',
     stateMachines: 'ResultStateMachine', // Ensure this matches the name in your Rive file
     onLoad: () => {
         console.log('Rive file loaded and state machine ready');
         // Get the inputs for the state machine
         inputs = riveInstance.stateMachineInputs('ResultStateMachine');
         riveInstance.resizeDrawingSurfaceToCanvas();
+        
     },
     onError: (error) => {
         console.error('Error loading the Rive file:', error);
