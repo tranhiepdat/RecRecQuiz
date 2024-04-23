@@ -286,6 +286,7 @@ const riveInstance = new rive.Rive({
     src: 'personalitytest.riv',
     canvas: riveCanvas,
     autoplay: false,
+    shouldDisableRiveListeners: true,
 
     stateMachines: 'ResultStateMachine', // Ensure this matches the name in your Rive file
     onLoad: () => {
