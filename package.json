@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "@rive-app/canvas": "^2.14.3"
+    "@rive-app/canvas": "^2.14.3",
+    "device-uuid": "^1.0.4",
+    "playfab-web-sdk": "^1.170.240412"
   }
 }

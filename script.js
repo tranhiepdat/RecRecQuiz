@@ -1,3 +1,7 @@
+
+
+
+
 let currentQuestion = 0;
 let userChoices = [];
 let questionsData;
@@ -8,6 +12,8 @@ let screenshotButtonVisible = false;
 let allAnswered = false;
 let riveAnimation;
 let isLoading = true;  
+let playerNameInput = false;
+let playerName = null;
 
 
 // Create a separate canvas for Rive animation
@@ -42,7 +48,10 @@ function setCanvasSize() {
     riveCanvas.style.height = (screenHeight / devicePixelRatio) + 'px'; // Set display height to full screen height
 
     // Redraw content after resizing
-    if (questionsData && !isLoading) {  // Check isLoading flag
+    if (!playerNameInput && !isLoading){
+        showInputField();
+    }
+    else if (questionsData && !isLoading) {  // Check isLoading flag
         if (currentQuestion < questionsData.length) {
             displayQuestion(currentQuestion);
         } else {
@@ -55,34 +64,19 @@ function setCanvasSize() {
 setCanvasSize();
 window.addEventListener('resize', setCanvasSize);
 
+
+
+
 const loadingscreenRive = new rive.Rive({
     src: 'personalitytest.riv',
-    canvas: document.getElementById('quiz-canvas'),
-    autoplay: false,
-    shouldDisableRiveListeners: false,
+    canvas: canvas,
+    autoplay: true,
+    shouldDisableRiveListeners: true,
+    
     artboard: 'Logo',
     stateMachines: 'Logo',
     onLoad: () => {
         console.log('Rive file loaded successfully.');
-        // Attempt to get the state machine instance
-
-        loadingscreenRive.on('riveevent', (event) => {
-            if (event.data.name === "Loadscreendone") {
-                console.log('Loading screen animation done.');
-
-                // Cleanup the Rive animation
-                loadingscreenRive.cleanup();
-
-                // Set the isLoading flag to false
-                isLoading = false;
-
-                // Proceed with showing quiz if ready
-                if (questionsData) {
-                    displayQuestion(currentQuestion);
-                }
-            }
-        });
-        
     },
     onError: (error) => {
         console.error('Error loading the Rive file:', error);
@@ -90,22 +84,57 @@ const loadingscreenRive = new rive.Rive({
 });
 
 
+loadingscreenRive.on('riveevent', (event) => {
+    if (event.data.name === "Loadscreendone") {
+        console.log('Loading screen animation done.');
+        isLoading = false;
+    }
+});
+
+
+function handleLoadingComplete() {
+    if (!isLoading) {
+        clearInterval(loadingInterval);
+        
+        
+        //loadingscreenRive.reset({
+           /// stateMachines: "Logo",
+           // autoplay: false,
+           // shouldDisableRiveListeners: false,
+       //   });
+        
+        //loadingscreenRive.off();
+        
+       loadingscreenRive.cleanup();
+       
+        
+        // Example: Displaying the input field when loading is complete
+        if (!playerNameInput) {
+            showInputField();
+        } else {
+            displayQuestion(currentQuestion);
+        }
+    }
+}
+const loadingInterval = setInterval(handleLoadingComplete, 100);
 
 // Fetch questions from JSON file
 function initialize() {
     // Fetch questions from JSON file
     
     // Play the Rive animation corresponding to the result
-    loadingscreenRive.resizeDrawingSurfaceToCanvas();
-    loadingscreenRive.play("Logo");
-    
+    if (isLoading) {
+        
+        loadingscreenRive.resizeDrawingSurfaceToCanvas();
+        loadingscreenRive.play("Logo");
+    }
     fetch('questions.json')
         .then(response => response.json())
         .then(data => {
             questionsData = data;
-            if (!isLoading) {  // Ensure loading screen has finished
-                displayQuestion(currentQuestion);
-            }
+            // if (!isLoading) {  // Ensure loading screen has finished
+            //     displayQuestion(currentQuestion);
+            // }
             document.body.appendChild(riveCanvas);
             // Position the riveCanvas behind the canvas
             riveCanvas.style.position = 'absolute';
@@ -115,6 +144,51 @@ function initialize() {
             riveCanvas.style.zIndex = '-1';
         })
         .catch(error => console.error('Error fetching questions:', error));
+}
+
+// Function to show the input field and submit button
+function showInputField() {
+    // Create input field
+    const inputField = document.createElement('input');
+    inputField.type = 'text';
+    inputField.placeholder = 'Enter your name';
+    inputField.style.position = 'absolute';
+    inputField.style.top = '50%';
+    inputField.style.left = '50%';
+    inputField.style.transform = 'translate(-50%, -50%)';
+    inputField.style.zIndex = '1000'; // Ensure it's above other elements
+    document.body.appendChild(inputField);
+
+    // Create submit button
+    const submitButton = document.createElement('button');
+    submitButton.textContent = 'Submit';
+    submitButton.style.position = 'absolute';
+    submitButton.style.top = '60%'; // Adjust as needed
+    submitButton.style.left = '50%';
+    submitButton.style.transform = 'translate(-50%, -50%)';
+    submitButton.style.zIndex = '1000'; // Ensure it's above other elements
+    // Add click event listener to handle submission
+    submitButton.addEventListener('click', () => {
+        playerName = inputField.value.trim();
+        if (playerName !== '') {
+            // Process player name (e.g., save to database)
+            console.log('Player Name:', playerName);
+            // Hide input field and submit button
+            document.body.removeChild(inputField);
+            document.body.removeChild(submitButton);
+            UpdateDisplayName();
+            displayQuestion(currentQuestion);
+            // Enable canvas for quiz interaction
+            playerNameInput = true;
+            canvas.disabled = false;
+        } else {
+            alert('Please enter your name.');
+        }
+    });
+    document.body.appendChild(submitButton);
+
+    // Disable canvas to prevent interaction
+    canvas.disabled = true;
 }
 
 // Function to display a question
@@ -212,14 +286,13 @@ const riveInstance = new rive.Rive({
     src: 'personalitytest.riv',
     canvas: riveCanvas,
     autoplay: false,
-    artboard: 'Result',
+
     stateMachines: 'ResultStateMachine', // Ensure this matches the name in your Rive file
     onLoad: () => {
         console.log('Rive file loaded and state machine ready');
         // Get the inputs for the state machine
         inputs = riveInstance.stateMachineInputs('ResultStateMachine');
         riveInstance.resizeDrawingSurfaceToCanvas();
-        
     },
     onError: (error) => {
         console.error('Error loading the Rive file:', error);
@@ -281,9 +354,23 @@ function showResult(personalityType) {
     }
 
     // Draw the result text on the canvas
-    const textX = canvas.width * 0.25;
-    const textY = canvas.height - canvas.height * 0.1;
-    ctx.fillText('Your Personality Type: ' + result, textX, textY);
+    const resultTextX = canvas.width * 0.25;
+    const resultTextY = canvas.height - canvas.height * 0.09;
+    const nameTextX = canvas.width * 0.25;
+    const nameTextY = canvas.height - canvas.height * 0.11;
+    const originalFont = ctx.font;
+
+    // Set the font style for the bold and larger text
+    ctx.font = `bold ${resultFontSize * 1.5}px Arial`; // Adjust font size as needed
+
+    // Draw the bold and larger text for 'Hello, ' + playerName
+    ctx.fillText('Hello, ' + playerName, nameTextX, nameTextY);
+
+    // Revert back to the original font style
+    ctx.font = originalFont;
+
+    // Draw the regular text for 'Your Personality Type: ' + result
+    ctx.fillText('Your Personality Type: ' + result, resultTextX, resultTextY);
 
     // Draw the screenshot button
     screenshotButtonVisible = true;
@@ -351,6 +438,7 @@ function takeScreenshot() {
     // Create a temporary canvas to draw the result without the screenshot button
     // Hide the screenshot button
     screenshotButtonVisible = false;
+    ctx.clearRect(screenshotButtonPos.x, screenshotButtonPos.y, screenshotButtonPos.width, screenshotButtonPos.height);
     // const tempCanvas = document.createElement('canvas');
     // const tempCtx = tempCanvas.getContext('2d');
     // tempCanvas.width = canvas.width;
@@ -362,8 +450,23 @@ function takeScreenshot() {
     // ctx.drawImage(tempCanvas, 0, 0);
 
     // Convert the result to a data URL
-    const dataUrl = riveCanvas.toDataURL('image/png');
+    // const dataUrl = riveCanvas.toDataURL('image/png');
+    // Create a temporary canvas to draw both canvases
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
 
+    // Set the temporary canvas size to match the main canvas size
+    tempCanvas.width = canvas.width;
+    tempCanvas.height = canvas.height;
+
+    // Draw the riveCanvas onto the temporary canvas
+    tempCtx.drawImage(riveCanvas, 0, 0);
+
+    // Draw the main canvas onto the temporary canvas
+    tempCtx.drawImage(canvas, 0, 0);
+
+    // Convert the result to a data URL
+    const dataUrl = tempCanvas.toDataURL('image/png');
     // Generate the filename with the current time and date
     const currentDate = new Date();
     const day = currentDate.getDate();
@@ -448,16 +551,6 @@ canvas.addEventListener('click', function (e) {
     handleInput(posX, posY);
 });
 
-// // Function to handle touch start
-// canvas.addEventListener('touchstart', function (e) {
-//     e.preventDefault(); // Prevent default touch behavior
-//     const touch = e.touches[0];
-//     const devicePixelRatio = window.devicePixelRatio || 1;
-//     const posX = (touch.clientX - canvas.getBoundingClientRect().left) * devicePixelRatio;
-//     const posY = (touch.clientY - canvas.getBoundingClientRect().top) * devicePixelRatio;
-//     handleInput(posX, posY);
-// }, false);
-
 // Function to handle touch end
 canvas.addEventListener('touchend', function (e) {
     e.preventDefault(); // Prevent default touch behavior
@@ -470,57 +563,61 @@ canvas.addEventListener('touchend', function (e) {
 
 // Function to handle mouse movement over buttons
 function handleMousemove(posX, posY) {
-    if (!allAnswered && questionsData != null) {
-        questionsData[currentQuestion].answers.forEach(answer => {
+    if (!isLoading && playerNameInput) {
+        if (!allAnswered && questionsData != null) {
+            questionsData[currentQuestion].answers.forEach(answer => {
+                if (
+                    posX >= answer.button.x &&
+                    posX <= answer.button.x + answer.button.width &&
+                    posY >= answer.button.y &&
+                    posY <= answer.button.y + answer.button.height
+                ) {
+                    answer.hover = true;
+                } else {
+                    answer.hover = false;
+                }
+            });
+            redrawButtons();
+        }
+        else if (screenshotButtonVisible) {
+            drawScreenshotButton(posX, posY)
+            // Check if the click/touch is within the screenshot button
             if (
-                posX >= answer.button.x &&
-                posX <= answer.button.x + answer.button.width &&
-                posY >= answer.button.y &&
-                posY <= answer.button.y + answer.button.height
+                posX >= screenshotButtonPos.x &&
+                posX <= screenshotButtonPos.x + screenshotButtonPos.width &&
+                posY >= screenshotButtonPos.y &&
+                posY <= screenshotButtonPos.y + screenshotButtonPos.height
             ) {
-                answer.hover = true;
-            } else {
-                answer.hover = false;
+                drawScreenshotButton(posX, posY);
             }
-        });
-        redrawButtons();
-    }
-    else if (screenshotButtonVisible) {
-        drawScreenshotButton(posX, posY)
-        // Check if the click/touch is within the screenshot button
-        if (
-            posX >= screenshotButtonPos.x &&
-            posX <= screenshotButtonPos.x + screenshotButtonPos.width &&
-            posY >= screenshotButtonPos.y &&
-            posY <= screenshotButtonPos.y + screenshotButtonPos.height
-        ) {
-            drawScreenshotButton(posX, posY);
         }
     }
 }
 
 // Function to handle input (mouse click or touch)
 function handleInput(posX, posY) {
-    if (screenshotButtonVisible) {
-        if (
-            posX >= screenshotButtonPos.x &&
-            posX <= screenshotButtonPos.x + screenshotButtonPos.width &&
-            posY >= screenshotButtonPos.y &&
-            posY <= screenshotButtonPos.y + screenshotButtonPos.height
-        ) {
-            takeScreenshot();
-        }
-    } else if (!allAnswered && questionsData != null) {
-        questionsData[currentQuestion].answers.forEach((answer, index) => {
+    if (!isLoading && playerNameInput) {
+        if (screenshotButtonVisible) {
             if (
-                posX >= answer.button.x &&
-                posX <= answer.button.x + answer.button.width &&
-                posY >= answer.button.y &&
-                posY <= answer.button.y + answer.button.height
+                posX >= screenshotButtonPos.x &&
+                posX <= screenshotButtonPos.x + screenshotButtonPos.width &&
+                posY >= screenshotButtonPos.y &&
+                posY <= screenshotButtonPos.y + screenshotButtonPos.height
             ) {
-                selectAnswer(index);
+                takeScreenshot();
             }
-        });
+        } else if (!allAnswered && questionsData != null) {
+            questionsData[currentQuestion].answers.forEach((answer, index) => {
+                if (
+                    posX >= answer.button.x &&
+                    posX <= answer.button.x + answer.button.width &&
+                    posY >= answer.button.y &&
+                    posY <= answer.button.y + answer.button.height
+                ) {
+                    selectAnswer(index);
+                }
+            });
+        }
     }
 }
 // Initialize the quiz when the DOM content is loaded
