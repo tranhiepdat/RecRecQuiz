@@ -146,10 +146,10 @@ function showInputField() {
         event.preventDefault(); // Prevent default form submission behavior
         handleSubmitName();
     });
-    submitButton.addEventListener('touchend', (event) => {
-        event.preventDefault(); // Prevent default touch behavior
-        handleSubmitName();
-    });
+    // submitButton.addEventListener('touchend', (event) => {
+    //     event.preventDefault(); // Prevent default touch behavior
+    //     handleSubmitName();
+    // });
 
 
     // Disable canvas to prevent interaction
