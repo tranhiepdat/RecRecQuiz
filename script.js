@@ -170,7 +170,7 @@ function handleSubmitName() {
             if (!playerNameInput) {
                 alert('Name is not available');
             }
-        }, 1000); // 1000 milliseconds = 1 second
+        }, 2000); // 1000 milliseconds = 1 second
     } else {
         alert('Please enter your name.');
     }
