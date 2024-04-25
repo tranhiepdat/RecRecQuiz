@@ -38,7 +38,9 @@ function UpdateDisplayName(){
 var UpdateDisplayNameCallback = function (result, error){
     if (result !== null) {
         console.log("name update success");
-        playerName = result.DisplayName;
+        console.log(result.data.DisplayName);
+        playerName = result.data.DisplayName;
+        playerNameInput = true;
     } else if (error !== null) {
         console.log(PlayFab.GenerateErrorReport(error));
     }

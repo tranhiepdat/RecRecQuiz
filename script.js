@@ -1,7 +1,3 @@
-
-
-
-
 let currentQuestion = 0;
 let userChoices = [];
 let questionsData;
@@ -11,9 +7,10 @@ const aspectRatio = 9 / 16;
 let screenshotButtonVisible = false;
 let allAnswered = false;
 let riveAnimation;
-let isLoading = true;  
+let isLoading = true;
 let playerNameInput = false;
 let playerName = null;
+let riveAnimLoaded = false;
 
 
 // Create a separate canvas for Rive animation
@@ -26,7 +23,7 @@ function setCanvasSize() {
     const screenHeight = window.innerHeight * devicePixelRatio;
     let canvasWidth, canvasHeight;
 
-    
+
 
     // Calculate canvas size while maintaining aspect ratio
     if (screenWidth / screenHeight > aspectRatio) {
@@ -41,14 +38,16 @@ function setCanvasSize() {
     canvas.height = screenHeight; // Set canvas height to full screen height
     canvas.style.width = (canvasWidth / devicePixelRatio) + 'px'; // Set display width and height
     canvas.style.height = (screenHeight / devicePixelRatio) + 'px'; // Set display height to full screen height
-
+    if (riveAnimLoaded) {
+        loadingscreenRive.resizeDrawingSurfaceToCanvas();
+    }
     riveCanvas.width = canvasWidth;
     riveCanvas.height = screenHeight; // Set canvas height to full screen height
     riveCanvas.style.width = (canvasWidth / devicePixelRatio) + 'px'; // Set display width and height
     riveCanvas.style.height = (screenHeight / devicePixelRatio) + 'px'; // Set display height to full screen height
 
     // Redraw content after resizing
-    if (!playerNameInput && !isLoading){
+    if (!playerNameInput && !isLoading) {
         showInputField();
     }
     else if (questionsData && !isLoading) {  // Check isLoading flag
@@ -70,13 +69,15 @@ window.addEventListener('resize', setCanvasSize);
 const loadingscreenRive = new rive.Rive({
     src: 'personalitytest.riv',
     canvas: canvas,
-    autoplay: true,
+    autoplay: false,
     shouldDisableRiveListeners: true,
-    
+
     artboard: 'Logo',
     stateMachines: 'Logo',
     onLoad: () => {
         console.log('Rive file loaded successfully.');
+        riveAnimLoaded = true;
+        loadingscreenRive.resizeDrawingSurfaceToCanvas();
     },
     onError: (error) => {
         console.error('Error loading the Rive file:', error);
@@ -95,19 +96,8 @@ loadingscreenRive.on('riveevent', (event) => {
 function handleLoadingComplete() {
     if (!isLoading) {
         clearInterval(loadingInterval);
-        
-        
-        //loadingscreenRive.reset({
-           /// stateMachines: "Logo",
-           // autoplay: false,
-           // shouldDisableRiveListeners: false,
-       //   });
-        
-        //loadingscreenRive.off();
-        
-       loadingscreenRive.cleanup();
-       
-        
+        loadingscreenRive.cleanup();
+
         // Example: Displaying the input field when loading is complete
         if (!playerNameInput) {
             showInputField();
@@ -124,8 +114,6 @@ function initialize() {
     
     // Play the Rive animation corresponding to the result
     if (isLoading) {
-        
-        loadingscreenRive.resizeDrawingSurfaceToCanvas();
         loadingscreenRive.play("Logo");
     }
     fetch('questions.json')
@@ -136,59 +124,93 @@ function initialize() {
             //     displayQuestion(currentQuestion);
             // }
             document.body.appendChild(riveCanvas);
-            // Position the riveCanvas behind the canvas
-            riveCanvas.style.position = 'absolute';
-            riveCanvas.style.top = '50%';
-            riveCanvas.style.left = '50%';
-            riveCanvas.style.transform = 'translate(-50%, -50%)';
-            riveCanvas.style.zIndex = '-1';
+            riveCanvas.className = 'rive-canvas';
+            // // Position the riveCanvas behind the canvas
+            // riveCanvas.style.position = 'absolute';
+            // riveCanvas.style.top = '50%';
+            // riveCanvas.style.left = '50%';
+            // riveCanvas.style.transform = 'translate(-50%, -50%)';
+            // riveCanvas.style.zIndex = '-1';
         })
         .catch(error => console.error('Error fetching questions:', error));
 }
+const inputContainer = document.querySelector('.input-container');
+const inputField = document.getElementById('nameInput');
+const submitButton = document.getElementById('submitButton');
 
 // Function to show the input field and submit button
 function showInputField() {
-    // Create input field
-    const inputField = document.createElement('input');
-    inputField.type = 'text';
-    inputField.placeholder = 'Enter your name';
-    inputField.style.position = 'absolute';
-    inputField.style.top = '50%';
-    inputField.style.left = '50%';
-    inputField.style.transform = 'translate(-50%, -50%)';
-    inputField.style.zIndex = '1000'; // Ensure it's above other elements
-    document.body.appendChild(inputField);
-
-    // Create submit button
-    const submitButton = document.createElement('button');
-    submitButton.textContent = 'Submit';
-    submitButton.style.position = 'absolute';
-    submitButton.style.top = '60%'; // Adjust as needed
-    submitButton.style.left = '50%';
-    submitButton.style.transform = 'translate(-50%, -50%)';
-    submitButton.style.zIndex = '1000'; // Ensure it's above other elements
-    // Add click event listener to handle submission
-    submitButton.addEventListener('click', () => {
-        playerName = inputField.value.trim();
-        if (playerName !== '') {
-            // Process player name (e.g., save to database)
-            console.log('Player Name:', playerName);
-            // Hide input field and submit button
-            document.body.removeChild(inputField);
-            document.body.removeChild(submitButton);
-            UpdateDisplayName();
-            displayQuestion(currentQuestion);
-            // Enable canvas for quiz interaction
-            playerNameInput = true;
-            canvas.disabled = false;
-        } else {
-            alert('Please enter your name.');
-        }
+    inputContainer.classList.remove('hidden');
+    // Click event for submit button
+    submitButton.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent default form submission behavior
+        handleSubmitName();
     });
-    document.body.appendChild(submitButton);
+    submitButton.addEventListener('touchend', (event) => {
+        event.preventDefault(); // Prevent default touch behavior
+        handleSubmitName();
+    });
+
 
     // Disable canvas to prevent interaction
     canvas.disabled = true;
+}
+
+function handleSubmitName() {
+    playerName = inputField.value.trim();
+    if (playerName !== '') {
+        // Process player name (e.g., save to database)
+        console.log('Player Name:', playerName);
+        UpdateDisplayName();
+        setTimeout(function () {
+            console.log("One second has passed!");
+            // Place your code here that you want to execute after one second
+            console.log(playerName);
+            // Hide input field and submit button
+            if (!playerNameInput) {
+                alert('Name is not available');
+            }
+        }, 1000); // 1000 milliseconds = 1 second
+    } else {
+        alert('Please enter your name.');
+    }
+}
+
+// Function to hide the input field and submit button
+function hideInputField() {
+    inputContainer.classList.add('hidden');
+}
+
+function RemoveNameForm() {
+    if (playerNameInput && inputField && submitButton) {
+        hideInputField();
+        displayQuestion(currentQuestion);
+        canvas.disabled = false;
+        clearInterval(removeNameFormInterval); // Clear the interval
+    }
+}
+const removeNameFormInterval = setInterval(RemoveNameForm, 100);
+
+function wrapText(context, text, maxWidth) {
+    const words = text.split(' ');
+    let lines = [];
+    let line = '';
+
+    words.forEach(word => {
+        const testLine = line + word + ' ';
+        const metrics = context.measureText(testLine);
+        const testWidth = metrics.width;
+
+        if (testWidth > maxWidth) {
+            lines.push(line);
+            line = word + ' ';
+        } else {
+            line = testLine;
+        }
+    });
+
+    lines.push(line);
+    return lines;
 }
 
 // Function to display a question
@@ -196,22 +218,41 @@ function displayQuestion(questionIndex) {
     const question = questionsData[questionIndex];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Display the quiz question at the bottom of the canvas
-    const questionFontSize = canvas.width * 0.03; // Adjust font size based on canvas width
-    ctx.font = `${questionFontSize}px Arial`;
-    ctx.textAlign = 'center';
-    const questionHeight = canvas.height * 0.2; // Height of the question text
-    ctx.fillText(question.quiz, canvas.width / 2, canvas.height - canvas.height * 0.1 - questionHeight);
+    const backgroundImage = new Image();
+    backgroundImage.src = `images/${questionIndex+1}.png`; // Assuming your images are named from 1.png to 10.png
+    backgroundImage.onload = () => {
+        
 
-    // Calculate button positions and draw buttons
-    drawButtons(question);
+        const imageX = (canvas.width - canvas.width * 1.366) / 2;
+        const imageY = (canvas.height - canvas.height * 1.024) / 2;
+        ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
+
+        // Display the quiz question at the bottom of the canvas
+        const questionFontSize = canvas.width * 0.08; // Adjust font size based on canvas width
+        ctx.font = `bold ${questionFontSize}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#0f5e74';
+        // Wrap the question text
+        const questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8);
+
+        // Calculate vertical position for the wrapped text
+        const lineHeight = questionFontSize * 1.2; // Line height including padding
+        const textY = canvas.height - canvas.height * 0.85 - (lineHeight * (questionLines.length - 1)) / 2;
+
+        // Draw each line of the wrapped text
+        questionLines.forEach((line, index) => {
+            ctx.fillText(line, canvas.width / 2, textY + index * lineHeight);
+        });
+
+        // Calculate button positions and draw buttons
+        drawButtons(question);
+    };
 }
 
 // Function to calculate button positions and draw buttons
 function drawButtons(question) {
     const buttonSpacing = canvas.height * -0.15; // Define spacing between buttons
     let startY = canvas.height - canvas.height * 0.35; // Starting Y position for buttons
-
     question.answers.forEach((answer, index) => {
         // Calculate button position
         const buttonWidth = canvas.width * 0.8;
@@ -222,30 +263,30 @@ function drawButtons(question) {
         // Calculate text dimensions
         const padding = canvas.width * 0.02; // Padding between button and text
         const buttonFontSize = canvas.width * 0.03; // Adjust font size based on canvas width
-        ctx.font = `${buttonFontSize}px Arial`;
-        const words = answer.answerText.split(' ');
-        let lines = [];
-        let line = '';
-        words.forEach(word => {
-            const testLine = line + word + ' ';
-            const metrics = ctx.measureText(testLine);
-            const testWidth = metrics.width;
-            if (testWidth > buttonWidth - padding * 2) {
-                lines.push(line);
-                line = word + ' ';
-            } else {
-                line = testLine;
-            }
-        });
-        lines.push(line);
+        ctx.font = `bold ${buttonFontSize}px Arial`;
+        const lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2)
         buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
 
-        // Draw button background
-        ctx.fillStyle = answer.hover ? '#bbb' : '#ddd';
-        ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+        // // Draw button background
+        // ctx.fillStyle = answer.hover ? '#bbb' : '#ddd';
+        // ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+        const cornerRadius = 20; // Adjust corner radius as needed
+        ctx.beginPath();
+        ctx.moveTo(buttonX + cornerRadius, buttonY);
+        ctx.lineTo(buttonX + buttonWidth - cornerRadius, buttonY);
+        ctx.arcTo(buttonX + buttonWidth, buttonY, buttonX + buttonWidth, buttonY + cornerRadius, cornerRadius);
+        ctx.lineTo(buttonX + buttonWidth, buttonY + buttonHeight - cornerRadius);
+        ctx.arcTo(buttonX + buttonWidth, buttonY + buttonHeight, buttonX + buttonWidth - cornerRadius, buttonY + buttonHeight, cornerRadius);
+        ctx.lineTo(buttonX + cornerRadius, buttonY + buttonHeight);
+        ctx.arcTo(buttonX, buttonY + buttonHeight, buttonX, buttonY + buttonHeight - cornerRadius, cornerRadius);
+        ctx.lineTo(buttonX, buttonY + cornerRadius);
+        ctx.arcTo(buttonX, buttonY, buttonX + cornerRadius, buttonY, cornerRadius);
+        ctx.closePath();
+        ctx.fillStyle = answer.hover ? '#bbb' : 'black';
+        ctx.fill();
 
         // Draw button text
-        ctx.fillStyle = '#000';
+        ctx.fillStyle = 'white';
         ctx.textAlign = 'center'; // Align text to the center
         const textY = buttonY + buttonHeight / 2; // Center vertically
         lines.forEach((line, index) => {
@@ -264,9 +305,36 @@ function drawButtons(question) {
 
 // Function to redraw buttons with hover effect
 function redrawButtons() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Clear only the region occupied by the buttons
     const question = questionsData[currentQuestion];
-    displayQuestion(currentQuestion);
+    // question.answers.forEach((answer) => {
+    //     ctx.clearRect(answer.button.x, answer.button.y, answer.button.width, answer.button.height);
+    // });
+    question.answers.forEach((answer) => {
+        // Set up clipping path to clear only within the rounded rectangle shape
+        const cornerRadius = 20; // Adjust corner radius as needed
+        ctx.save(); // Save the current drawing state
+        ctx.beginPath();
+        ctx.moveTo(answer.button.x + cornerRadius, answer.button.y);
+        ctx.lineTo(answer.button.x + answer.button.width - cornerRadius, answer.button.y);
+        ctx.arcTo(answer.button.x + answer.button.width, answer.button.y, answer.button.x + answer.button.width, answer.button.y + cornerRadius, cornerRadius);
+        ctx.lineTo(answer.button.x + answer.button.width, answer.button.y + answer.button.height - cornerRadius);
+        ctx.arcTo(answer.button.x + answer.button.width, answer.button.y + answer.button.height, answer.button.x + answer.button.width - cornerRadius, answer.button.y + answer.button.height, cornerRadius);
+        ctx.lineTo(answer.button.x + cornerRadius, answer.button.y + answer.button.height);
+        ctx.arcTo(answer.button.x, answer.button.y + answer.button.height, answer.button.x, answer.button.y + answer.button.height - cornerRadius, cornerRadius);
+        ctx.lineTo(answer.button.x, answer.button.y + cornerRadius);
+        ctx.arcTo(answer.button.x, answer.button.y, answer.button.x + cornerRadius, answer.button.y, cornerRadius);
+        ctx.closePath();
+        ctx.clip();
+
+        // Clear the button area
+        ctx.clearRect(answer.button.x, answer.button.y, answer.button.width, answer.button.height);
+
+        // Reset clipping path
+        ctx.restore();
+    });
+
+    drawButtons(question);
 }
 
 // Function to handle answer selection
@@ -303,7 +371,10 @@ const riveInstance = new rive.Rive({
 // Function to show the result
 function showResult(personalityType) {
     // Clear the canvas
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    
 
     // Draw the personality result text
     const resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
@@ -324,13 +395,13 @@ function showResult(personalityType) {
             result = 'Tomyum';
             break;
         case 3:
-            result = 'Mala + Gochujang';
+            result = 'Gochujang';
             break;
         case 4:
-            result = 'Mala + Tomyum';
+            result = 'Gochujang';
             break;
         case 5:
-            result = 'Gochujang + Tomyum';
+            result = 'Gochujang';
             break;
         default:
             result = 'Unknown';
@@ -338,6 +409,7 @@ function showResult(personalityType) {
     }
 
     
+
     riveInstance.resizeDrawingSurfaceToCanvas();
     // Play the Rive animation corresponding to the result
     riveInstance.play("ResultStateMachine");
@@ -355,9 +427,9 @@ function showResult(personalityType) {
     }
 
     // Draw the result text on the canvas
-    const resultTextX = canvas.width * 0.25;
+    const resultTextX = canvas.width * 0.75;
     const resultTextY = canvas.height - canvas.height * 0.09;
-    const nameTextX = canvas.width * 0.25;
+    const nameTextX = canvas.width * 0.75;
     const nameTextY = canvas.height - canvas.height * 0.11;
     const originalFont = ctx.font;
 
@@ -482,9 +554,10 @@ function takeScreenshot() {
     // Create a temporary link element to trigger the download
     const link = document.createElement('a');
     link.href = dataUrl;
-    link.download = filename;
+    link.setAttribute('download', filename);
 
     // Trigger the download
+    link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -508,6 +581,21 @@ function drawScreenshotButton(mouseX, mouseY) {
             width: buttonWidth,
             height: buttonHeight
         };
+        const cornerRadius = 20; // Adjust corner radius as needed
+
+        // Begin drawing the button
+        ctx.beginPath();
+        ctx.moveTo(buttonX + cornerRadius, buttonY); // Move to top-left corner
+        ctx.lineTo(buttonX + buttonWidth - cornerRadius, buttonY); // Draw top edge
+        ctx.arcTo(buttonX + buttonWidth, buttonY, buttonX + buttonWidth, buttonY + cornerRadius, cornerRadius); // Draw top-right corner
+        ctx.lineTo(buttonX + buttonWidth, buttonY + buttonHeight - cornerRadius); // Draw right edge
+        ctx.arcTo(buttonX + buttonWidth, buttonY + buttonHeight, buttonX + buttonWidth - cornerRadius, buttonY + buttonHeight, cornerRadius); // Draw bottom-right corner
+        ctx.lineTo(buttonX + cornerRadius, buttonY + buttonHeight); // Draw bottom edge
+        ctx.arcTo(buttonX, buttonY + buttonHeight, buttonX, buttonY + buttonHeight - cornerRadius, cornerRadius); // Draw bottom-left corner
+        ctx.lineTo(buttonX, buttonY + cornerRadius); // Draw left edge
+        ctx.arcTo(buttonX, buttonY, buttonX + cornerRadius, buttonY, cornerRadius); // Draw top-left corner
+        ctx.closePath();
+
         const isHover = (
             mouseX >= buttonX &&
             mouseX <= buttonX + buttonWidth &&
@@ -515,7 +603,7 @@ function drawScreenshotButton(mouseX, mouseY) {
             mouseY <= buttonY + buttonHeight
         );
         ctx.fillStyle = isHover ? '#ccc' : '#ddd'; // Change color on hover
-        ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+        ctx.fill();
 
         // Draw button text with appropriate color
         ctx.fillStyle = '#000';
@@ -552,6 +640,16 @@ canvas.addEventListener('click', function (e) {
     handleInput(posX, posY);
 });
 
+// Function to handle touch start on buttons
+canvas.addEventListener('touchstart', function (e) {
+    e.preventDefault(); // Prevent default touch behavior
+    const touch = e.changedTouches[0];
+    const devicePixelRatio = window.devicePixelRatio || 1;
+    const posX = (touch.clientX - canvas.getBoundingClientRect().left) * devicePixelRatio;
+    const posY = (touch.clientY - canvas.getBoundingClientRect().top) * devicePixelRatio;
+    handleMousemove(posX, posY);
+}, false);
+
 // Function to handle touch end
 canvas.addEventListener('touchend', function (e) {
     e.preventDefault(); // Prevent default touch behavior
@@ -581,16 +679,16 @@ function handleMousemove(posX, posY) {
             redrawButtons();
         }
         else if (screenshotButtonVisible) {
-            drawScreenshotButton(posX, posY)
-            // Check if the click/touch is within the screenshot button
-            if (
-                posX >= screenshotButtonPos.x &&
-                posX <= screenshotButtonPos.x + screenshotButtonPos.width &&
-                posY >= screenshotButtonPos.y &&
-                posY <= screenshotButtonPos.y + screenshotButtonPos.height
-            ) {
+            // drawScreenshotButton(posX, posY)
+            // // Check if the click/touch is within the screenshot button
+            // if (
+            //     posX >= screenshotButtonPos.x &&
+            //     posX <= screenshotButtonPos.x + screenshotButtonPos.width &&
+            //     posY >= screenshotButtonPos.y &&
+            //     posY <= screenshotButtonPos.y + screenshotButtonPos.height
+            // ) {
                 drawScreenshotButton(posX, posY);
-            }
+            // }
         }
     }
 }
