@@ -1,5 +1,29 @@
+function generateDeviceUUID() {
+    // Check if UUID is already stored in local storage
+    let deviceId = localStorage.getItem('deviceId');
+    
+    // If UUID is not stored, generate a new one
+    if (!deviceId) {
+        deviceId = createUUID();
+        // Store the generated UUID in local storage
+        localStorage.setItem('deviceId', deviceId);
+    }
+    
+    return deviceId;
+}
+
+// Function to create a UUID
+function createUUID() {
+    // Generate a random UUID using the format xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
 function Login() {
-    var uuid = new DeviceUUID().get();
+    var uuid = generateDeviceUUID();
     PlayFab.settings.deviceId = uuid
     PlayFab.settings.titleId = "B2C32"
     var request = {
