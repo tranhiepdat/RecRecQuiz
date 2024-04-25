@@ -213,41 +213,79 @@ function wrapText(context, text, maxWidth) {
     return lines;
 }
 
-// Function to display a question
-function displayQuestion(questionIndex) {
+// Function to preload an image
+function preloadImage(url) {
+    return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = reject;
+        image.src = url;
+    });
+}
+async function displayQuestion(questionIndex) {
     const question = questionsData[questionIndex];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const backgroundImage = new Image();
-    backgroundImage.src = `images/${questionIndex+1}.png`; // Assuming your images are named from 1.png to 10.png
-    backgroundImage.onload = () => {
+    const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
+    const imageX = (canvas.width - canvas.width * 1.366) / 2;
+    const imageY = (canvas.height - canvas.height * 1.024) / 2;
+    ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
+
+    // Display the quiz question at the bottom of the canvas
+    const questionFontSize = canvas.width * 0.08; // Adjust font size based on canvas width
+    ctx.font = `bold ${questionFontSize}px Arial`;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#0f5e74';
+    // Wrap the question text
+    const questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8);
+
+    // Calculate vertical position for the wrapped text
+    const lineHeight = questionFontSize * 1.2; // Line height including padding
+    const textY = canvas.height - canvas.height * 0.85 - (lineHeight * (questionLines.length - 1)) / 2;
+
+    // Draw each line of the wrapped text
+    questionLines.forEach((line, index) => {
+        ctx.fillText(line, canvas.width / 2, textY + index * lineHeight);
+    });
+
+    // Calculate button positions and draw buttons
+    drawButtons(question);
+}
+// Function to display a question
+// function displayQuestion(questionIndex) {
+//     const question = questionsData[questionIndex];
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+//     const backgroundImage = new Image();
+//     backgroundImage.src = `images/${questionIndex+1}.png`; // Assuming your images are named from 1.png to 10.png
+//     backgroundImage.onload = () => {
         
 
-        const imageX = (canvas.width - canvas.width * 1.366) / 2;
-        const imageY = (canvas.height - canvas.height * 1.024) / 2;
-        ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
+//         const imageX = (canvas.width - canvas.width * 1.366) / 2;
+//         const imageY = (canvas.height - canvas.height * 1.024) / 2;
+//         ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
 
-        // Display the quiz question at the bottom of the canvas
-        const questionFontSize = canvas.width * 0.08; // Adjust font size based on canvas width
-        ctx.font = `bold ${questionFontSize}px Arial`;
-        ctx.textAlign = 'center';
-        ctx.fillStyle = '#0f5e74';
-        // Wrap the question text
-        const questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8);
+//         // Display the quiz question at the bottom of the canvas
+//         const questionFontSize = canvas.width * 0.08; // Adjust font size based on canvas width
+//         ctx.font = `bold ${questionFontSize}px Arial`;
+//         ctx.textAlign = 'center';
+//         ctx.fillStyle = '#0f5e74';
+//         // Wrap the question text
+//         const questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8);
 
-        // Calculate vertical position for the wrapped text
-        const lineHeight = questionFontSize * 1.2; // Line height including padding
-        const textY = canvas.height - canvas.height * 0.85 - (lineHeight * (questionLines.length - 1)) / 2;
+//         // Calculate vertical position for the wrapped text
+//         const lineHeight = questionFontSize * 1.2; // Line height including padding
+//         const textY = canvas.height - canvas.height * 0.85 - (lineHeight * (questionLines.length - 1)) / 2;
 
-        // Draw each line of the wrapped text
-        questionLines.forEach((line, index) => {
-            ctx.fillText(line, canvas.width / 2, textY + index * lineHeight);
-        });
+//         // Draw each line of the wrapped text
+//         questionLines.forEach((line, index) => {
+//             ctx.fillText(line, canvas.width / 2, textY + index * lineHeight);
+//         });
 
-        // Calculate button positions and draw buttons
-        drawButtons(question);
-    };
-}
+//         // Calculate button positions and draw buttons
+//         drawButtons(question);
+//     };
+// }
 
 // Function to calculate button positions and draw buttons
 function drawButtons(question) {
