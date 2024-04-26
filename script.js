@@ -11,6 +11,7 @@ let isLoading = true;
 let playerNameInput = false;
 let playerName = null;
 let riveAnimLoaded = false;
+preloadImages.images = null;
 
 
 // Create a separate canvas for Rive animation
@@ -116,6 +117,14 @@ function initialize() {
     if (isLoading) {
         loadingscreenRive.play("Logo");
     }
+
+    // Preload images
+    preloadImages()
+        .then(images => {
+            preloadImages.images = images; // Store preloaded images
+        })
+        .catch(error => console.error('Error preloading images:', error));
+
     fetch('questions.json')
         .then(response => response.json())
         .then(data => {
@@ -213,6 +222,16 @@ function wrapText(context, text, maxWidth) {
     return lines;
 }
 
+// Function to preload all images
+async function preloadImages() {
+    const imagePromises = [];
+    for (let i = 1; i <= 10; i++) { // Assuming there are 10 images numbered from 1.png to 10.png
+        const imageUrl = `images/${i}.png`;
+        imagePromises.push(preloadImage(imageUrl));
+    }
+    return Promise.all(imagePromises);
+}
+
 // Function to preload an image
 function preloadImage(url) {
     return new Promise((resolve, reject) => {
@@ -226,7 +245,13 @@ async function displayQuestion(questionIndex) {
     const question = questionsData[questionIndex];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
+    // const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
+    // // Preload all images
+    // if (!preloadImages.images) {
+    //     preloadImages.images = await preloadImages();
+    // }
+
+    const backgroundImage = preloadImages.images[questionIndex];
     const imageX = (canvas.width - canvas.width * 1.366) / 2;
     const imageY = (canvas.height - canvas.height * 1.024) / 2;
     ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
