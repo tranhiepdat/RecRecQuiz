@@ -153,6 +153,7 @@ function showInputField() {
     // Click event for submit button
     submitButton.addEventListener('click', (event) => {
         event.preventDefault(); // Prevent default form submission behavior
+        submitButton.disabled = true;
         handleSubmitName();
     });
     // submitButton.addEventListener('touchend', (event) => {
@@ -178,10 +179,12 @@ function handleSubmitName() {
             // Hide input field and submit button
             if (!playerNameInput) {
                 alert('Name is not available');
+                submitButton.disabled = false;
             }
         }, 2000); // 1000 milliseconds = 1 second
     } else {
         alert('Please enter your name.');
+        submitButton.disabled = false;
     }
 }
 
