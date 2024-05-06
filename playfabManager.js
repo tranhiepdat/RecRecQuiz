@@ -69,4 +69,7 @@ var UpdateDisplayNameCallback = function (result, error){
         console.log(PlayFab.GenerateErrorReport(error));
     }
 }
+function UpdatePlayerType(){
+
+}
 Login();

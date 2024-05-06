@@ -5,22 +5,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Quiz</title>
         <link rel="stylesheet" href="styles.css">
-        <script src="https://unpkg.com/@rive-app/canvas@2.14.3">
+        <!-- <script src="https://unpkg.com/@rive-app/canvas@2.14.3">
             //import riveWASMResource from "https://unpkg.com/@rive-app/canvas@2.14.3/rive.wasm"; 
             //import { Rive, RuntimeLoader } from "https://unpkg.com/@rive-app/canvas@2.14.3";
-        </script> 
-        
-        <!-- <script src="https://github.com/tranhiepdat/RecRecQuiz.github.io/blob/main/node_modules/device-uuid/lib/device-uuid.js"></script> -->
+        </script>  -->
         <script type="text/javascript" src="https://download.playfab.com/PlayFabClientApi.js"></script>
         
     </head>
 <body>
+
     <div class="input-container hidden">
         <input type="text" id="nameInput" placeholder="Enter your name">
         <button id="submitButton" type="submit">Submit</button>
     </div>
     <canvas id="quiz-canvas"></canvas>
-    <script src="script.js"> </script>
-    <script src="playfabManager.js"></script>
+    <!-- <script type="module" src="js/script.js"> </script> -->
+    <script src="bundle.js"></script>
+    <!-- <script type="module" src="js/playfabManager.js"></script> -->
 </body>
 </html>
