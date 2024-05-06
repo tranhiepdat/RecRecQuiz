@@ -1,10 +1,9 @@
 import * as rive from "../node_modules/@rive-app/canvas";
-import riveWASMResource from "../node_modules/@rive-app/canvas/rive.wasm";
-import { Rive, RuntimeLoader } from "../node_modules/@rive-app/canvas";
+// import riveWASMResource from '../node_modules/@rive-app/canvas/rive.wasm';
 
-import { UpdateDisplayName, playerNameInput } from "./playfabManager";
+import { UpdateDisplayName, playerNameInput, nameFromDatabase } from "./playfabManager";
 
-RuntimeLoader.setWasmUrl(riveWASMResource);
+// rive.RuntimeLoader.setWasmUrl(riveWASMResource);
 
 let currentQuestion = 0;
 let userChoices = [];
@@ -457,7 +456,7 @@ function showResult(personalityType) {
     ctx.font = `bold ${resultFontSize * 1.5}px Arial`; // Adjust font size as needed
 
     // Draw the bold and larger text for 'Hello, ' + playerName
-    ctx.fillText('Hello, ' + playerName, nameTextX, nameTextY);
+    ctx.fillText('Hello, ' + nameFromDatabase, nameTextX, nameTextY);
 
     // Revert back to the original font style
     ctx.font = originalFont;

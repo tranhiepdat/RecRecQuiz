@@ -1,5 +1,6 @@
 import { playerName } from './script';
 export let playerNameInput = false;
+export let nameFromDatabase = null;
 function generateDeviceUUID() {
     // Check if UUID is already stored in local storage
     let deviceId = localStorage.getItem('deviceId');
@@ -45,7 +46,7 @@ var LoginCallback = function (result, error) {
         console.log("login success");
         if (result.data.InfoResultPayload.PlayerProfile.DisplayName !== undefined) {
             console.log(result.data.InfoResultPayload.PlayerProfile.DisplayName);
-            playerName = result.data.InfoResultPayload.PlayerProfile.DisplayName;
+            nameFromDatabase = result.data.InfoResultPayload.PlayerProfile.DisplayName;
             playerNameInput = true;
         }
     } else if (error !== null) {
@@ -66,6 +67,7 @@ var UpdateDisplayNameCallback = function (result, error){
         console.log("name update success");
         console.log(result.data.DisplayName);
         playerName = result.data.DisplayName;
+        nameFromDatabase = result.data.DisplayName;
         playerNameInput = true;
     } else if (error !== null) {
         console.log(PlayFab.GenerateErrorReport(error));

@@ -4,18 +4,9 @@
     "device-uuid": "^1.0.4",
     "playfab-web-sdk": "^1.170.240412"
   },
-  "name": "persona-notop",
-  "version": "1.0.0",
-  "description": "persona test game",
-  "main": "index.js",
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@babel/preset-env": "^7.24.5",
     "babelify": "^10.0.0"
-  },
-  "scripts": {
-    "test": "node test"
-  },
-  "author": "King",
-  "license": "ISC"
+  }
 }
