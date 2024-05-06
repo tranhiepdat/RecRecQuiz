@@ -1,5 +1,11 @@
 import * as rive from "../node_modules/@rive-app/canvas";
+import riveWASMResource from "../node_modules/@rive-app/canvas/rive.wasm";
+import { Rive, RuntimeLoader } from "../node_modules/@rive-app/canvas";
+
 import { UpdateDisplayName, playerNameInput } from "./playfabManager";
+
+RuntimeLoader.setWasmUrl(riveWASMResource);
+
 let currentQuestion = 0;
 let userChoices = [];
 let questionsData;
