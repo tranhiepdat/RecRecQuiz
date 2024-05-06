@@ -66,7 +66,6 @@ var UpdateDisplayNameCallback = function UpdateDisplayNameCallback(result, error
   if (result !== null) {
     console.log("name update success");
     console.log(result.data.DisplayName);
-    _script.playerName = result.data.DisplayName;
     exports.nameFromDatabase = nameFromDatabase = result.data.DisplayName;
     exports.playerNameInput = playerNameInput = true;
   } else if (error !== null) {
@@ -90,9 +89,7 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; } // import riveWASMResource from '../node_modules/@rive-app/canvas/rive.wasm';
-// rive.RuntimeLoader.setWasmUrl(riveWASMResource);
-
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var currentQuestion = 0;
 var userChoices = [];
 var questionsData;
@@ -101,7 +98,6 @@ var ctx = canvas.getContext('2d');
 var aspectRatio = 9 / 16;
 var screenshotButtonVisible = false;
 var allAnswered = false;
-var riveAnimation;
 var isLoading = true;
 var playerName = exports.playerName = null;
 var riveAnimLoaded = false;
@@ -824,17 +820,17 @@ var Rive = (() => {
   return (
 function(moduleArg = {}) {
 
-var n = moduleArg, aa, ba;
-n.ready = new Promise((a, b) => {
+var m = moduleArg, aa, ba;
+m.ready = new Promise((a, b) => {
   aa = a;
   ba = b;
 });
 function ca() {
   function a(g) {
-    const m = d;
+    const n = d;
     c = b = 0;
     d = new Map();
-    m.forEach(p => {
+    n.forEach(p => {
       try {
         p(g);
       } catch (l) {
@@ -847,9 +843,9 @@ function ca() {
   let b = 0, c = 0, d = new Map(), e = null, f = null;
   this.requestAnimationFrame = function(g) {
     b || (b = requestAnimationFrame(a.bind(this)));
-    const m = ++c;
-    d.set(m, g);
-    return m;
+    const n = ++c;
+    d.set(n, g);
+    return n;
   };
   this.cancelAnimationFrame = function(g) {
     d.delete(g);
@@ -857,14 +853,14 @@ function ca() {
   };
   this.Wb = function(g) {
     f && (document.body.remove(f), f = null);
-    g || (f = document.createElement("div"), f.style.backgroundColor = "black", f.style.position = "fixed", f.style.right = 0, f.style.top = 0, f.style.color = "white", f.style.padding = "4px", f.innerHTML = "RIVE FPS", g = function(m) {
-      f.innerHTML = "RIVE FPS " + m.toFixed(1);
+    g || (f = document.createElement("div"), f.style.backgroundColor = "black", f.style.position = "fixed", f.style.right = 0, f.style.top = 0, f.style.color = "white", f.style.padding = "4px", f.innerHTML = "RIVE FPS", g = function(n) {
+      f.innerHTML = "RIVE FPS " + n.toFixed(1);
     }, document.body.appendChild(f));
     e = new function() {
-      let m = 0, p = 0;
+      let n = 0, p = 0;
       this.Yb = function() {
         var l = performance.now();
-        p ? (++m, l -= p, 1000 < l && (g(1000 * m / l), m = p = 0)) : (p = l, m = 0);
+        p ? (++n, l -= p, 1000 < l && (g(1000 * n / l), n = p = 0)) : (p = l, n = 0);
       };
     }();
   };
@@ -890,60 +886,55 @@ function ha(a) {
     return c << a;
   };
 }
-const ia = n.onRuntimeInitialized;
-n.onRuntimeInitialized = function() {
+const ia = m.onRuntimeInitialized;
+m.onRuntimeInitialized = function() {
   ia && ia();
-  let a = n.decodeAudio;
-  n.decodeAudio = function(d, e) {
-    d = a(d);
-    e(d);
+  let a = m.decodeFont;
+  m.decodeFont = function(c, d) {
+    c = a(c);
+    d(c);
   };
-  let b = n.decodeFont;
-  n.decodeFont = function(d, e) {
-    d = b(d);
-    e(d);
+  const b = m.FileAssetLoader;
+  m.ptrToAsset = c => {
+    let d = m.ptrToFileAsset(c);
+    return d.isImage ? m.ptrToImageAsset(c) : d.isFont ? m.ptrToFontAsset(c) : d;
   };
-  const c = n.FileAssetLoader;
-  n.ptrToAsset = d => {
-    let e = n.ptrToFileAsset(d);
-    return e.isImage ? n.ptrToImageAsset(d) : e.isFont ? n.ptrToFontAsset(d) : e.isAudio ? n.ptrToAudioAsset(d) : e;
-  };
-  n.CustomFileAssetLoader = c.extend("CustomFileAssetLoader", {__construct:function({loadContents:d}) {
+  m.CustomFileAssetLoader = b.extend("CustomFileAssetLoader", {__construct:function({loadContents:c}) {
     this.__parent.__construct.call(this);
-    this.Hb = d;
-  }, loadContents:function(d, e) {
-    d = n.ptrToAsset(d);
-    return this.Hb(d, e);
+    this.Hb = c;
+  }, loadContents:function(c, d) {
+    c = m.ptrToAsset(c);
+    return this.Hb(c, d);
   },});
-  n.CDNFileAssetLoader = c.extend("CDNFileAssetLoader", {__construct:function() {
+  m.CDNFileAssetLoader = b.extend("CDNFileAssetLoader", {__construct:function() {
     this.__parent.__construct.call(this);
-  }, loadContents:function(d) {
-    let e = n.ptrToAsset(d);
-    d = e.cdnUuid;
-    if ("" === d) {
+  }, loadContents:function(c) {
+    let d = m.ptrToAsset(c);
+    c = d.cdnUuid;
+    if ("" === c) {
       return !1;
     }
-    (function(f, g) {
-      var m = new XMLHttpRequest();
-      m.responseType = "arraybuffer";
-      m.onreadystatechange = function() {
-        4 == m.readyState && 200 == m.status && g(m);
+    (function(e, f) {
+      var g = new XMLHttpRequest();
+      g.responseType = "arraybuffer";
+      g.onreadystatechange = function() {
+        4 == g.readyState && 200 == g.status && f(g);
       };
-      m.open("GET", f, !0);
-      m.send(null);
-    })(e.cdnBaseUrl + "/" + d, f => {
-      e.decode(new Uint8Array(f.response));
+      g.open("GET", e, !0);
+      g.send(null);
+    })(d.cdnBaseUrl + "/" + c, e => {
+      d.decode(new Uint8Array(e.response));
     });
     return !0;
   },});
-  n.FallbackFileAssetLoader = c.extend("FallbackFileAssetLoader", {__construct:function() {
+  m.FallbackFileAssetLoader = b.extend("FallbackFileAssetLoader", {__construct:function() {
     this.__parent.__construct.call(this);
     this.lb = [];
-  }, addLoader:function(d) {
-    this.lb.push(d);
-  }, loadContents:function(d, e) {
-    for (let f of this.lb) {
-      if (f.loadContents(d, e)) {
+  }, addLoader:function(c) {
+    this.lb.push(c);
+  }, loadContents:function(c, d) {
+    for (let e of this.lb) {
+      if (e.loadContents(c, d)) {
         return !0;
       }
     }
@@ -1022,7 +1013,7 @@ const ja = "createConicGradient createImageData createLinearGradient createPatte
     }
     return !0;
   }
-  let b = null, c = 0, d = 0, e = null, f = null, g = 0, m = 0, p = !1;
+  let b = null, c = 0, d = 0, e = null, f = null, g = 0, n = 0, p = !1;
   a();
   this.nc = function() {
     a();
@@ -1073,7 +1064,7 @@ const ja = "createConicGradient createImageData createLinearGradient createPatte
         }
         console.assert(w == 8 * B);
         w = y.push(E);
-        m != w && (b.bufferData(b.ELEMENT_ARRAY_BUFFER, 2 * w, b.DYNAMIC_DRAW), m = w);
+        n != w && (b.bufferData(b.ELEMENT_ARRAY_BUFFER, 2 * w, b.DYNAMIC_DRAW), n = w);
         V = 0;
         for (var va of r) {
           b.bufferSubData(b.ELEMENT_ARRAY_BUFFER, V, va.indices), V += 2 * va.indices.length;
@@ -1103,8 +1094,8 @@ const ja = "createConicGradient createImageData createLinearGradient createPatte
   this.canvas = function() {
     return a() && b.canvas;
   };
-}(), la = n.onRuntimeInitialized;
-n.onRuntimeInitialized = function() {
+}(), la = m.onRuntimeInitialized;
+m.onRuntimeInitialized = function() {
   function a(q) {
     switch(q) {
       case l.srcOver:
@@ -1155,10 +1146,10 @@ n.onRuntimeInitialized = function() {
     E.clear();
   }
   la && la();
-  var d = n.RenderPaintStyle;
-  const e = n.RenderPath, f = n.RenderPaint, g = n.Renderer, m = n.StrokeCap, p = n.StrokeJoin, l = n.BlendMode, u = d.fill, v = d.stroke, y = n.FillRule.evenOdd;
+  var d = m.RenderPaintStyle;
+  const e = m.RenderPath, f = m.RenderPaint, g = m.Renderer, n = m.StrokeCap, p = m.StrokeJoin, l = m.BlendMode, u = d.fill, v = d.stroke, y = m.FillRule.evenOdd;
   let k = 1;
-  var t = n.RenderImage.extend("CanvasRenderImage", {__construct:function({la:q, ya:z} = {}) {
+  var t = m.RenderImage.extend("CanvasRenderImage", {__construct:function({la:q, ya:z} = {}) {
     this.__parent.__construct.call(this);
     this.Ka = k;
     k = k + 1 & 2147483647 || 1;
@@ -1222,13 +1213,13 @@ n.onRuntimeInitialized = function() {
     }
   }, cap:function(q) {
     switch(q) {
-      case m.butt:
+      case n.butt:
         this.Ha = "butt";
         break;
-      case m.round:
+      case n.round:
         this.Ha = "round";
         break;
-      case m.square:
+      case n.square:
         this.Ha = "square";
     }
   }, style:function(q) {
@@ -1275,7 +1266,7 @@ n.onRuntimeInitialized = function() {
   },});
   const E = new Set();
   let w = null, O = [], V = 0, ea = 0;
-  var va = n.CanvasRenderer = g.extend("Renderer", {__construct:function(q) {
+  var va = m.CanvasRenderer = g.extend("Renderer", {__construct:function(q) {
     this.__parent.__construct.call(this);
     this.T = [1, 0, 0, 1, 0, 0];
     this.C = q.getContext("2d");
@@ -1334,7 +1325,7 @@ n.onRuntimeInitialized = function() {
       S = ka.nc();
       wa > S && (R *= S / wa, wa = S);
       xa > S && (fa *= S / xa, xa = S);
-      w || (w = new n.DynamicRectanizer(S), w.reset(512, 512));
+      w || (w = new m.DynamicRectanizer(S), w.reset(512, 512));
       S = w.addRect(wa, xa);
       0 > S && (c(), E.add(this), S = w.addRect(wa, xa), console.assert(0 <= S));
       var ac = S & 65535, bc = S >> 16;
@@ -1361,7 +1352,7 @@ n.onRuntimeInitialized = function() {
   }, translate:function(q, z) {
     this.transform(1, 0, 0, 1, q, z);
   },});
-  n.makeRenderer = function(q) {
+  m.makeRenderer = function(q) {
     const z = new va(q), I = z.C;
     return new Proxy(z, {get(J, D) {
       if ("function" === typeof J[D]) {
@@ -1384,10 +1375,10 @@ n.onRuntimeInitialized = function() {
       }
     },});
   };
-  n.decodeImage = function(q, z) {
+  m.decodeImage = function(q, z) {
     (new t({la:z})).decode(q);
   };
-  n.renderFactory = {makeRenderPaint:function() {
+  m.renderFactory = {makeRenderPaint:function() {
     return new B();
   }, makeRenderPath:function() {
     return new r();
@@ -1403,11 +1394,11 @@ n.onRuntimeInitialized = function() {
       }
     },});
   },};
-  let H = n.load, da = null;
-  n.load = function(q, z, I = !0) {
-    const J = new n.FallbackFileAssetLoader();
+  let H = m.load, da = null;
+  m.load = function(q, z, I = !0) {
+    const J = new m.FallbackFileAssetLoader();
     void 0 !== z && J.addLoader(z);
-    I && (z = new n.CDNFileAssetLoader(), J.addLoader(z));
+    I && (z = new m.CDNFileAssetLoader(), J.addLoader(z));
     return new Promise(function(D) {
       let K = null;
       da = {total:0, loaded:0, ready:function() {
@@ -1418,17 +1409,17 @@ n.onRuntimeInitialized = function() {
     });
   };
   d = new ca();
-  n.requestAnimationFrame = d.requestAnimationFrame.bind(d);
-  n.cancelAnimationFrame = d.cancelAnimationFrame.bind(d);
-  n.enableFPSCounter = d.Wb.bind(d);
-  n.disableFPSCounter = d.Tb;
+  m.requestAnimationFrame = d.requestAnimationFrame.bind(d);
+  m.cancelAnimationFrame = d.cancelAnimationFrame.bind(d);
+  m.enableFPSCounter = d.Wb.bind(d);
+  m.disableFPSCounter = d.Tb;
   d.pb = c;
-  n.resolveAnimationFrame = c;
-  n.cleanup = function() {
+  m.resolveAnimationFrame = c;
+  m.cleanup = function() {
     w && w.delete();
   };
 };
-var ma = Object.assign({}, n), na = "./this.program", oa = "object" == typeof window, pa = "function" == typeof importScripts, qa = "", ra, sa;
+var ma = Object.assign({}, m), na = "./this.program", oa = "object" == typeof window, pa = "function" == typeof importScripts, qa = "", ra, sa;
 if (oa || pa) {
   pa ? qa = self.location.href : "undefined" != typeof document && document.currentScript && (qa = document.currentScript.src), _scriptDir && (qa = _scriptDir), 0 !== qa.indexOf("blob:") ? qa = qa.substr(0, qa.replace(/[?#].*/, "").lastIndexOf("/") + 1) : qa = "", pa && (sa = a => {
     var b = new XMLHttpRequest();
@@ -1447,35 +1438,35 @@ if (oa || pa) {
     d.send(null);
   };
 }
-var ta = n.print || console.log.bind(console), ua = n.printErr || console.error.bind(console);
-Object.assign(n, ma);
+var ta = m.print || console.log.bind(console), ua = m.printErr || console.error.bind(console);
+Object.assign(m, ma);
 ma = null;
-n.thisProgram && (na = n.thisProgram);
+m.thisProgram && (na = m.thisProgram);
 var ya;
-n.wasmBinary && (ya = n.wasmBinary);
-var noExitRuntime = n.noExitRuntime || !0;
+m.wasmBinary && (ya = m.wasmBinary);
+var noExitRuntime = m.noExitRuntime || !0;
 "object" != typeof WebAssembly && za("no native wasm support detected");
 var Aa, x, Ba = !1, A, C, Da, Ea, F, G, Fa, Ga;
 function Ha() {
   var a = Aa.buffer;
-  n.HEAP8 = A = new Int8Array(a);
-  n.HEAP16 = Da = new Int16Array(a);
-  n.HEAP32 = F = new Int32Array(a);
-  n.HEAPU8 = C = new Uint8Array(a);
-  n.HEAPU16 = Ea = new Uint16Array(a);
-  n.HEAPU32 = G = new Uint32Array(a);
-  n.HEAPF32 = Fa = new Float32Array(a);
-  n.HEAPF64 = Ga = new Float64Array(a);
+  m.HEAP8 = A = new Int8Array(a);
+  m.HEAP16 = Da = new Int16Array(a);
+  m.HEAP32 = F = new Int32Array(a);
+  m.HEAPU8 = C = new Uint8Array(a);
+  m.HEAPU16 = Ea = new Uint16Array(a);
+  m.HEAPU32 = G = new Uint32Array(a);
+  m.HEAPF32 = Fa = new Float32Array(a);
+  m.HEAPF64 = Ga = new Float64Array(a);
 }
 var Ka, La = [], Ma = [], Na = [];
 function Oa() {
-  var a = n.preRun.shift();
+  var a = m.preRun.shift();
   La.unshift(a);
 }
 var Pa = 0, Qa = null, Ra = null;
 function za(a) {
-  if (n.onAbort) {
-    n.onAbort(a);
+  if (m.onAbort) {
+    m.onAbort(a);
   }
   a = "Aborted(" + a + ")";
   ua(a);
@@ -1491,7 +1482,7 @@ var Ta;
 Ta = "canvas_advanced.wasm";
 if (!Sa(Ta)) {
   var Ua = Ta;
-  Ta = n.locateFile ? n.locateFile(Ua, qa) : qa + Ua;
+  Ta = m.locateFile ? m.locateFile(Ua, qa) : qa + Ua;
 }
 function Va(a) {
   if (a == Ta && ya) {
@@ -1534,7 +1525,7 @@ function Ya(a, b) {
     return Xa(c, a, b);
   }));
 }
-var N, P, bb = {433788:(a, b, c, d, e) => {
+var N, P, bb = {433276:(a, b, c, d, e) => {
   if ("undefined" === typeof window || void 0 === (window.AudioContext || window.webkitAudioContext)) {
     return 0;
   }
@@ -1550,9 +1541,9 @@ var N, P, bb = {433788:(a, b, c, d, e) => {
     let f = window.h;
     f.D = [];
     f.Gc = function(g) {
-      for (var m = 0; m < f.D.length; ++m) {
-        if (null == f.D[m]) {
-          return f.D[m] = g, m;
+      for (var n = 0; n < f.D.length; ++n) {
+        if (null == f.D[n]) {
+          return f.D[n] = g, n;
         }
       }
       f.D.push(g);
@@ -1568,9 +1559,9 @@ var N, P, bb = {433788:(a, b, c, d, e) => {
       }
     };
     f.Sc = function(g) {
-      for (var m = 0; m < f.D.length; ++m) {
-        if (f.D[m] == g) {
-          return f.Db(m);
+      for (var n = 0; n < f.D.length; ++n) {
+        if (f.D[n] == g) {
+          return f.Db(n);
         }
       }
     };
@@ -1580,9 +1571,9 @@ var N, P, bb = {433788:(a, b, c, d, e) => {
     f.Cb = ["touchend", "click"];
     f.unlock = function() {
       for (var g = 0; g < f.D.length; ++g) {
-        var m = f.D[g];
-        null != m && null != m.I && m.state === f.ga.yb && m.I.resume().then(() => {
-          Za(m.qb);
+        var n = f.D[g];
+        null != n && null != n.I && n.state === f.ga.yb && n.I.resume().then(() => {
+          Za(n.qb);
         }, p => {
           console.error("Failed to resume audiocontext", p);
         });
@@ -1597,9 +1588,9 @@ var N, P, bb = {433788:(a, b, c, d, e) => {
   }
   window.h.Aa += 1;
   return 1;
-}, 435966:() => {
+}, 435454:() => {
   "undefined" !== typeof window.h && (--window.h.Aa, 0 === window.h.Aa && delete window.h);
-}, 436130:() => void 0 !== navigator.mediaDevices && void 0 !== navigator.mediaDevices.getUserMedia, 436234:() => {
+}, 435618:() => void 0 !== navigator.mediaDevices && void 0 !== navigator.mediaDevices.getUserMedia, 435722:() => {
   try {
     var a = new (window.AudioContext || window.webkitAudioContext)(), b = a.sampleRate;
     a.close();
@@ -1607,13 +1598,13 @@ var N, P, bb = {433788:(a, b, c, d, e) => {
   } catch (c) {
     return 0;
   }
-}, 436405:(a, b, c, d, e, f) => {
+}, 435893:(a, b, c, d, e, f) => {
   if ("undefined" === typeof window.h) {
     return -1;
   }
-  var g = {}, m = {};
-  a == window.h.H.za && 0 != c && (m.sampleRate = c);
-  g.I = new (window.AudioContext || window.webkitAudioContext)(m);
+  var g = {}, n = {};
+  a == window.h.H.za && 0 != c && (n.sampleRate = c);
+  g.I = new (window.AudioContext || window.webkitAudioContext)(n);
   g.I.suspend();
   g.state = window.h.ga.stopped;
   c = 0;
@@ -1653,7 +1644,7 @@ var N, P, bb = {433788:(a, b, c, d, e) => {
   a == window.h.H.za && g.$.connect(g.I.destination);
   g.qb = f;
   return window.h.Gc(g);
-}, 439282:a => window.h.sa(a).I.sampleRate, 439355:a => {
+}, 438770:a => window.h.sa(a).I.sampleRate, 438843:a => {
   a = window.h.sa(a);
   void 0 !== a.$ && (a.$.onaudioprocess = function() {
   }, a.$.disconnect(), a.$ = void 0);
@@ -1661,19 +1652,19 @@ var N, P, bb = {433788:(a, b, c, d, e) => {
   a.I.close();
   a.I = void 0;
   a.qb = void 0;
-}, 439755:a => {
+}, 439243:a => {
   window.h.Db(a);
-}, 439805:a => {
+}, 439293:a => {
   a = window.h.sa(a);
   a.I.resume();
   a.state = window.h.ga.yb;
-}, 439944:a => {
+}, 439432:a => {
   a = window.h.sa(a);
   a.I.suspend();
   a.state = window.h.ga.stopped;
 }}, cb = a => {
   for (; 0 < a.length;) {
-    a.shift()(n);
+    a.shift()(m);
   }
 }, db = (a, b) => {
   for (var c = 0, d = a.length - 1; 0 <= d; d--) {
@@ -1768,8 +1759,8 @@ var kb = "undefined" != typeof TextDecoder ? new TextDecoder("utf8") : void 0, l
   for (var f = 0; f < a.length; ++f) {
     var g = a.charCodeAt(f);
     if (55296 <= g && 57343 >= g) {
-      var m = a.charCodeAt(++f);
-      g = 65536 + ((g & 1023) << 10) | m & 1023;
+      var n = a.charCodeAt(++f);
+      g = 65536 + ((g & 1023) << 10) | n & 1023;
     }
     if (127 >= g) {
       if (c >= d) {
@@ -1832,7 +1823,7 @@ var tb = {open:function(a) {
   for (var e = 0, f = 0; f < d; f++) {
     try {
       var g = a.s.W.ib(a.s);
-    } catch (m) {
+    } catch (n) {
       throw new Q(29);
     }
     if (void 0 === g && 0 === e) {
@@ -2307,7 +2298,7 @@ var Cb = null, Db = {}, Eb = [], Fb = 1, Gb = null, Hb = !0, Q = null, zb = {}, 
   b &= -131713;
   e = Tb({node:e, path:Kb(e), flags:b, seekable:!0, position:0, m:e.m, Hc:[], error:!1});
   e.m.open && e.m.open(e);
-  !n.logReadFiles || b & 1 || (Yb || (Yb = {}), a in Yb || (Yb[a] = 1));
+  !m.logReadFiles || b & 1 || (Yb || (Yb = {}), a in Yb || (Yb[a] = 1));
   return e;
 }, ec = (a, b, c) => {
   if (null === a.Z) {
@@ -2343,7 +2334,7 @@ var Cb = null, Db = {}, Eb = [], Fb = 1, Gb = null, Hb = !0, Q = null, zb = {}, 
     f.seekable = !1;
   }, close:() => {
     c && c.buffer && c.buffer.length && c(10);
-  }, read:(f, g, m, p) => {
+  }, read:(f, g, n, p) => {
     for (var l = 0, u = 0; u < p; u++) {
       try {
         var v = b();
@@ -2357,14 +2348,14 @@ var Cb = null, Db = {}, Eb = [], Fb = 1, Gb = null, Hb = !0, Q = null, zb = {}, 
         break;
       }
       l++;
-      g[m + u] = v;
+      g[n + u] = v;
     }
     l && (f.node.timestamp = Date.now());
     return l;
-  }, write:(f, g, m, p) => {
+  }, write:(f, g, n, p) => {
     for (var l = 0; l < p; l++) {
       try {
-        c(g[m + l]);
+        c(g[n + l]);
       } catch (u) {
         throw new Q(29);
       }
@@ -2526,20 +2517,20 @@ function Sc(a) {
 }
 var Tc = {}, Uc = {};
 function X(a, b, c) {
-  function d(m) {
-    m = c(m);
-    m.length !== a.length && Nc("Mismatched type converter count");
+  function d(n) {
+    n = c(n);
+    n.length !== a.length && Nc("Mismatched type converter count");
     for (var p = 0; p < a.length; ++p) {
-      Vc(a[p], m[p]);
+      Vc(a[p], n[p]);
     }
   }
-  a.forEach(function(m) {
-    Uc[m] = b;
+  a.forEach(function(n) {
+    Uc[n] = b;
   });
   var e = Array(b.length), f = [], g = 0;
-  b.forEach((m, p) => {
-    Bc.hasOwnProperty(m) ? e[p] = Bc[m] : (f.push(m), Tc.hasOwnProperty(m) || (Tc[m] = []), Tc[m].push(() => {
-      e[p] = Bc[m];
+  b.forEach((n, p) => {
+    Bc.hasOwnProperty(n) ? e[p] = Bc[n] : (f.push(n), Tc.hasOwnProperty(n) || (Tc[n] = []), Tc[n].push(() => {
+      e[p] = Bc[n];
       ++g;
       g === f.length && d(e);
     }));
@@ -2596,9 +2587,9 @@ function $c(a, b, c) {
   }
 }
 function ad(a, b, c) {
-  n.hasOwnProperty(a) ? ((void 0 === c || void 0 !== n[a].B && void 0 !== n[a].B[c]) && U(`Cannot register public name '${a}' twice`), $c(n, a, a), n.hasOwnProperty(c) && U(`Cannot register multiple overloads of a function with the same number of arguments (${c})!`), n[a].B[c] = b) : (n[a] = b, void 0 !== c && (n[a].Pc = c));
+  m.hasOwnProperty(a) ? ((void 0 === c || void 0 !== m[a].B && void 0 !== m[a].B[c]) && U(`Cannot register public name '${a}' twice`), $c(m, a, a), m.hasOwnProperty(c) && U(`Cannot register multiple overloads of a function with the same number of arguments (${c})!`), m[a].B[c] = b) : (m[a] = b, void 0 !== c && (m[a].Pc = c));
 }
-function bd(a, b, c, d, e, f, g, m) {
+function bd(a, b, c, d, e, f, g, n) {
   this.name = a;
   this.constructor = b;
   this.O = c;
@@ -2606,7 +2597,7 @@ function bd(a, b, c, d, e, f, g, m) {
   this.A = e;
   this.Zb = f;
   this.oa = g;
-  this.Ub = m;
+  this.Ub = n;
   this.rb = [];
 }
 function cd(a, b, c) {
@@ -2681,8 +2672,8 @@ function hd(a, b, c, d) {
   void 0 !== b.A ? this.toWireType = fd : (this.toWireType = d ? dd : gd, this.K = null);
 }
 function jd(a, b, c) {
-  n.hasOwnProperty(a) || Nc("Replacing nonexistant public symbol");
-  void 0 !== n[a].B && void 0 !== c ? n[a].B[c] = b : (n[a] = b, n[a].ea = c);
+  m.hasOwnProperty(a) || Nc("Replacing nonexistant public symbol");
+  void 0 !== m[a].B && void 0 !== c ? m[a].B[c] = b : (m[a] = b, m[a].ea = c);
 }
 var kd = [], ld = a => {
   var b = kd[a];
@@ -2694,7 +2685,7 @@ var kd = [], ld = a => {
     c.length = 0;
     Object.assign(c, arguments);
     if (a.includes("j")) {
-      var d = n["dynCall_" + a];
+      var d = m["dynCall_" + a];
       d = c && c.length ? d.apply(null, [b].concat(c)) : d.call(null, b);
     } else {
       d = ld(b).apply(null, c);
@@ -2720,10 +2711,10 @@ function od(a, b) {
 function pd(a, b, c, d, e) {
   var f = b.length;
   2 > f && U("argTypes array size mismatch! Must at least get return value and 'this' types!");
-  var g = null !== b[1] && null !== c, m = !1;
+  var g = null !== b[1] && null !== c, n = !1;
   for (c = 1; c < b.length; ++c) {
     if (null !== b[c] && void 0 === b[c].K) {
-      m = !0;
+      n = !0;
       break;
     }
   }
@@ -2741,7 +2732,7 @@ function pd(a, b, c, d, e) {
       u[t] = b[t + 2].toWireType(y, arguments[t]), v.push(u[t]);
     }
     t = d.apply(null, v);
-    if (m) {
+    if (n) {
       Rc(y);
     } else {
       for (var r = g ? 1 : 2; r < b.length; r++) {
@@ -2948,7 +2939,7 @@ var Jd = [], Kd = [], Ld = {}, Nd = () => {
     0 === (B = r(k.getFullYear() - t.getFullYear())) && 0 === (B = r(k.getMonth() - t.getMonth())) && (B = r(k.getDate() - t.getDate()));
     return B;
   }
-  function m(k) {
+  function n(k) {
     switch(k.getDay()) {
       case 0:
         return new Date(k.getFullYear() - 1, 11, 29);
@@ -2978,8 +2969,8 @@ var Jd = [], Kd = [], Ld = {}, Nd = () => {
       }
     }
     r = new Date(k.getFullYear() + 1, 0, 4);
-    t = m(new Date(k.getFullYear(), 0, 4));
-    r = m(r);
+    t = n(new Date(k.getFullYear(), 0, 4));
+    r = n(r);
     return 0 >= g(t, k) ? 0 >= g(r, k) ? k.getFullYear() + 1 : k.getFullYear() : k.getFullYear() - 1;
   }
   var l = F[d + 40 >> 2];
@@ -3097,7 +3088,7 @@ Object.assign(oc.prototype, {get(a) {
   this.M[a] = void 0;
   this.hb.push(a);
 }});
-qc = n.BindingError = class extends Error {
+qc = m.BindingError = class extends Error {
   constructor(a) {
     super(a);
     this.name = "BindingError";
@@ -3105,33 +3096,33 @@ qc = n.BindingError = class extends Error {
 };
 pc.M.push({value:void 0}, {value:null}, {value:!0}, {value:!1},);
 pc.h = pc.M.length;
-n.count_emval_handles = function() {
+m.count_emval_handles = function() {
   for (var a = 0, b = pc.h; b < pc.M.length; ++b) {
     void 0 !== pc.M[b] && ++a;
   }
   return a;
 };
-uc = n.PureVirtualError = tc("PureVirtualError");
+uc = m.PureVirtualError = tc("PureVirtualError");
 for (var Sd = Array(256), Td = 0; 256 > Td; ++Td) {
   Sd[Td] = String.fromCharCode(Td);
 }
 vc = Sd;
-n.getInheritedInstanceCount = function() {
+m.getInheritedInstanceCount = function() {
   return Object.keys(zc).length;
 };
-n.getLiveInheritedInstances = function() {
+m.getLiveInheritedInstances = function() {
   var a = [], b;
   for (b in zc) {
     zc.hasOwnProperty(b) && a.push(zc[b]);
   }
   return a;
 };
-n.flushPendingDeletes = xc;
-n.setDelayFunction = function(a) {
+m.flushPendingDeletes = xc;
+m.setDelayFunction = function(a) {
   yc = a;
   wc.length && yc && yc(xc);
 };
-Mc = n.InternalError = class extends Error {
+Mc = m.InternalError = class extends Error {
   constructor(a) {
     super(a);
     this.name = "InternalError";
@@ -3219,7 +3210,7 @@ hd.prototype.fromWireType = function(a) {
   var e = Jc(c, this.i, d.i);
   return null === e ? b.call(this) : this.va ? Oc(d.i.O, {u:d, o:e, L:this, G:a,}) : Oc(d.i.O, {u:d, o:e,});
 };
-nd = n.UnboundTypeError = tc("UnboundTypeError");
+nd = m.UnboundTypeError = tc("UnboundTypeError");
 var Wd = {__syscall_fcntl64:function(a, b, c) {
   kc = c;
   try {
@@ -3285,15 +3276,15 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
       F[b + 28 >> 2] = P[1];
       F[b + 32 >> 2] = 4096;
       F[b + 36 >> 2] = e.Mb;
-      var g = e.Kb.getTime(), m = e.rc.getTime(), p = e.Pb.getTime();
+      var g = e.Kb.getTime(), n = e.rc.getTime(), p = e.Pb.getTime();
       P = [Math.floor(g / 1000) >>> 0, (N = Math.floor(g / 1000), 1.0 <= +Math.abs(N) ? 0.0 < N ? +Math.floor(N / 4294967296.0) >>> 0 : ~~+Math.ceil((N - +(~~N >>> 0)) / 4294967296.0) >>> 0 : 0)];
       F[b + 40 >> 2] = P[0];
       F[b + 44 >> 2] = P[1];
       G[b + 48 >> 2] = g % 1000 * 1000;
-      P = [Math.floor(m / 1000) >>> 0, (N = Math.floor(m / 1000), 1.0 <= +Math.abs(N) ? 0.0 < N ? +Math.floor(N / 4294967296.0) >>> 0 : ~~+Math.ceil((N - +(~~N >>> 0)) / 4294967296.0) >>> 0 : 0)];
+      P = [Math.floor(n / 1000) >>> 0, (N = Math.floor(n / 1000), 1.0 <= +Math.abs(N) ? 0.0 < N ? +Math.floor(N / 4294967296.0) >>> 0 : ~~+Math.ceil((N - +(~~N >>> 0)) / 4294967296.0) >>> 0 : 0)];
       F[b + 56 >> 2] = P[0];
       F[b + 60 >> 2] = P[1];
-      G[b + 64 >> 2] = m % 1000 * 1000;
+      G[b + 64 >> 2] = n % 1000 * 1000;
       P = [Math.floor(p / 1000) >>> 0, (N = Math.floor(p / 1000), 1.0 <= +Math.abs(N) ? 0.0 < N ? +Math.floor(N / 4294967296.0) >>> 0 : ~~+Math.ceil((N - +(~~N >>> 0)) / 4294967296.0) >>> 0 : 0)];
       F[b + 72 >> 2] = P[0];
       F[b + 76 >> 2] = P[1];
@@ -3398,17 +3389,17 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
     }
     var g = d ? lc() : 0;
     return dc(b, c, g).Z;
-  } catch (m) {
-    if ("undefined" == typeof jc || "ErrnoError" !== m.name) {
-      throw m;
+  } catch (n) {
+    if ("undefined" == typeof jc || "ErrnoError" !== n.name) {
+      throw n;
     }
-    return -m.Y;
+    return -n.Y;
   }
 }, _embind_create_inheriting_constructor:function(a, b, c) {
   a = W(a);
   b = Fc(b, "wrapper");
   c = rc(c);
-  var d = [].slice, e = b.i, f = e.O, g = e.A.O, m = e.A.constructor;
+  var d = [].slice, e = b.i, f = e.O, g = e.A.O, n = e.A.constructor;
   a = nc(a, function() {
     e.A.rb.forEach(function(l) {
       if (this[l] === g[l]) {
@@ -3420,7 +3411,7 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
   });
   f.__construct = function() {
     this === f && U("Pass correct 'this' to __construct");
-    var l = m.implement.apply(void 0, [this].concat(d.call(arguments)));
+    var l = n.implement.apply(void 0, [this].concat(d.call(arguments)));
     Gc(l);
     var u = l.g;
     l.notifyOnDestruction();
@@ -3448,10 +3439,10 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
   delete Qc[a];
   var c = b.Qa, d = b.X, e = b.fb, f = e.map(g => g.cc).concat(e.map(g => g.zc));
   X([a], f, g => {
-    var m = {};
+    var n = {};
     e.forEach((p, l) => {
       var u = g[l], v = p.ac, y = p.bc, k = g[l + e.length], t = p.yc, r = p.Ac;
-      m[p.Xb] = {read:B => u.fromWireType(v(y, B)), write:(B, E) => {
+      n[p.Xb] = {read:B => u.fromWireType(v(y, B)), write:(B, E) => {
         var w = [];
         t(r, B, k.toWireType(w, E));
         Rc(w);
@@ -3459,20 +3450,20 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
     });
     return [{name:b.name, fromWireType:function(p) {
       var l = {}, u;
-      for (u in m) {
-        l[u] = m[u].read(p);
+      for (u in n) {
+        l[u] = n[u].read(p);
       }
       d(p);
       return l;
     }, toWireType:function(p, l) {
-      for (var u in m) {
+      for (var u in n) {
         if (!(u in l)) {
           throw new TypeError(`Missing field: "${u}"`);
         }
       }
       var v = c();
-      for (u in m) {
-        m[u].write(v, l[u]);
+      for (u in n) {
+        n[u].write(v, l[u]);
       }
       null !== p && p.push(d, v);
       return v;
@@ -3484,24 +3475,24 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
   b = W(b);
   Vc(a, {name:b, fromWireType:function(g) {
     return !!g;
-  }, toWireType:function(g, m) {
-    return m ? d : e;
+  }, toWireType:function(g, n) {
+    return n ? d : e;
   }, argPackAdvance:8, readValueFromPointer:function(g) {
     if (1 === c) {
-      var m = A;
+      var n = A;
     } else if (2 === c) {
-      m = Da;
+      n = Da;
     } else if (4 === c) {
-      m = F;
+      n = F;
     } else {
       throw new TypeError("Unknown boolean type size: " + b);
     }
-    return this.fromWireType(m[g >> f]);
+    return this.fromWireType(n[g >> f]);
   }, K:null,});
-}, _embind_register_class:function(a, b, c, d, e, f, g, m, p, l, u, v, y) {
+}, _embind_register_class:function(a, b, c, d, e, f, g, n, p, l, u, v, y) {
   u = W(u);
   f = Y(e, f);
-  m && (m = Y(g, m));
+  n && (n = Y(g, n));
   l && (l = Y(p, l));
   y = Y(v, y);
   var k = mc(u);
@@ -3531,7 +3522,7 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
     });
     var E = Object.create(B, {constructor:{value:t},});
     t.prototype = E;
-    var w = new bd(u, t, E, y, r, f, m, l);
+    var w = new bd(u, t, E, y, r, f, n, l);
     w.A && (void 0 === w.A.pa && (w.A.pa = []), w.A.pa.push(w));
     r = new hd(u, w, !0, !1);
     B = new hd(u + "*", w, !1, !1);
@@ -3541,19 +3532,19 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
     return [r, B, O];
   });
 }, _embind_register_class_class_function:function(a, b, c, d, e, f, g) {
-  var m = rd(c, d);
+  var n = rd(c, d);
   b = W(b);
   f = Y(e, f);
   X([], [a], function(p) {
     function l() {
-      od(`Cannot call ${u} due to unbound types`, m);
+      od(`Cannot call ${u} due to unbound types`, n);
     }
     p = p[0];
     var u = `${p.name}.${b}`;
     b.startsWith("@@") && (b = Symbol[b.substring(2)]);
     var v = p.i.constructor;
     void 0 === v[b] ? (l.ea = c - 1, v[b] = l) : ($c(v, b, u), v[b].B[c - 1] = l);
-    X([], m, function(y) {
+    X([], n, function(y) {
       y = pd(u, [y[0], null].concat(y.slice(1)), null, f, g);
       void 0 === v[b].B ? (y.ea = c - 1, v[b] = y) : v[b].B[c - 1] = y;
       if (p.i.pa) {
@@ -3565,7 +3556,7 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
     });
     return [];
   });
-}, _embind_register_class_class_property:function(a, b, c, d, e, f, g, m) {
+}, _embind_register_class_class_property:function(a, b, c, d, e, f, g, n) {
   b = W(b);
   f = Y(e, f);
   X([], [a], function(p) {
@@ -3573,7 +3564,7 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
     var l = `${p.name}.${b}`, u = {get() {
       od(`Cannot access ${l} due to unbound types`, [c]);
     }, enumerable:!0, configurable:!0};
-    u.set = m ? () => {
+    u.set = n ? () => {
       od(`Cannot access ${l} due to unbound types`, [c]);
     } : () => {
       U(`${l} is a read-only property`);
@@ -3584,9 +3575,9 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
       var y = {get() {
         return v.fromWireType(f(d));
       }, enumerable:!0};
-      m && (m = Y(g, m), y.set = k => {
+      n && (n = Y(g, n), y.set = k => {
         var t = [];
-        m(d, v.toWireType(t, k));
+        n(d, v.toWireType(t, k));
         Rc(t);
       });
       Object.defineProperty(p.i.constructor, b, y);
@@ -3597,24 +3588,24 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
 }, _embind_register_class_constructor:function(a, b, c, d, e, f) {
   var g = rd(b, c);
   e = Y(d, e);
-  X([], [a], function(m) {
-    m = m[0];
-    var p = `constructor ${m.name}`;
-    void 0 === m.i.aa && (m.i.aa = []);
-    if (void 0 !== m.i.aa[b - 1]) {
-      throw new qc(`Cannot register multiple constructors with identical number of parameters (${b - 1}) for class '${m.name}'! Overload resolution is currently only performed using the parameter count, not actual type info!`);
+  X([], [a], function(n) {
+    n = n[0];
+    var p = `constructor ${n.name}`;
+    void 0 === n.i.aa && (n.i.aa = []);
+    if (void 0 !== n.i.aa[b - 1]) {
+      throw new qc(`Cannot register multiple constructors with identical number of parameters (${b - 1}) for class '${n.name}'! Overload resolution is currently only performed using the parameter count, not actual type info!`);
     }
-    m.i.aa[b - 1] = () => {
-      od(`Cannot construct ${m.name} due to unbound types`, g);
+    n.i.aa[b - 1] = () => {
+      od(`Cannot construct ${n.name} due to unbound types`, g);
     };
     X([], g, function(l) {
       l.splice(1, 0, null);
-      m.i.aa[b - 1] = pd(p, l, null, e, f);
+      n.i.aa[b - 1] = pd(p, l, null, e, f);
       return [];
     });
     return [];
   });
-}, _embind_register_class_function:function(a, b, c, d, e, f, g, m) {
+}, _embind_register_class_function:function(a, b, c, d, e, f, g, n) {
   var p = rd(c, d);
   b = W(b);
   f = Y(e, f);
@@ -3625,7 +3616,7 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
     l = l[0];
     var v = `${l.name}.${b}`;
     b.startsWith("@@") && (b = Symbol[b.substring(2)]);
-    m && l.i.rb.push(b);
+    n && l.i.rb.push(b);
     var y = l.i.O, k = y[b];
     void 0 === k || void 0 === k.B && k.className !== l.name && k.ea === c - 2 ? (u.ea = c - 2, u.className = l.name, y[b] = u) : ($c(y, b, v), y[b].B[c - 2] = u);
     X([], p, function(t) {
@@ -3635,7 +3626,7 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
     });
     return [];
   });
-}, _embind_register_class_property:function(a, b, c, d, e, f, g, m, p, l) {
+}, _embind_register_class_property:function(a, b, c, d, e, f, g, n, p, l) {
   b = W(b);
   e = Y(d, e);
   X([], [a], function(u) {
@@ -3655,7 +3646,7 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
         return t.fromWireType(e(f, E));
       }, enumerable:!0};
       if (p) {
-        p = Y(m, p);
+        p = Y(n, p);
         var B = k[1];
         r.set = function(E) {
           var w = sd(this, u, v + " setter"), O = [];
@@ -3712,22 +3703,22 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
   ad(a, function() {
     od(`Cannot call ${a} due to unbound types`, g);
   }, b - 1);
-  X([], g, function(m) {
-    jd(a, pd(a, [m[0], null].concat(m.slice(1)), null, e, f), b - 1);
+  X([], g, function(n) {
+    jd(a, pd(a, [n[0], null].concat(n.slice(1)), null, e, f), b - 1);
     return [];
   });
 }, _embind_register_integer:function(a, b, c, d, e) {
   b = W(b);
   -1 === e && (e = 4294967295);
   e = Wc(c);
-  var f = m => m;
+  var f = n => n;
   if (0 === d) {
     var g = 32 - 8 * c;
-    f = m => m << g >>> g;
+    f = n => n << g >>> g;
   }
-  c = b.includes("unsigned") ? function(m, p) {
+  c = b.includes("unsigned") ? function(n, p) {
     return p >>> 0;
-  } : function(m, p) {
+  } : function(n, p) {
     return p;
   };
   Vc(a, {name:b, fromWireType:f, toWireType:c, argPackAdvance:8, readValueFromPointer:wd(b, e, 0 !== d), K:null,});
@@ -3746,9 +3737,9 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
   Vc(a, {name:b, fromWireType:function(d) {
     var e = G[d >> 2], f = d + 4;
     if (c) {
-      for (var g = f, m = 0; m <= e; ++m) {
-        var p = f + m;
-        if (m == e || 0 == C[p]) {
+      for (var g = f, n = 0; n <= e; ++n) {
+        var p = f + n;
+        if (n == e || 0 == C[p]) {
           g = g ? lb(C, g, p - g) : "";
           if (void 0 === l) {
             var l = g;
@@ -3760,8 +3751,8 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
       }
     } else {
       l = Array(e);
-      for (m = 0; m < e; ++m) {
-        l[m] = String.fromCharCode(C[f + m]);
+      for (n = 0; n < e; ++n) {
+        l[n] = String.fromCharCode(C[f + n]);
       }
       l = l.join("");
     }
@@ -3772,8 +3763,8 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
     var f = "string" == typeof e;
     f || e instanceof Uint8Array || e instanceof Uint8ClampedArray || e instanceof Int8Array || U("Cannot pass non-string to std::string");
     var g = c && f ? nb(e) : e.length;
-    var m = Vd(4 + g + 1), p = m + 4;
-    G[m >> 2] = g;
+    var n = Vd(4 + g + 1), p = n + 4;
+    G[n >> 2] = g;
     if (c && f) {
       ob(e, C, p, g + 1);
     } else {
@@ -3789,8 +3780,8 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
         }
       }
     }
-    null !== d && d.push(Ec, m);
-    return m;
+    null !== d && d.push(Ec, n);
+    return n;
   }, argPackAdvance:8, readValueFromPointer:Sc, K:function(d) {
     Ec(d);
   },});
@@ -3801,14 +3792,14 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
     var e = zd;
     var f = Ad;
     var g = () => Ea;
-    var m = 1;
+    var n = 1;
   } else {
-    4 === b && (d = Bd, e = Cd, f = Dd, g = () => G, m = 2);
+    4 === b && (d = Bd, e = Cd, f = Dd, g = () => G, n = 2);
   }
   Vc(a, {name:c, fromWireType:function(p) {
     for (var l = G[p >> 2], u = g(), v, y = p + 4, k = 0; k <= l; ++k) {
       var t = p + 4 + k * b;
-      if (k == l || 0 == u[t >> m]) {
+      if (k == l || 0 == u[t >> n]) {
         y = d(y, t - y), void 0 === v ? v = y : (v += String.fromCharCode(0), v += y), y = t + b;
       }
     }
@@ -3817,7 +3808,7 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
   }, toWireType:function(p, l) {
     "string" != typeof l && U(`Cannot pass non-string to C++ string type ${c}`);
     var u = f(l), v = Vd(4 + u + b);
-    G[v >> 2] = u >> m;
+    G[v >> 2] = u >> n;
     e(l, v + 4, u + b);
     null !== p && p.push(Ec, v);
     return v;
@@ -3826,8 +3817,8 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
   },});
 }, _embind_register_value_object:function(a, b, c, d, e, f) {
   Qc[a] = {name:W(b), Qa:Y(c, d), X:Y(e, f), fb:[],};
-}, _embind_register_value_object_field:function(a, b, c, d, e, f, g, m, p, l) {
-  Qc[a].fb.push({Xb:W(b), cc:c, ac:Y(d, e), bc:f, zc:g, yc:Y(m, p), Ac:l,});
+}, _embind_register_value_object_field:function(a, b, c, d, e, f, g, n, p, l) {
+  Qc[a].fb.push({Xb:W(b), cc:c, ac:Y(d, e), bc:f, zc:g, yc:Y(n, p), Ac:l,});
 }, _embind_register_void:function(a, b) {
   b = W(b);
   Vc(a, {mc:!0, name:b, argPackAdvance:0, fromWireType:function() {
@@ -3861,11 +3852,11 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
     return e;
   }
   var f = Array(a - 1);
-  e = Hd((g, m, p, l) => {
+  e = Hd((g, n, p, l) => {
     for (var u = 0, v = 0; v < a - 1; ++v) {
       f[v] = c[v + 1].readValueFromPointer(l + u), u += c[v + 1].argPackAdvance;
     }
-    g = g[m].apply(g, f);
+    g = g[n].apply(g, f);
     for (v = 0; v < a - 1; ++v) {
       c[v + 1].Rb && c[v + 1].Rb(f[v]);
     }
@@ -3876,7 +3867,7 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
   return Jd[b] = e;
 }, _emval_get_module_property:function(a) {
   a = Fd(a);
-  return sc(n[a]);
+  return sc(m[a]);
 }, _emval_get_property:function(a, b) {
   a = rc(a);
   b = rc(b);
@@ -3985,9 +3976,9 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
       var e = Rb(a);
       a = b;
       for (var f, g = b = 0; g < c; g++) {
-        var m = G[a >> 2], p = G[a + 4 >> 2];
+        var n = G[a >> 2], p = G[a + 4 >> 2];
         a += 8;
-        var l = e, u = m, v = p, y = f, k = A;
+        var l = e, u = n, v = p, y = f, k = A;
         if (0 > v || 0 > y) {
           throw new Q(28);
         }
@@ -4057,9 +4048,9 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
       var e = Rb(a);
       a = b;
       for (var f, g = b = 0; g < c; g++) {
-        var m = G[a >> 2], p = G[a + 4 >> 2];
+        var n = G[a >> 2], p = G[a + 4 >> 2];
         a += 8;
-        var l = e, u = m, v = p, y = f, k = A;
+        var l = e, u = n, v = p, y = f, k = A;
         if (0 > v || 0 > y) {
           throw new Q(28);
         }
@@ -4111,7 +4102,7 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
     Ka = x.__indirect_function_table;
     Ma.unshift(x.__wasm_call_ctors);
     Pa--;
-    n.monitorRunDependencies && n.monitorRunDependencies(Pa);
+    m.monitorRunDependencies && m.monitorRunDependencies(Pa);
     if (0 == Pa && (null !== Qa && (clearInterval(Qa), Qa = null), Ra)) {
       var d = Ra;
       Ra = null;
@@ -4121,10 +4112,10 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
   }
   var b = {env:Wd, wasi_snapshot_preview1:Wd,};
   Pa++;
-  n.monitorRunDependencies && n.monitorRunDependencies(Pa);
-  if (n.instantiateWasm) {
+  m.monitorRunDependencies && m.monitorRunDependencies(Pa);
+  if (m.instantiateWasm) {
     try {
-      return n.instantiateWasm(b, a);
+      return m.instantiateWasm(b, a);
     } catch (c) {
       ua("Module.instantiateWasm callback failed with error: " + c), ba(c);
     }
@@ -4134,20 +4125,20 @@ var Wd = {__syscall_fcntl64:function(a, b, c) {
   }).catch(ba);
   return {};
 })();
-var Ec = a => (Ec = x.free)(a), Vd = a => (Vd = x.malloc)(a), Za = n._ma_device__on_notification_unlocked = a => (Za = n._ma_device__on_notification_unlocked = x.ma_device__on_notification_unlocked)(a);
-n._ma_malloc_emscripten = (a, b) => (n._ma_malloc_emscripten = x.ma_malloc_emscripten)(a, b);
-n._ma_free_emscripten = (a, b) => (n._ma_free_emscripten = x.ma_free_emscripten)(a, b);
-var $a = n._ma_device_process_pcm_frames_capture__webaudio = (a, b, c) => ($a = n._ma_device_process_pcm_frames_capture__webaudio = x.ma_device_process_pcm_frames_capture__webaudio)(a, b, c), ab = n._ma_device_process_pcm_frames_playback__webaudio = (a, b, c) => (ab = n._ma_device_process_pcm_frames_playback__webaudio = x.ma_device_process_pcm_frames_playback__webaudio)(a, b, c), Ud = () => (Ud = x.__errno_location)(), Dc = a => (Dc = x.__getTypeName)(a);
-n.__embind_initialize_bindings = () => (n.__embind_initialize_bindings = x._embind_initialize_bindings)();
-n.dynCall_iiiji = (a, b, c, d, e, f) => (n.dynCall_iiiji = x.dynCall_iiiji)(a, b, c, d, e, f);
-n.dynCall_iiji = (a, b, c, d, e) => (n.dynCall_iiji = x.dynCall_iiji)(a, b, c, d, e);
-n.dynCall_jiji = (a, b, c, d, e) => (n.dynCall_jiji = x.dynCall_jiji)(a, b, c, d, e);
-n.dynCall_iij = (a, b, c, d) => (n.dynCall_iij = x.dynCall_iij)(a, b, c, d);
-n.dynCall_jii = (a, b, c) => (n.dynCall_jii = x.dynCall_jii)(a, b, c);
-n.dynCall_viijii = (a, b, c, d, e, f, g) => (n.dynCall_viijii = x.dynCall_viijii)(a, b, c, d, e, f, g);
-n.dynCall_iiiiij = (a, b, c, d, e, f, g) => (n.dynCall_iiiiij = x.dynCall_iiiiij)(a, b, c, d, e, f, g);
-n.dynCall_iiiiijj = (a, b, c, d, e, f, g, m, p) => (n.dynCall_iiiiijj = x.dynCall_iiiiijj)(a, b, c, d, e, f, g, m, p);
-n.dynCall_iiiiiijj = (a, b, c, d, e, f, g, m, p, l) => (n.dynCall_iiiiiijj = x.dynCall_iiiiiijj)(a, b, c, d, e, f, g, m, p, l);
+var Ec = a => (Ec = x.free)(a), Vd = a => (Vd = x.malloc)(a), Za = m._ma_device__on_notification_unlocked = a => (Za = m._ma_device__on_notification_unlocked = x.ma_device__on_notification_unlocked)(a);
+m._ma_malloc_emscripten = (a, b) => (m._ma_malloc_emscripten = x.ma_malloc_emscripten)(a, b);
+m._ma_free_emscripten = (a, b) => (m._ma_free_emscripten = x.ma_free_emscripten)(a, b);
+var $a = m._ma_device_process_pcm_frames_capture__webaudio = (a, b, c) => ($a = m._ma_device_process_pcm_frames_capture__webaudio = x.ma_device_process_pcm_frames_capture__webaudio)(a, b, c), ab = m._ma_device_process_pcm_frames_playback__webaudio = (a, b, c) => (ab = m._ma_device_process_pcm_frames_playback__webaudio = x.ma_device_process_pcm_frames_playback__webaudio)(a, b, c), Ud = () => (Ud = x.__errno_location)(), Dc = a => (Dc = x.__getTypeName)(a);
+m.__embind_initialize_bindings = () => (m.__embind_initialize_bindings = x._embind_initialize_bindings)();
+m.dynCall_iiiji = (a, b, c, d, e, f) => (m.dynCall_iiiji = x.dynCall_iiiji)(a, b, c, d, e, f);
+m.dynCall_iiji = (a, b, c, d, e) => (m.dynCall_iiji = x.dynCall_iiji)(a, b, c, d, e);
+m.dynCall_jiji = (a, b, c, d, e) => (m.dynCall_jiji = x.dynCall_jiji)(a, b, c, d, e);
+m.dynCall_iij = (a, b, c, d) => (m.dynCall_iij = x.dynCall_iij)(a, b, c, d);
+m.dynCall_jii = (a, b, c) => (m.dynCall_jii = x.dynCall_jii)(a, b, c);
+m.dynCall_viijii = (a, b, c, d, e, f, g) => (m.dynCall_viijii = x.dynCall_viijii)(a, b, c, d, e, f, g);
+m.dynCall_iiiiij = (a, b, c, d, e, f, g) => (m.dynCall_iiiiij = x.dynCall_iiiiij)(a, b, c, d, e, f, g);
+m.dynCall_iiiiijj = (a, b, c, d, e, f, g, n, p) => (m.dynCall_iiiiijj = x.dynCall_iiiiijj)(a, b, c, d, e, f, g, n, p);
+m.dynCall_iiiiiijj = (a, b, c, d, e, f, g, n, p, l) => (m.dynCall_iiiiiijj = x.dynCall_iiiiiijj)(a, b, c, d, e, f, g, n, p, l);
 var Xd;
 Ra = function Yd() {
   Xd || Zd();
@@ -4155,17 +4146,17 @@ Ra = function Yd() {
 };
 function Zd() {
   function a() {
-    if (!Xd && (Xd = !0, n.calledRun = !0, !Ba)) {
-      n.noFSInit || gc || (gc = !0, fc(), n.stdin = n.stdin, n.stdout = n.stdout, n.stderr = n.stderr, n.stdin ? ic("stdin", n.stdin) : Xb("/dev/tty", "/dev/stdin"), n.stdout ? ic("stdout", null, n.stdout) : Xb("/dev/tty", "/dev/stdout"), n.stderr ? ic("stderr", null, n.stderr) : Xb("/dev/tty1", "/dev/stderr"), dc("/dev/stdin", 0), dc("/dev/stdout", 1), dc("/dev/stderr", 1));
+    if (!Xd && (Xd = !0, m.calledRun = !0, !Ba)) {
+      m.noFSInit || gc || (gc = !0, fc(), m.stdin = m.stdin, m.stdout = m.stdout, m.stderr = m.stderr, m.stdin ? ic("stdin", m.stdin) : Xb("/dev/tty", "/dev/stdin"), m.stdout ? ic("stdout", null, m.stdout) : Xb("/dev/tty", "/dev/stdout"), m.stderr ? ic("stderr", null, m.stderr) : Xb("/dev/tty1", "/dev/stderr"), dc("/dev/stdin", 0), dc("/dev/stdout", 1), dc("/dev/stderr", 1));
       Hb = !1;
       cb(Ma);
-      aa(n);
-      if (n.onRuntimeInitialized) {
-        n.onRuntimeInitialized();
+      aa(m);
+      if (m.onRuntimeInitialized) {
+        m.onRuntimeInitialized();
       }
-      if (n.postRun) {
-        for ("function" == typeof n.postRun && (n.postRun = [n.postRun]); n.postRun.length;) {
-          var b = n.postRun.shift();
+      if (m.postRun) {
+        for ("function" == typeof m.postRun && (m.postRun = [m.postRun]); m.postRun.length;) {
+          var b = m.postRun.shift();
           Na.unshift(b);
         }
       }
@@ -4173,23 +4164,23 @@ function Zd() {
     }
   }
   if (!(0 < Pa)) {
-    if (n.preRun) {
-      for ("function" == typeof n.preRun && (n.preRun = [n.preRun]); n.preRun.length;) {
+    if (m.preRun) {
+      for ("function" == typeof m.preRun && (m.preRun = [m.preRun]); m.preRun.length;) {
         Oa();
       }
     }
     cb(La);
-    0 < Pa || (n.setStatus ? (n.setStatus("Running..."), setTimeout(function() {
+    0 < Pa || (m.setStatus ? (m.setStatus("Running..."), setTimeout(function() {
       setTimeout(function() {
-        n.setStatus("");
+        m.setStatus("");
       }, 1);
       a();
     }, 1)) : a());
   }
 }
-if (n.preInit) {
-  for ("function" == typeof n.preInit && (n.preInit = [n.preInit]); 0 < n.preInit.length;) {
-    n.preInit.pop()();
+if (m.preInit) {
+  for ("function" == typeof m.preInit && (m.preInit = [m.preInit]); 0 < m.preInit.length;) {
+    m.preInit.pop()();
   }
 }
 Zd();
@@ -4207,7 +4198,7 @@ Zd();
 /* 2 */
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"name":"@rive-app/canvas","version":"2.15.2","description":"Rive\'s canvas based web api.","main":"rive.js","homepage":"https://rive.app","repository":{"type":"git","url":"https://github.com/rive-app/rive-wasm/tree/master/js"},"keywords":["rive","animation"],"author":"Rive","contributors":["Luigi Rosso <luigi@rive.app> (https://rive.app)","Maxwell Talbot <max@rive.app> (https://rive.app)","Arthur Vivian <arthur@rive.app> (https://rive.app)","Umberto Sonnino <umberto@rive.app> (https://rive.app)","Matthew Sullivan <matt.j.sullivan@gmail.com> (mailto:matt.j.sullivan@gmail.com)"],"license":"MIT","files":["rive.js","rive.js.map","rive.wasm","rive.d.ts","rive_advanced.mjs.d.ts"],"typings":"rive.d.ts","dependencies":{},"browser":{"fs":false,"path":false}}');
+module.exports = JSON.parse('{"name":"@rive-app/canvas","version":"2.14.3","description":"Rive\'s canvas based web api.","main":"rive.js","homepage":"https://rive.app","repository":{"type":"git","url":"https://github.com/rive-app/rive-wasm/tree/master/js"},"keywords":["rive","animation"],"author":"Rive","contributors":["Luigi Rosso <luigi@rive.app> (https://rive.app)","Maxwell Talbot <max@rive.app> (https://rive.app)","Arthur Vivian <arthur@rive.app> (https://rive.app)","Umberto Sonnino <umberto@rive.app> (https://rive.app)","Matthew Sullivan <matt.j.sullivan@gmail.com> (mailto:matt.j.sullivan@gmail.com)"],"license":"MIT","files":["rive.js","rive.js.map","rive.wasm","rive.d.ts","rive_advanced.mjs.d.ts"],"typings":"rive.d.ts","dependencies":{},"browser":{"fs":false,"path":false}}');
 
 /***/ }),
 /* 3 */
@@ -4505,7 +4496,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   StateMachineInput: () => (/* binding */ StateMachineInput),
 /* harmony export */   StateMachineInputType: () => (/* binding */ StateMachineInputType),
 /* harmony export */   Testing: () => (/* binding */ Testing),
-/* harmony export */   decodeAudio: () => (/* binding */ decodeAudio),
 /* harmony export */   decodeFont: () => (/* binding */ decodeFont),
 /* harmony export */   decodeImage: () => (/* binding */ decodeImage)
 /* harmony export */ });
@@ -5630,60 +5620,6 @@ var AudioManager = /** @class */ (function (_super) {
     return AudioManager;
 }(EventManager));
 var audioManager = new AudioManager();
-var FakeResizeObserver = /** @class */ (function () {
-    function FakeResizeObserver() {
-    }
-    FakeResizeObserver.prototype.observe = function () { };
-    FakeResizeObserver.prototype.unobserve = function () { };
-    FakeResizeObserver.prototype.disconnect = function () { };
-    return FakeResizeObserver;
-}());
-var MyResizeObserver = globalThis.ResizeObserver || FakeResizeObserver;
-/**
- * This class takes care of any observers that will be attached to an animation.
- * It should be treated as a singleton because observers are much more performant
- * when used for observing multiple elements by a single instance.
- */
-var ObjectObservers = /** @class */ (function () {
-    function ObjectObservers() {
-        var _this = this;
-        this._elementsMap = new Map();
-        /**
-         * Resize observers trigger both when the element changes its size and also when the
-         * element is added or removed from the document.
-         */
-        this._onObservedEntry = function (entry) {
-            var observed = _this._elementsMap.get(entry.target);
-            if (observed !== null) {
-                observed.onResize(entry.target.clientWidth == 0 || entry.target.clientHeight == 0);
-            }
-            else {
-                _this._resizeObserver.unobserve(entry.target);
-            }
-        };
-        this._onObserved = function (entries) {
-            entries.forEach(_this._onObservedEntry);
-        };
-        this._resizeObserver = new MyResizeObserver(this._onObserved);
-    }
-    // Adds an observable element
-    ObjectObservers.prototype.add = function (element, onResize) {
-        var observed = {
-            onResize: onResize,
-            element: element,
-        };
-        this._elementsMap.set(element, observed);
-        this._resizeObserver.observe(element);
-        return observed;
-    };
-    // Removes an observable element
-    ObjectObservers.prototype.remove = function (observed) {
-        this._resizeObserver.unobserve(observed.element);
-        this._elementsMap.delete(observed.element);
-    };
-    return ObjectObservers;
-}());
-var observers = new ObjectObservers();
 var Rive = /** @class */ (function () {
     function Rive(params) {
         var _this = this;
@@ -5708,28 +5644,17 @@ var Rive = /** @class */ (function () {
         this.enableRiveAssetCDN = true;
         // Keep a local value of the set volume to update it asynchronously
         this._volume = 1;
-        // Whether the canvas element's size is 0
-        this._hasZeroSize = false;
         // Durations to generate a frame for the last second. Used for performance profiling.
         this.durations = [];
         this.frameTimes = [];
         this.frameCount = 0;
         this.isTouchScrollEnabled = false;
-        this.onCanvasResize = function (hasZeroSize) {
-            _this._hasZeroSize = hasZeroSize;
-            if (!_this._layout.maxX || !_this._layout.maxY) {
-                _this.resizeToCanvas();
-            }
-        };
         /**
          * Used be draw to track when a second of active rendering time has passed.
          * Used for debugging purposes
          */
         this.renderSecondTimer = 0;
         this.canvas = params.canvas;
-        if (params.canvas.constructor === HTMLCanvasElement) {
-            this._observed = observers.add(this.canvas, this.onCanvasResize);
-        }
         this.src = params.src;
         this.buffer = params.buffer;
         this.layout = (_a = params.layout) !== null && _a !== void 0 ? _a : new Layout();
@@ -5782,6 +5707,14 @@ var Rive = /** @class */ (function () {
             this.assetLoader = params.assetLoader;
         // Hook up the task queue
         this.taskQueue = new TaskQueueManager(this.eventManager);
+        // Initialize audio
+        if (audioManager.status == SystemAudioStatus.UNAVAILABLE) {
+            audioManager.add({
+                type: EventType.AudioStatusChange,
+                callback: function () { return _this.onSystemAudioChanged(); },
+            });
+            audioManager.establishAudio();
+        }
         this.init({
             src: this.src,
             buffer: this.buffer,
@@ -5877,24 +5810,6 @@ var Rive = /** @class */ (function () {
             this.eventCleanup();
         }
     };
-    /**
-     * If the instance has audio and the system audio is not ready
-     * we hook the instance to the audio manager
-     */
-    Rive.prototype.initializeAudio = function () {
-        var _this = this;
-        var _a;
-        // Initialize audio if needed
-        if (audioManager.status == SystemAudioStatus.UNAVAILABLE) {
-            if ((_a = this.artboard) === null || _a === void 0 ? void 0 : _a.hasAudio) {
-                audioManager.add({
-                    type: EventType.AudioStatusChange,
-                    callback: function () { return _this.onSystemAudioChanged(); },
-                });
-                audioManager.establishAudio();
-            }
-        }
-    };
     // Initializes runtime with Rive data and preps for playing
     Rive.prototype.initData = function (artboardName, animationNames, stateMachineNames, autoplay) {
         var _a;
@@ -5924,8 +5839,6 @@ var Rive = /** @class */ (function () {
                         if (this.file) {
                             // Initialize and draw frame
                             this.initArtboard(artboardName, animationNames, stateMachineNames, autoplay);
-                            // Check for audio
-                            this.initializeAudio();
                             // Everything's set up, emit a load event
                             this.loaded = true;
                             this.eventManager.fire({
@@ -6003,9 +5916,9 @@ var Rive = /** @class */ (function () {
      * @param time the time at which to render a frame
      */
     Rive.prototype.draw = function (time, onSecond) {
+        var before = performance.now();
         // Clear the frameRequestId, as we're now rendering a fresh frame
         this.frameRequestId = null;
-        var before = performance.now();
         // On the first pass, make sure lastTime has a valid value
         if (!this.lastRenderTime) {
             this.lastRenderTime = time;
@@ -6084,10 +5997,7 @@ var Rive = /** @class */ (function () {
         renderer.save();
         // Update the renderer alignment if necessary
         this.alignRenderer();
-        // Do not draw on 0 canvas size
-        if (!this._hasZeroSize) {
-            this.artboard.draw(renderer);
-        }
+        this.artboard.draw(renderer);
         renderer.restore();
         renderer.flush();
         // Check for any animations that looped
@@ -6167,10 +6077,6 @@ var Rive = /** @class */ (function () {
         this.stopRendering();
         // Clean up any artboard, animation or state machine instances.
         this.cleanupInstances();
-        // Remove from observer
-        if (this._observed !== null) {
-            observers.remove(this._observed);
-        }
         // Delete the rive file
         (_a = this.file) === null || _a === void 0 ? void 0 : _a.delete();
         this.file = null;
@@ -6765,22 +6671,9 @@ var Testing = {
 // #endregion
 // #region asset loaders
 /**
- * Decodes bytes into an audio asset.
- *
- * Be sure to call `.unref()` on the audio once it is no longer needed. This
- * allows the engine to clean it up when it is not used by any more animations.
- */
-var decodeAudio = function (bytes) {
-    return new Promise(function (resolve) {
-        return RuntimeLoader.getInstance(function (rive) {
-            rive.decodeAudio(bytes, resolve);
-        });
-    });
-};
-/**
  * Decodes bytes into an image.
  *
- * Be sure to call `.unref()` on the image once it is no longer needed. This
+ * Be sure to call `.dispose()` on the image once it is no longer needed. This
  * allows the engine to clean it up when it is not used by any more animations.
  */
 var decodeImage = function (bytes) {
@@ -6793,7 +6686,7 @@ var decodeImage = function (bytes) {
 /**
  * Decodes bytes into a font.
  *
- * Be sure to call `.unref()` on the font once it is no longer needed. This
+ * Be sure to call `.dispose()` on the font once it is no longer needed. This
  * allows the engine to clean it up when it is not used by any more animations.
  */
 var decodeFont = function (bytes) {

@@ -1,10 +1,5 @@
 import * as rive from "../node_modules/@rive-app/canvas";
-// import riveWASMResource from '../node_modules/@rive-app/canvas/rive.wasm';
-
 import { UpdateDisplayName, playerNameInput, nameFromDatabase } from "./playfabManager";
-
-// rive.RuntimeLoader.setWasmUrl(riveWASMResource);
-
 let currentQuestion = 0;
 let userChoices = [];
 let questionsData;
@@ -13,7 +8,6 @@ let ctx = canvas.getContext('2d');
 const aspectRatio = 9 / 16;
 let screenshotButtonVisible = false;
 let allAnswered = false;
-let riveAnimation;
 let isLoading = true;
 export let playerName = null;
 let riveAnimLoaded = false;

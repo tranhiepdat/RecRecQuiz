@@ -66,7 +66,6 @@ var UpdateDisplayNameCallback = function (result, error){
     if (result !== null) {
         console.log("name update success");
         console.log(result.data.DisplayName);
-        playerName = result.data.DisplayName;
         nameFromDatabase = result.data.DisplayName;
         playerNameInput = true;
     } else if (error !== null) {
