@@ -72,5 +72,29 @@ var UpdateDisplayNameCallback = function (result, error){
         console.log(PlayFab.GenerateErrorReport(error));
     }
 }
+
+function SendUserPersonality(personalityType) {
+    const request = {
+        Statistics: [
+            {
+                StatisticName: "Personalities",
+                Value: personalityType
+            }
+        ]
+    };
+
+    PlayFabClientSDK.UpdatePlayerStatistics(request, SendUserPersonaltyCallback);
+}
+
+var SendUserPersonaltyCallback = function (result, error){
+    if (result !== null) {
+        console.log("user personality sent");
+        console.log(result);
+    } else if (error !== null) {
+        console.log(PlayFab.GenerateErrorReport(error));
+    }
+}
+
 Login();
 exports.UpdateDisplayName = UpdateDisplayName;
+exports.SendUserPersonality = SendUserPersonality;

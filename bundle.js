@@ -72,8 +72,26 @@ var UpdateDisplayNameCallback = function UpdateDisplayNameCallback(result, error
     console.log(PlayFab.GenerateErrorReport(error));
   }
 };
+function SendUserPersonality(personalityType) {
+  var request = {
+    Statistics: [{
+      StatisticName: "Personalities",
+      Value: personalityType
+    }]
+  };
+  PlayFabClientSDK.UpdatePlayerStatistics(request, SendUserPersonaltyCallback);
+}
+var SendUserPersonaltyCallback = function SendUserPersonaltyCallback(result, error) {
+  if (result !== null) {
+    console.log("user personality sent");
+    console.log(result);
+  } else if (error !== null) {
+    console.log(PlayFab.GenerateErrorReport(error));
+  }
+};
 Login();
 exports.UpdateDisplayName = UpdateDisplayName;
+exports.SendUserPersonality = SendUserPersonality;
 
 },{"./script":2}],2:[function(require,module,exports){
 "use strict";
@@ -480,6 +498,7 @@ function showResult(personalityType) {
   // Clear the canvas
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  (0, _playfabManager.SendUserPersonality)(personalityType);
 
   // Draw the personality result text
   var resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
