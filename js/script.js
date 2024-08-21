@@ -459,7 +459,7 @@ function showResult(personalityType) {
 
     // Draw the regular text for 'Your Personality Type: ' + result
     ctx.fillText('Your Personality Type: ' + result, resultTextX, resultTextY);
-    ctx.fillText(CalcPersonaRate(personalityType) + 'people also this type', statTextX, statTextY);
+    ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', statTextX, statTextY);
 
     // Draw the screenshot button
     screenshotButtonVisible = true;
