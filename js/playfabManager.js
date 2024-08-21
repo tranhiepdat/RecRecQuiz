@@ -104,7 +104,7 @@ function GetUserStatistics(){
     PlayFabClientSDK.GetLeaderboard(request, GetUserStatisticsCallback);
 }
 
-var leaderboard;
+const leaderboard = null;
 
 var GetUserStatisticsCallback = function (result, error){
     if (result !== null){
