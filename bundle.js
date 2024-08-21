@@ -89,6 +89,7 @@ var SendUserPersonaltyCallback = function SendUserPersonaltyCallback(result, err
     console.log(PlayFab.GenerateErrorReport(error));
   }
 };
+var leaderboard;
 function GetUserStatistics() {
   var request = {
     StatisticName: "Personalities",
@@ -96,7 +97,6 @@ function GetUserStatistics() {
   };
   PlayFabClientSDK.GetLeaderboard(request, GetUserStatisticsCallback);
 }
-var leaderboard = null;
 var GetUserStatisticsCallback = function GetUserStatisticsCallback(result, error) {
   if (result !== null) {
     console.log("get statistic success");
@@ -106,8 +106,7 @@ var GetUserStatisticsCallback = function GetUserStatisticsCallback(result, error
     console.log(PlayFab.GenerateErrorReport(error));
   }
 };
-function CalcPersonaPercentage(userPersonalityType) {
-  GetUserStatistics();
+function CalcPersonaRate(userPersonalityType) {
   var count = 0;
   if (leaderboard !== null) {
     console.log(leaderboard);
@@ -120,7 +119,8 @@ function CalcPersonaPercentage(userPersonalityType) {
   return count * 100 / leaderboard.length;
 }
 Login();
-exports.CalcPersonaPercentage = CalcPersonaPercentage;
+exports.GetUserStatistics = GetUserStatistics;
+exports.CalcPersonaRate = CalcPersonaRate;
 exports.UpdateDisplayName = UpdateDisplayName;
 exports.SendUserPersonality = SendUserPersonality;
 
@@ -530,6 +530,7 @@ function showResult(personalityType) {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   (0, _playfabManager.SendUserPersonality)(personalityType);
+  (0, _playfabManager.GetUserStatistics)();
   // Draw the personality result text
   var resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
   ctx.font = "".concat(resultFontSize, "px Arial");

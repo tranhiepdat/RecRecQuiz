@@ -95,6 +95,8 @@ var SendUserPersonaltyCallback = function (result, error){
     }
 }
 
+let leaderboard;
+
 function GetUserStatistics(){
     const request = {
         StatisticName: "Personalities",
@@ -103,8 +105,6 @@ function GetUserStatistics(){
 
     PlayFabClientSDK.GetLeaderboard(request, GetUserStatisticsCallback);
 }
-
-let leaderboard = null;
 
 var GetUserStatisticsCallback = function (result, error){
     if (result !== null){
@@ -116,8 +116,7 @@ var GetUserStatisticsCallback = function (result, error){
     }
 }
 
-function CalcPersonaPercentage(userPersonalityType){
-    GetUserStatistics();
+function CalcPersonaRate(userPersonalityType){
     var count = 0;
     if (leaderboard !== null){
         console.log(leaderboard);
@@ -131,6 +130,8 @@ function CalcPersonaPercentage(userPersonalityType){
 }
 
 Login();
-exports.CalcPersonaPercentage = CalcPersonaPercentage;
+
+exports.GetUserStatistics = GetUserStatistics;
+exports.CalcPersonaRate = CalcPersonaRate;
 exports.UpdateDisplayName = UpdateDisplayName;
 exports.SendUserPersonality = SendUserPersonality;

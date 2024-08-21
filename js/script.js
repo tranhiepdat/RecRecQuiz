@@ -1,5 +1,5 @@
 import * as rive from "../node_modules/@rive-app/canvas";
-import { UpdateDisplayName, SendUserPersonality, CalcPersonaPercentage, playerNameInput, nameFromDatabase } from "./playfabManager";
+import { UpdateDisplayName, SendUserPersonality, CalcPersonaPercentage, GetUserStatistics, playerNameInput, nameFromDatabase } from "./playfabManager";
 let currentQuestion = 0;
 let userChoices = [];
 let questionsData;
@@ -388,6 +388,7 @@ function showResult(personalityType) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     SendUserPersonality(personalityType);
+    GetUserStatistics();
     // Draw the personality result text
     const resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
     ctx.font = `${resultFontSize}px Arial`;
