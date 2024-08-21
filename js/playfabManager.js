@@ -98,7 +98,7 @@ var SendUserPersonaltyCallback = function (result, error){
 function GetUserStatistics(){
     const request = {
         StatisticName: "Personalities",
-        StartPosition: 0
+        StartPosition: 0,
     };
 
     PlayFabClientSDK.GetLeaderboard(request, GetUserStatisticsCallback);
@@ -107,8 +107,7 @@ function GetUserStatistics(){
 var GetUserStatisticsCallback = function (result, error){
     if (result !== null){
         console.log("get statistic success");
-        console.log(result.Leaderboard);
-        return result.Leaderboard;
+        console.log(result);
     } else if (error !== null){
         console.log(PlayFab.GenerateErrorReport(error));
     }
