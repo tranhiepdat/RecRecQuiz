@@ -1,5 +1,5 @@
 import * as rive from "../node_modules/@rive-app/canvas";
-import { UpdateDisplayName, SendUserPersonality, CalcPersonaPercentage, GetUserStatistics, playerNameInput, nameFromDatabase } from "./playfabManager";
+import { UpdateDisplayName, SendUserPersonality, CalcPersonaRate, GetUserStatistics, playerNameInput, nameFromDatabase } from "./playfabManager";
 let currentQuestion = 0;
 let userChoices = [];
 let questionsData;
@@ -459,7 +459,7 @@ function showResult(personalityType) {
 
     // Draw the regular text for 'Your Personality Type: ' + result
     ctx.fillText('Your Personality Type: ' + result, resultTextX, resultTextY);
-    ctx.fillText(CalcPersonaPercentage(personalityType) + 'people also this type', statTextX, statTextY);
+    ctx.fillText(CalcPersonaRate(personalityType) + 'people also this type', statTextX, statTextY);
 
     // Draw the screenshot button
     screenshotButtonVisible = true;
