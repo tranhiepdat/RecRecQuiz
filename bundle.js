@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.playerNameInput = exports.nameFromDatabase = void 0;
 var _script = require("./script");
-function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
 var playerNameInput = exports.playerNameInput = false;
 var nameFromDatabase = exports.nameFromDatabase = null;
 function generateDeviceUUID() {
@@ -102,7 +101,7 @@ var GetUserStatisticsCallback = function GetUserStatisticsCallback(result, error
   if (result !== null) {
     console.log("get statistic success");
     console.log(result.data.Leaderboard);
-    result.data.Leaderboard, _readOnlyError("leaderboard");
+    leaderboard = result.data.Leaderboard;
   } else if (error !== null) {
     console.log(PlayFab.GenerateErrorReport(error));
   }
