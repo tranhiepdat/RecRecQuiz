@@ -117,7 +117,9 @@ function CalcPersonaPercentage(userPersonalityType){
     GetUserStatistics();
     var count = 0;
     if (GetUserStatisticsCallback !== null){
-        GetUserStatisticsCallback.forEach(item => {
+        console.log(GetUserStatisticsCallback);
+        var leaderboard = GetUserStatisticsCallback;
+        leaderboard.forEach(item => {
             if (item.StatValue == userPersonalityType){
                 count++;
             }
