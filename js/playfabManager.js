@@ -103,11 +103,14 @@ function GetUserStatistics(){
 
     PlayFabClientSDK.GetLeaderboard(request, GetUserStatisticsCallback);
 }
+
+var leaderboard;
+
 var GetUserStatisticsCallback = function (result, error){
     if (result !== null){
         console.log("get statistic success");
         console.log(result.data.Leaderboard);
-        return result.data.Leaderboard;
+        leaderboard = result.data.Leaderboard;
     } else if (error !== null){
         console.log(PlayFab.GenerateErrorReport(error));
     }
@@ -116,16 +119,15 @@ var GetUserStatisticsCallback = function (result, error){
 function CalcPersonaPercentage(userPersonalityType){
     GetUserStatistics();
     var count = 0;
-    if (GetUserStatisticsCallback !== null){
-        console.log(GetUserStatisticsCallback);
-        var leaderboard = GetUserStatisticsCallback;
+    if (leaderboard !== null){
+        console.log(leaderboard);
         leaderboard.forEach(item => {
             if (item.StatValue == userPersonalityType){
                 count++;
             }
         });
     }
-    return count*100/GetUserStatisticsCallback.length;
+    return count*100/leaderboard.length;
 }
 
 Login();
