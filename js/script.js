@@ -184,6 +184,7 @@ function RemoveNameForm() {
     if (playerNameInput && inputField && submitButton) {
         hideInputField();
         displayQuestion(currentQuestion);
+        GetUserStatistics();
         canvas.disabled = false;
         clearInterval(removeNameFormInterval); // Clear the interval
     }
@@ -388,7 +389,6 @@ function showResult(personalityType) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     SendUserPersonality(personalityType);
-    GetUserStatistics();
     // Draw the personality result text
     const resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
     ctx.font = `${resultFontSize}px Arial`;

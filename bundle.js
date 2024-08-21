@@ -307,6 +307,7 @@ function RemoveNameForm() {
   if (_playfabManager.playerNameInput && inputField && submitButton) {
     hideInputField();
     displayQuestion(currentQuestion);
+    (0, _playfabManager.GetUserStatistics)();
     canvas.disabled = false;
     clearInterval(removeNameFormInterval); // Clear the interval
   }
@@ -530,7 +531,6 @@ function showResult(personalityType) {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   (0, _playfabManager.SendUserPersonality)(personalityType);
-  (0, _playfabManager.GetUserStatistics)();
   // Draw the personality result text
   var resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
   ctx.font = "".concat(resultFontSize, "px Arial");
