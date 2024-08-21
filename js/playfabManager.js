@@ -95,6 +95,39 @@ var SendUserPersonaltyCallback = function (result, error){
     }
 }
 
+function GetUserStatistics(){
+    const request = {
+        StatisticName: "Personalities",
+        StartPosition: 0
+    };
+
+    PlayFabClientSDK.GetLeaderBoard(request, GetUserStatisticsCallback);
+}
+
+var GetUserStatisticsCallback = function (result, error){
+    if (result !== null){
+        console.log("get statistic success");
+        console.log(result.Leaderboard);
+        return result.Leaderboard;
+    } else if (error !== null){
+        console.log(PlayFab.GenerateErrorReport(error));
+    }
+}
+
+function CalcPersonaPercentage(userPersonalityType){
+    GetUserStatistics();
+    var count = 0;
+    if (GetUserStatisticsCallback !== null){
+        GetUserStatisticsCallback.forEach(item => {
+            if (item.StatValue == userPersonalityType){
+                count++;
+            }
+        });
+    }
+    return count*100/GetUserStatisticsCallback.length;
+}
+
 Login();
+exports.CalcPersonaPercentage = CalcPersonaPercentage;
 exports.UpdateDisplayName = UpdateDisplayName;
 exports.SendUserPersonality = SendUserPersonality;

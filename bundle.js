@@ -89,7 +89,36 @@ var SendUserPersonaltyCallback = function SendUserPersonaltyCallback(result, err
     console.log(PlayFab.GenerateErrorReport(error));
   }
 };
+function GetUserStatistics() {
+  var request = {
+    StatisticName: "Personalities",
+    StartPosition: 0
+  };
+  PlayFabClientSDK.GetLeaderBoard(request, GetUserStatisticsCallback);
+}
+var GetUserStatisticsCallback = function GetUserStatisticsCallback(result, error) {
+  if (result !== null) {
+    console.log("get statistic success");
+    console.log(result.Leaderboard);
+    return result.Leaderboard;
+  } else if (error !== null) {
+    console.log(PlayFab.GenerateErrorReport(error));
+  }
+};
+function CalcPersonaPercentage(userPersonalityType) {
+  GetUserStatistics();
+  var count = 0;
+  if (GetUserStatisticsCallback !== null) {
+    GetUserStatisticsCallback.forEach(function (item) {
+      if (item.StatValue == userPersonalityType) {
+        count++;
+      }
+    });
+  }
+  return count * 100 / GetUserStatisticsCallback.length;
+}
 Login();
+exports.CalcPersonaPercentage = CalcPersonaPercentage;
 exports.UpdateDisplayName = UpdateDisplayName;
 exports.SendUserPersonality = SendUserPersonality;
 
@@ -499,7 +528,6 @@ function showResult(personalityType) {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   (0, _playfabManager.SendUserPersonality)(personalityType);
-
   // Draw the personality result text
   var resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
   ctx.font = "".concat(resultFontSize, "px Arial");
@@ -550,6 +578,8 @@ function showResult(personalityType) {
   }
 
   // Draw the result text on the canvas
+  var statTextX = canvas.width * 0.75;
+  var statTextY = canvas.height - canvas.height * 0.07;
   var resultTextX = canvas.width * 0.75;
   var resultTextY = canvas.height - canvas.height * 0.09;
   var nameTextX = canvas.width * 0.75;
@@ -567,6 +597,7 @@ function showResult(personalityType) {
 
   // Draw the regular text for 'Your Personality Type: ' + result
   ctx.fillText('Your Personality Type: ' + result, resultTextX, resultTextY);
+  ctx.fillText((0, _playfabManager.CalcPersonaPercentage)(personalityType) + 'people also this type', statTextX, statTextY);
 
   // Draw the screenshot button
   screenshotButtonVisible = true;
