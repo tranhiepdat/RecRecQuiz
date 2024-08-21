@@ -94,7 +94,7 @@ function GetUserStatistics() {
     StatisticName: "Personalities",
     StartPosition: 0
   };
-  PlayFabClientSDK.GetLeaderBoard(request, GetUserStatisticsCallback);
+  PlayFabClientSDK.GetLeaderboard(request, GetUserStatisticsCallback);
 }
 var GetUserStatisticsCallback = function GetUserStatisticsCallback(result, error) {
   if (result !== null) {
