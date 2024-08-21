@@ -103,11 +103,11 @@ function GetUserStatistics(){
 
     PlayFabClientSDK.GetLeaderboard(request, GetUserStatisticsCallback);
 }
-
 var GetUserStatisticsCallback = function (result, error){
     if (result !== null){
         console.log("get statistic success");
-        console.log(result);
+        console.log(result.data.Leaderboard);
+        return result.data.Leaderboard;
     } else if (error !== null){
         console.log(PlayFab.GenerateErrorReport(error));
     }

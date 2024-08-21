@@ -99,7 +99,8 @@ function GetUserStatistics() {
 var GetUserStatisticsCallback = function GetUserStatisticsCallback(result, error) {
   if (result !== null) {
     console.log("get statistic success");
-    console.log(result);
+    console.log(result.data.Leaderboard);
+    return result.data.Leaderboard;
   } else if (error !== null) {
     console.log(PlayFab.GenerateErrorReport(error));
   }
