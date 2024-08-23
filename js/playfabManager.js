@@ -126,7 +126,7 @@ function CalcPersonaRate(userPersonalityType){
             }
         });
     }
-    return count*100/leaderboard.length;
+    return Math.round(count*100/leaderboard.length);
 }
 
 Login();
