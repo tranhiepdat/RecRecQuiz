@@ -292,7 +292,7 @@ function handleSubmitName() {
         alert('Name is not available');
         submitButton.disabled = false;
       }
-    }, 1000); // 1000 milliseconds = 1 second
+    }, 1500); // 1000 milliseconds = 1 second
   } else {
     alert('Please enter your name.');
     submitButton.disabled = false;
