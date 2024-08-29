@@ -330,7 +330,7 @@ function drawButtons(question) {
     });
 
     // Adjust starting Y position to center the buttons
-    let startY = (canvas.height - totalHeight + buttonSpacing) / 1;
+    let startY = (canvas.height - totalHeight + buttonSpacing) / 1.1;
 
     question.answers.forEach((answer, index) => {
         // Calculate button position
