@@ -264,26 +264,88 @@ async function displayQuestion(questionIndex) {
     drawButtons(question);
 }
 
-// Function to calculate button positions and draw buttons
+// // Function to calculate button positions and draw buttons
+// function drawButtons(question) {
+//     const buttonSpacing = canvas.height * -0.15; // Define spacing between buttons
+//     let startY = canvas.height - canvas.height * 0.45; // Starting Y position for buttons
+//     question.answers.forEach((answer, index) => {
+//         // Calculate button position
+//         const buttonWidth = canvas.width * 0.8;
+//         let buttonHeight = canvas.height * 0.05; // Initial height
+//         const buttonX = (canvas.width - buttonWidth) / 2;
+//         const buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
+
+//         // Calculate text dimensions
+//         const padding = canvas.width * 0.02; // Padding between button and text
+//         const buttonFontSize = canvas.width * 0.03; // Adjust font size based on canvas width
+//         ctx.font = `bold ${buttonFontSize}px Arial`;
+//         const lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2)
+//         buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
+//         // // Draw button background
+//         // ctx.fillStyle = answer.hover ? '#bbb' : '#ddd';
+//         // ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+//         const cornerRadius = 20; // Adjust corner radius as needed
+//         ctx.beginPath();
+//         ctx.moveTo(buttonX + cornerRadius, buttonY);
+//         ctx.lineTo(buttonX + buttonWidth - cornerRadius, buttonY);
+//         ctx.arcTo(buttonX + buttonWidth, buttonY, buttonX + buttonWidth, buttonY + cornerRadius, cornerRadius);
+//         ctx.lineTo(buttonX + buttonWidth, buttonY + buttonHeight - cornerRadius);
+//         ctx.arcTo(buttonX + buttonWidth, buttonY + buttonHeight, buttonX + buttonWidth - cornerRadius, buttonY + buttonHeight, cornerRadius);
+//         ctx.lineTo(buttonX + cornerRadius, buttonY + buttonHeight);
+//         ctx.arcTo(buttonX, buttonY + buttonHeight, buttonX, buttonY + buttonHeight - cornerRadius, cornerRadius);
+//         ctx.lineTo(buttonX, buttonY + cornerRadius);
+//         ctx.arcTo(buttonX, buttonY, buttonX + cornerRadius, buttonY, cornerRadius);
+//         ctx.closePath();
+//         ctx.fillStyle = answer.hover ? '#bbb' : 'black';
+//         ctx.fill();
+
+//         // Draw button text
+//         ctx.fillStyle = 'white';
+//         ctx.textAlign = 'center'; // Align text to the center
+//         const textY = buttonY + buttonHeight / 2; // Center vertically
+//         lines.forEach((line, index) => {
+//             ctx.fillText(line, buttonX + buttonWidth / 2, textY + (index - (lines.length - 1) / 2) * (canvas.height * 0.02));
+//         });
+
+//         // Save button details for click detection
+//         answer.button = {
+//             x: buttonX,
+//             y: buttonY,
+//             width: buttonWidth,
+//             height: buttonHeight
+//         };
+//     });
+// }
 function drawButtons(question) {
-    const buttonSpacing = canvas.height * -0.14; // Define spacing between buttons
-    let startY = canvas.height - canvas.height * 0.45; // Starting Y position for buttons
+    const buttonSpacing = canvas.height * 0.05; // Define spacing between buttons
+
+    // Calculate total height of all buttons including spacing
+    let totalHeight = 0;
+    question.answers.forEach(answer => {
+        const buttonFontSize = canvas.width * 0.03; // Adjust font size based on canvas width
+        ctx.font = `bold ${buttonFontSize}px Arial`;
+        const lines = wrapText(ctx, answer.answerText, canvas.width * 0.8 - canvas.width * 0.02 * 2);
+        let buttonHeight = canvas.height * 0.05 + (lines.length - 1) * (canvas.height * 0.02);
+        totalHeight += buttonHeight + buttonSpacing;
+    });
+
+    // Adjust starting Y position to center the buttons
+    let startY = (canvas.height - totalHeight + buttonSpacing) / 2;
+
     question.answers.forEach((answer, index) => {
         // Calculate button position
         const buttonWidth = canvas.width * 0.8;
         let buttonHeight = canvas.height * 0.05; // Initial height
         const buttonX = (canvas.width - buttonWidth) / 2;
-        const buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
-
-        // Calculate text dimensions
         const padding = canvas.width * 0.02; // Padding between button and text
         const buttonFontSize = canvas.width * 0.03; // Adjust font size based on canvas width
         ctx.font = `bold ${buttonFontSize}px Arial`;
-        const lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2)
+        const lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2);
         buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
-        // // Draw button background
-        // ctx.fillStyle = answer.hover ? '#bbb' : '#ddd';
-        // ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+
+        const buttonY = startY; // Use updated startY for this button's Y position
+
+        // Draw button background with rounded corners
         const cornerRadius = 20; // Adjust corner radius as needed
         ctx.beginPath();
         ctx.moveTo(buttonX + cornerRadius, buttonY);
@@ -314,8 +376,12 @@ function drawButtons(question) {
             width: buttonWidth,
             height: buttonHeight
         };
+
+        // Update startY for the next button
+        startY += buttonHeight + buttonSpacing;
     });
 }
+
 
 // Function to redraw buttons with hover effect
 function redrawButtons() {

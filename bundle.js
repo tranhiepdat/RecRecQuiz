@@ -370,7 +370,55 @@ function preloadImage(url) {
 }
 function displayQuestion(_x) {
   return _displayQuestion.apply(this, arguments);
-} // Function to calculate button positions and draw buttons
+} // // Function to calculate button positions and draw buttons
+// function drawButtons(question) {
+//     const buttonSpacing = canvas.height * -0.15; // Define spacing between buttons
+//     let startY = canvas.height - canvas.height * 0.45; // Starting Y position for buttons
+//     question.answers.forEach((answer, index) => {
+//         // Calculate button position
+//         const buttonWidth = canvas.width * 0.8;
+//         let buttonHeight = canvas.height * 0.05; // Initial height
+//         const buttonX = (canvas.width - buttonWidth) / 2;
+//         const buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
+//         // Calculate text dimensions
+//         const padding = canvas.width * 0.02; // Padding between button and text
+//         const buttonFontSize = canvas.width * 0.03; // Adjust font size based on canvas width
+//         ctx.font = `bold ${buttonFontSize}px Arial`;
+//         const lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2)
+//         buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
+//         // // Draw button background
+//         // ctx.fillStyle = answer.hover ? '#bbb' : '#ddd';
+//         // ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+//         const cornerRadius = 20; // Adjust corner radius as needed
+//         ctx.beginPath();
+//         ctx.moveTo(buttonX + cornerRadius, buttonY);
+//         ctx.lineTo(buttonX + buttonWidth - cornerRadius, buttonY);
+//         ctx.arcTo(buttonX + buttonWidth, buttonY, buttonX + buttonWidth, buttonY + cornerRadius, cornerRadius);
+//         ctx.lineTo(buttonX + buttonWidth, buttonY + buttonHeight - cornerRadius);
+//         ctx.arcTo(buttonX + buttonWidth, buttonY + buttonHeight, buttonX + buttonWidth - cornerRadius, buttonY + buttonHeight, cornerRadius);
+//         ctx.lineTo(buttonX + cornerRadius, buttonY + buttonHeight);
+//         ctx.arcTo(buttonX, buttonY + buttonHeight, buttonX, buttonY + buttonHeight - cornerRadius, cornerRadius);
+//         ctx.lineTo(buttonX, buttonY + cornerRadius);
+//         ctx.arcTo(buttonX, buttonY, buttonX + cornerRadius, buttonY, cornerRadius);
+//         ctx.closePath();
+//         ctx.fillStyle = answer.hover ? '#bbb' : 'black';
+//         ctx.fill();
+//         // Draw button text
+//         ctx.fillStyle = 'white';
+//         ctx.textAlign = 'center'; // Align text to the center
+//         const textY = buttonY + buttonHeight / 2; // Center vertically
+//         lines.forEach((line, index) => {
+//             ctx.fillText(line, buttonX + buttonWidth / 2, textY + (index - (lines.length - 1) / 2) * (canvas.height * 0.02));
+//         });
+//         // Save button details for click detection
+//         answer.button = {
+//             x: buttonX,
+//             y: buttonY,
+//             width: buttonWidth,
+//             height: buttonHeight
+//         };
+//     });
+// }
 function _displayQuestion() {
   _displayQuestion = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(questionIndex) {
     var question, backgroundImage, imageX, imageY, questionFontSize, questionLines, lineHeight, textY;
@@ -410,24 +458,34 @@ function _displayQuestion() {
   return _displayQuestion.apply(this, arguments);
 }
 function drawButtons(question) {
-  var buttonSpacing = canvas.height * -0.14; // Define spacing between buttons
-  var startY = canvas.height - canvas.height * 0.45; // Starting Y position for buttons
+  var buttonSpacing = canvas.height * 0.05; // Define spacing between buttons
+
+  // Calculate total height of all buttons including spacing
+  var totalHeight = 0;
+  question.answers.forEach(function (answer) {
+    var buttonFontSize = canvas.width * 0.03; // Adjust font size based on canvas width
+    ctx.font = "bold ".concat(buttonFontSize, "px Arial");
+    var lines = wrapText(ctx, answer.answerText, canvas.width * 0.8 - canvas.width * 0.02 * 2);
+    var buttonHeight = canvas.height * 0.05 + (lines.length - 1) * (canvas.height * 0.02);
+    totalHeight += buttonHeight + buttonSpacing;
+  });
+
+  // Adjust starting Y position to center the buttons
+  var startY = (canvas.height - totalHeight + buttonSpacing) / 2;
   question.answers.forEach(function (answer, index) {
     // Calculate button position
     var buttonWidth = canvas.width * 0.8;
     var buttonHeight = canvas.height * 0.05; // Initial height
     var buttonX = (canvas.width - buttonWidth) / 2;
-    var buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
-
-    // Calculate text dimensions
     var padding = canvas.width * 0.02; // Padding between button and text
     var buttonFontSize = canvas.width * 0.03; // Adjust font size based on canvas width
     ctx.font = "bold ".concat(buttonFontSize, "px Arial");
     var lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2);
     buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
-    // // Draw button background
-    // ctx.fillStyle = answer.hover ? '#bbb' : '#ddd';
-    // ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+
+    var buttonY = startY; // Use updated startY for this button's Y position
+
+    // Draw button background with rounded corners
     var cornerRadius = 20; // Adjust corner radius as needed
     ctx.beginPath();
     ctx.moveTo(buttonX + cornerRadius, buttonY);
@@ -458,6 +516,9 @@ function drawButtons(question) {
       width: buttonWidth,
       height: buttonHeight
     };
+
+    // Update startY for the next button
+    startY += buttonHeight + buttonSpacing;
   });
 }
 
