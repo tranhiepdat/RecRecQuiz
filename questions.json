@@ -1,132 +1,212 @@
 [
-    {
-        "quiz": "Imagine you're in a new city. What grabs your attention first?",
-        "answers": [
-            {
-                "answerText": "A. Bustling market: Exotic smells and vibrant sights will draw me in.",
-                "answerType": 1
-            },
-            {
-                "answerText": "B. Charming cafes and bakeries: Warm ambiance and familiar comforts beckon.",
-                "answerType": 2
-            }
-        ]
-    },
-    {
-        "quiz": "Now that you're hungry, what do you crave?",
-        "answers": [
-            {
-                "answerText": "A. Local specialty: I want to experience authentic flavors.",
-                "answerType": 2
-            },
-            {
-                "answerText": "B. Something unique and unfamiliar: I’m down for an adventurous culinary journey.",
-                "answerType": 1
-            }
-        ]
-    },
-    {
-        "quiz": "It's time to find a souvenir. What catches your eye?",
-        "answers": [
-            {
-                "answerText": "A. A wacky, one-of-a-kind trinket: It's gotta be something nobody else has!",
-                "answerType": 1
-            },
-            {
-                "answerText": "B. A beautiful, handcrafted item from local artisans.",
-                "answerType": 2
-            }
-        ]
-    },
-    {
-        "quiz": "Back in your hotel room, what sets your mood?",
-        "answers": [
-            {
-                "answerText": "A. High-energy playlist: Pump it up with driving rhythms and powerful vocals!",
-                "answerType": 0
-            },
-            {
-                "answerText": "B. Calming melodies: Let’s unwind with soothing tunes that melt the day's stress.",
-                "answerType": 2
-            }
-        ]
-    },
-    {
-        "quiz": "Let's talk dinner! Which dish sounds more tempting to you?",
-        "answers": [
-            {
-                "answerText": "A. Fiery Feast: A sizzling dish bursting with bold flavors and a kick of heat that will tantalize my taste buds.",
-                "answerType": 0
-            },
-            {
-                "answerText": "B. Flavorful Fusion: A dish that combines familiar comfort with a touch of exciting spice for a harmonious blend.",
-                "answerType": 2
-            }
-        ]
-    },
-    {
-        "quiz": "Time for dessert! What tempts your taste buds?",
-        "answers": [
-            {
-                "answerText": "A. Something intense and unexpected. Surprise me with bold flavors and contrasting textures!",
-                "answerType": 0
-            },
-            {
-                "answerText": "B. Light and refreshing, please! Keep it sweet and simple for the perfect ending.",
-                "answerType": 2
-            }
-        ]
-    },
-    {
-        "quiz": "Waking up next morning, how do you jumpstart your day?",
-        "answers": [
-            {
-                "answerText": "A. Spicy breakfast burrito: A fiery kick gets my engine going!",
-                "answerType": 0
-            },
-            {
-                "answerText": "B. Classic breakfast routine: Familiar flavors fuel my mornings.",
-                "answerType": 2
-            }
-        ]
-    },
-    {
-        "quiz": "You are going for a walk, how do you like to explore the local scene?",
-        "answers": [
-            {
-                "answerText": "A. Trendy Hotspot: Dive into the hottest new destinations and snap envy-worthy selfies to document the adventures.",
-                "answerType": 1
-            },
-            {
-                "answerText": "B. Hidden Gem: Seek out unique spots for photos that capture the city's authentic vibe.",
-                "answerType": 2
-            }
-        ]
-    },
-    {
-        "quiz": "As the sun sets, how do you enjoy the nightlife?",
-        "answers": [
-            {
-                "answerText": "A. Thrilling Thump: Hit up a club with electrifying music and vibrant crowds!",
-                "answerType": 0
-            },
-            {
-                "answerText": "B. Chill Corner: Find a cozy bar with live music for a relaxed evening.",
-                "answerType": 2
-            }
-        ]
-    },
-    {
-        "quiz": "As your taxi pulls away, what memory flashes brightest?",
-        "answers": [
-            {
-                "answerText": "A. Striking up a conversation with a local and having a hilarious and unexpected encounter",
-                "answerType": 1
-            },
-            {
-                "answerText": "B. Conquering a thrilling activity that left me exhilarated and a little shaken.",
-                "answerType": 0
-            }
-        ]
-    }
+  {
+    "quiz": "You enter the enchanted forest and encounter a fork in the path. Which way do you go?",
+    "answers": [
+      {
+        "answerText": "A) A winding, unpredictable path that seems to change as you walk.",
+        "answerType": 2
+      },
+      {
+        "answerText": "B) A carefully structured path laid out with precise markers.",
+        "answerType": 1
+      },
+      {
+        "answerText": "C) A path bathed in soft light, capturing the beauty of the surroundings.",
+        "answerType": 0
+      },
+      {
+        "answerText": "D) A trail with practical signs and directions.",
+        "answerType": 9
+      }
+    ]
+  },
+  {
+    "quiz": "You hear a mysterious sound coming from the bushes. How do you react?",
+    "answers": [
+      {
+        "answerText": "A) You engage with it playfully, testing its reaction.",
+        "answerType": 8
+      },
+      {
+        "answerText": "B) You analyze it, trying to figure out the source.",
+        "answerType": 5
+      },
+      {
+        "answerText": "C) You cautiously approach, thinking critically about the possible outcomes.",
+        "answerType": 3
+      },
+      {
+        "answerText": "D) You feel a surge of emotion and let your instincts guide you.",
+        "answerType": 7
+      }
+    ]
+  },
+  {
+    "quiz": "You find a glimmering pond in the middle of the forest. What do you do?",
+    "answers": [
+      {
+        "answerText": "A) You dip your hand in, feeling a connection to the natural world.",
+        "answerType": 4
+      },
+      {
+        "answerText": "B) You analyze the ripples and reflections carefully to determine the pond’s depth and clarity for practical purposes.",
+        "answerType": 1
+      },
+      {
+        "answerText": "C) You study the ripples and reflections carefully.",
+        "answerType": 5
+      },
+      {
+        "answerText": "D) You imagine all the magical creatures that could be living in it.",
+        "answerType": 2
+      }
+    ]
+  },
+  {
+    "quiz": "A strange creature appears on your path. How do you handle this encounter?",
+    "answers": [
+      {
+        "answerText": "A) You try to communicate with it.",
+        "answerType": 2
+      },
+      {
+        "answerText": "B) You observe its features, trying to understand its structure.",
+        "answerType": 5
+      },
+      {
+        "answerText": "C) You challenge its presence with boldness.",
+        "answerType": 3
+      },
+      {
+        "answerText": "D) You calmly assess if it poses a practical threat or can be useful.",
+        "answerType": 9
+      }
+    ]
+  },
+  {
+    "quiz": "You come across an ancient tree with symbols carved into it. What do you do?",
+    "answers": [
+      {
+        "answerText": "A) You decipher the symbols with precise logic.",
+        "answerType": 1
+      },
+      {
+        "answerText": "B) You interpret them creatively, seeing abstract connections.",
+        "answerType": 5
+      },
+      {
+        "answerText": "C) You feel the energy of the symbols and connect emotionally.",
+        "answerType": 7
+      },
+      {
+        "answerText": "D) You admire the craftsmanship and how it fits naturally into the environment.",
+        "answerType": 8
+      }
+    ]
+  },
+  {
+    "quiz": "The forest leads you to a clearing with a mysterious structure. What is your first thought?",
+    "answers": [
+      {
+        "answerText": "A) You’re struck by the emotional power of the structure.",
+        "answerType": 7
+      },
+      {
+        "answerText": "B) You wonder what hidden, imaginative secrets it might hold.",
+        "answerType": 2
+      },
+      {
+        "answerText": "C) You focus on how it blends with its surroundings and its elegance.",
+        "answerType": 4
+      },
+      {
+        "answerText": "D) You focus on the structure’s functionality and design.",
+        "answerType": 6
+      }
+    ]
+  },
+  {
+    "quiz": "You find a glowing object partially buried in the ground. How do you proceed?",
+    "answers": [
+      {
+        "answerText": "A) You analyze its shape and form, considering how it fits in the environment.",
+        "answerType": 5
+      },
+      {
+        "answerText": "B) You carefully extract it, appreciating its design and potential use.",
+        "answerType": 6
+      },
+      {
+        "answerText": "C) You notice how it catches the light, creating beautiful reflections.",
+        "answerType": 0
+      },
+      {
+        "answerText": "D) You interpret its meaning and significance in the broader context of the forest.",
+        "answerType": 9
+      }
+    ]
+  },
+  {
+    "quiz": "As night falls, you need to find a place to rest. Where do you choose?",
+    "answers": [
+      {
+        "answerText": "A) A spot that feels like it’s from another world, mysterious and dream-like.",
+        "answerType": 2
+      },
+      {
+        "answerText": "B) A naturally sheltered spot that feels peaceful.",
+        "answerType": 4
+      },
+      {
+        "answerText": "C) A place that provides practical shelter, no-nonsense and efficient.",
+        "answerType": 6
+      },
+      {
+        "answerText": "D) A spot where the moonlight casts beautiful, soothing patterns.",
+        "answerType": 0
+      }
+    ]
+  },
+  {
+    "quiz": "ou come across a series of puzzles guarding a treasure. How do you solve them?",
+    "answers": [
+      {
+        "answerText": "A) You approach them logically, step by step.",
+        "answerType": 1
+      },
+      {
+        "answerText": "B) You embrace the abstract nature of the puzzles, finding creative solutions.",
+        "answerType": 5
+      },
+      {
+        "answerText": "C) You solve them with an unconventional method that breaks the rules.",
+        "answerType": 3
+      },
+      {
+        "answerText": "D) You approach them with a playful, rebellious mindset.",
+        "answerType": 8
+      }
+    ]
+  },
+  {
+    "quiz": "At the end of your journey, you reach a mystical fountain. What do you do?",
+    "answers": [
+      {
+        "answerText": "A) You admire the craftsmanship and elegance of the fountain.",
+        "answerType": 4
+      },
+      {
+        "answerText": "B) You carefully study the fountain’s structure and functionality.",
+        "answerType": 6
+      },
+      {
+        "answerText": "C) You feel a deep emotional connection to the fountain, as if it holds a part of your soul.",
+        "answerType": 7
+      },
+      {
+        "answerText": "D) You capture the way the light reflects off the water, creating a mesmerizing scene.",
+        "answerType": 0
+      }
+    ]
+  }
 ]

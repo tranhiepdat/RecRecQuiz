@@ -400,22 +400,34 @@ function showResult(personalityType) {
     // Determine the result based on personality type
     switch (personalityType) {
         case 0:
-            result = 'Mala';
+            result = 'Impressionism';
             break;
         case 1:
-            result = 'Gochujang';
+            result = 'De Stijl';
             break;
         case 2:
-            result = 'Tomyum';
+            result = 'Surrealism';
             break;
         case 3:
-            result = 'Gochujang';
+            result = 'Post-modern';
             break;
         case 4:
-            result = 'Gochujang';
+            result = 'Art Nouveau';
             break;
         case 5:
-            result = 'Gochujang';
+            result = 'Cubism';
+            break;
+        case 6:
+            result = 'Bauhaus';
+            break;
+        case 7:
+            result = 'Expressionism';
+            break;
+        case 8:
+            result = 'Dadaism';
+            break;
+        case 9:
+            result = 'Constructivism';
             break;
         default:
             result = 'Unknown';
