@@ -267,7 +267,7 @@ async function displayQuestion(questionIndex) {
 // Function to calculate button positions and draw buttons
 function drawButtons(question) {
     const buttonSpacing = canvas.height * -0.13; // Define spacing between buttons
-    let startY = canvas.height - canvas.height * 0.5; // Starting Y position for buttons
+    let startY = canvas.height - canvas.height * 0.4; // Starting Y position for buttons
     question.answers.forEach((answer, index) => {
         // Calculate button position
         const buttonWidth = canvas.width * 0.8;

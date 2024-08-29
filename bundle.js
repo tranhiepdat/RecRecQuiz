@@ -411,7 +411,7 @@ function _displayQuestion() {
 }
 function drawButtons(question) {
   var buttonSpacing = canvas.height * -0.13; // Define spacing between buttons
-  var startY = canvas.height - canvas.height * 0.5; // Starting Y position for buttons
+  var startY = canvas.height - canvas.height * 0.4; // Starting Y position for buttons
   question.answers.forEach(function (answer, index) {
     // Calculate button position
     var buttonWidth = canvas.width * 0.8;
