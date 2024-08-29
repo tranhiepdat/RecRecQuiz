@@ -387,7 +387,7 @@ function _displayQuestion() {
           ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
 
           // Display the quiz question at the bottom of the canvas
-          questionFontSize = canvas.width * 0.05; // Adjust font size based on canvas width
+          questionFontSize = canvas.width * 0.06; // Adjust font size based on canvas width
           ctx.font = "bold ".concat(questionFontSize, "px Arial");
           ctx.textAlign = 'center';
           ctx.fillStyle = '#0f5e74';
@@ -410,8 +410,8 @@ function _displayQuestion() {
   return _displayQuestion.apply(this, arguments);
 }
 function drawButtons(question) {
-  var buttonSpacing = canvas.height * -0.1; // Define spacing between buttons
-  var startY = canvas.height - canvas.height * 0.7; // Starting Y position for buttons
+  var buttonSpacing = canvas.height * -0.15; // Define spacing between buttons
+  var startY = canvas.height - canvas.height * 0.6; // Starting Y position for buttons
   question.answers.forEach(function (answer, index) {
     // Calculate button position
     var buttonWidth = canvas.width * 0.8;

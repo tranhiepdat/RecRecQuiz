@@ -244,7 +244,7 @@ async function displayQuestion(questionIndex) {
     ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
 
     // Display the quiz question at the bottom of the canvas
-    const questionFontSize = canvas.width * 0.05; // Adjust font size based on canvas width
+    const questionFontSize = canvas.width * 0.06; // Adjust font size based on canvas width
     ctx.font = `bold ${questionFontSize}px Arial`;
     ctx.textAlign = 'center';
     ctx.fillStyle = '#0f5e74';
@@ -266,8 +266,8 @@ async function displayQuestion(questionIndex) {
 
 // Function to calculate button positions and draw buttons
 function drawButtons(question) {
-    const buttonSpacing = canvas.height * -0.1; // Define spacing between buttons
-    let startY = canvas.height - canvas.height * 0.7; // Starting Y position for buttons
+    const buttonSpacing = canvas.height * -0.15; // Define spacing between buttons
+    let startY = canvas.height - canvas.height * 0.6; // Starting Y position for buttons
     question.answers.forEach((answer, index) => {
         // Calculate button position
         const buttonWidth = canvas.width * 0.8;
