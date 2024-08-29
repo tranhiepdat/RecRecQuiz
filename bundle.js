@@ -458,7 +458,7 @@ function _displayQuestion() {
   return _displayQuestion.apply(this, arguments);
 }
 function drawButtons(question) {
-  var buttonSpacing = canvas.height * 0.03; // Define spacing between buttons
+  var buttonSpacing = canvas.height * 0.01; // Define spacing between buttons
 
   // Calculate total height of all buttons including spacing
   var totalHeight = 0;
@@ -471,7 +471,7 @@ function drawButtons(question) {
   });
 
   // Adjust starting Y position to center the buttons
-  var startY = (canvas.height - totalHeight + buttonSpacing) / 1.5;
+  var startY = (canvas.height - totalHeight + buttonSpacing) / 1;
   question.answers.forEach(function (answer, index) {
     // Calculate button position
     var buttonWidth = canvas.width * 0.8;
