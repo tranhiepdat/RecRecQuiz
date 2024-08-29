@@ -387,7 +387,7 @@ function _displayQuestion() {
           ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
 
           // Display the quiz question at the bottom of the canvas
-          questionFontSize = canvas.width * 0.08; // Adjust font size based on canvas width
+          questionFontSize = canvas.width * 0.05; // Adjust font size based on canvas width
           ctx.font = "bold ".concat(questionFontSize, "px Arial");
           ctx.textAlign = 'center';
           ctx.fillStyle = '#0f5e74';
@@ -410,8 +410,8 @@ function _displayQuestion() {
   return _displayQuestion.apply(this, arguments);
 }
 function drawButtons(question) {
-  var buttonSpacing = canvas.height * -0.15; // Define spacing between buttons
-  var startY = canvas.height - canvas.height * 0.35; // Starting Y position for buttons
+  var buttonSpacing = canvas.height * -0.1; // Define spacing between buttons
+  var startY = canvas.height - canvas.height * 0.7; // Starting Y position for buttons
   question.answers.forEach(function (answer, index) {
     // Calculate button position
     var buttonWidth = canvas.width * 0.8;
@@ -542,22 +542,34 @@ function showResult(personalityType) {
   // Determine the result based on personality type
   switch (personalityType) {
     case 0:
-      result = 'Mala';
+      result = 'Impressionism';
       break;
     case 1:
-      result = 'Gochujang';
+      result = 'De Stijl';
       break;
     case 2:
-      result = 'Tomyum';
+      result = 'Surrealism';
       break;
     case 3:
-      result = 'Gochujang';
+      result = 'Post-modern';
       break;
     case 4:
-      result = 'Gochujang';
+      result = 'Art Nouveau';
       break;
     case 5:
-      result = 'Gochujang';
+      result = 'Cubism';
+      break;
+    case 6:
+      result = 'Bauhaus';
+      break;
+    case 7:
+      result = 'Expressionism';
+      break;
+    case 8:
+      result = 'Dadaism';
+      break;
+    case 9:
+      result = 'Constructivism';
       break;
     default:
       result = 'Unknown';
