@@ -410,14 +410,14 @@ function _displayQuestion() {
   return _displayQuestion.apply(this, arguments);
 }
 function drawButtons(question) {
-  var buttonSpacing = canvas.height * -0.13; // Define spacing between buttons
-  var startY = canvas.height - canvas.height * 0.4; // Starting Y position for buttons
+  var buttonSpacing = canvas.height * -0.14; // Define spacing between buttons
+  var startY = canvas.height - canvas.height * 0.45; // Starting Y position for buttons
   question.answers.forEach(function (answer, index) {
     // Calculate button position
     var buttonWidth = canvas.width * 0.8;
     var buttonHeight = canvas.height * 0.05; // Initial height
     var buttonX = (canvas.width - buttonWidth) / 2;
-    var buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
+    // const buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
 
     // Calculate text dimensions
     var padding = canvas.width * 0.02; // Padding between button and text
@@ -425,7 +425,7 @@ function drawButtons(question) {
     ctx.font = "bold ".concat(buttonFontSize, "px Arial");
     var lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2);
     buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
-
+    var buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
     // // Draw button background
     // ctx.fillStyle = answer.hover ? '#bbb' : '#ddd';
     // ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);

@@ -266,14 +266,14 @@ async function displayQuestion(questionIndex) {
 
 // Function to calculate button positions and draw buttons
 function drawButtons(question) {
-    const buttonSpacing = canvas.height * -0.13; // Define spacing between buttons
-    let startY = canvas.height - canvas.height * 0.4; // Starting Y position for buttons
+    const buttonSpacing = canvas.height * -0.14; // Define spacing between buttons
+    let startY = canvas.height - canvas.height * 0.45; // Starting Y position for buttons
     question.answers.forEach((answer, index) => {
         // Calculate button position
         const buttonWidth = canvas.width * 0.8;
         let buttonHeight = canvas.height * 0.05; // Initial height
         const buttonX = (canvas.width - buttonWidth) / 2;
-        const buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
+        // const buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
 
         // Calculate text dimensions
         const padding = canvas.width * 0.02; // Padding between button and text
@@ -281,7 +281,7 @@ function drawButtons(question) {
         ctx.font = `bold ${buttonFontSize}px Arial`;
         const lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2)
         buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
-
+        const buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
         // // Draw button background
         // ctx.fillStyle = answer.hover ? '#bbb' : '#ddd';
         // ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
