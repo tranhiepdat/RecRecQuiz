@@ -273,7 +273,7 @@ function drawButtons(question) {
         const buttonWidth = canvas.width * 0.8;
         let buttonHeight = canvas.height * 0.05; // Initial height
         const buttonX = (canvas.width - buttonWidth) / 2;
-        // const buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
+        const buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
 
         // Calculate text dimensions
         const padding = canvas.width * 0.02; // Padding between button and text
@@ -281,7 +281,6 @@ function drawButtons(question) {
         ctx.font = `bold ${buttonFontSize}px Arial`;
         const lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2)
         buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
-        const buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
         // // Draw button background
         // ctx.fillStyle = answer.hover ? '#bbb' : '#ddd';
         // ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
