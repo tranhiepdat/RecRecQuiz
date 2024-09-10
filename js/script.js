@@ -451,7 +451,7 @@ function showResult(personalityType) {
     // Draw the result text (name, result, stat) on the left
     const resultFontSize = Math.min(canvas.width * 0.03, canvas.height * 0.03); // Adjust font size based on canvas width (2% of canvas width)
     const textX = 20; // X position for the text on the left side
-    let textY = imageY + imageHeight + textPadding; // Y position for the text below the image
+    let textY = imageY + imageHeight + textPadding + 0.5; // Y position for the text below the image
 
     ctx.font = `bold ${resultFontSize * 1.4}px Arial`; // Bold and larger text
     ctx.fillStyle = '#000';
@@ -467,7 +467,7 @@ function showResult(personalityType) {
 
     ctx.font = `normal ${resultFontSize}px Arial`; // Normal font style for stat text
     ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', textX, textY);
-    textY = imageY + imageHeight + textPadding + 0.1;
+    textY = imageY + imageHeight + textPadding;
 
     // Draw the explanation text on the right bottom half
     const explanation = explanationData.find(item => item.Type === personalityType);
