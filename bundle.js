@@ -430,7 +430,7 @@ function _displayQuestion() {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
           // const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
-          backgroundImage = preloadImages.images[questionIndex];
+          backgroundImage = preloadImages.images[questionIndex + 1];
           imageX = (canvas.width - canvas.width * 1.366) / 2;
           imageY = (canvas.height - canvas.height * 1.024) / 1;
           ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);

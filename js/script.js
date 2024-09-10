@@ -238,7 +238,7 @@ async function displayQuestion(questionIndex) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
-    const backgroundImage = preloadImages.images[questionIndex];
+    const backgroundImage = preloadImages.images[questionIndex+1];
     const imageX = (canvas.width - canvas.width * 1.366) / 2;
     const imageY = (canvas.height - canvas.height * 1.024) / 1;
     ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
