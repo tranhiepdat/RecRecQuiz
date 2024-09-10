@@ -383,15 +383,14 @@ function drawButtons(question, startY) {
 
 // Function to redraw buttons with hover effect
 function redrawButtons() {
-    // Clear only the region occupied by the buttons
     const question = questionsData[currentQuestion];
-    // question.answers.forEach((answer) => {
-    //     ctx.clearRect(answer.button.x, answer.button.y, answer.button.width, answer.button.height);
-    // });
+
+    // Clear the region occupied by the buttons
     question.answers.forEach((answer) => {
-        // Set up clipping path to clear only within the rounded rectangle shape
         const cornerRadius = 20; // Adjust corner radius as needed
         ctx.save(); // Save the current drawing state
+
+        // Set up clipping path to clear only within the rounded rectangle shape
         ctx.beginPath();
         ctx.moveTo(answer.button.x + cornerRadius, answer.button.y);
         ctx.lineTo(answer.button.x + answer.button.width - cornerRadius, answer.button.y);
@@ -412,6 +411,7 @@ function redrawButtons() {
         ctx.restore();
     });
 
+    // Re-draw all buttons with updated states
     drawButtons(question);
 }
 
