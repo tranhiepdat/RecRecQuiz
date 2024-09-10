@@ -289,10 +289,10 @@ async function displayQuestion(questionIndex) {
     ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
     // Calculate space below the image for the question and buttons
-    const availableHeight = canvas.height - imageHeight - padding - (canvas.height * 0.05); // Space below image and padding
+    const availableHeight = canvas.height - imageHeight - padding - (canvas.height * 0.03); // Space below image and padding
 
     // Display the quiz question at the bottom of the available space
-    const questionFontSize = Math.min(canvas.width * 0.07, availableHeight * 0.1); // Adjust font size based on canvas width and available height
+    const questionFontSize = Math.min(canvas.width * 0.05, availableHeight * 0.1); // Adjust font size based on canvas width and available height
     ctx.font = `bold ${questionFontSize}px Arial`;
     ctx.textAlign = 'center';
     ctx.fillStyle = '#0f5e74';
@@ -308,7 +308,7 @@ async function displayQuestion(questionIndex) {
         ctx.fillText(line, canvas.width / 2, questionTextY + index * lineHeight);
     });
 
-    buttonStartY = questionTextY + questionLines.length * lineHeight + (canvas.height * 0.01)
+    buttonStartY = questionTextY + questionLines.length * lineHeight + (canvas.height * 0.02)
     // Draw buttons below the question
     drawButtons(question, buttonStartY);
 }
@@ -451,7 +451,7 @@ function showResult(personalityType) {
     // Draw the result text (name, result, stat) on the left
     const resultFontSize = Math.min(canvas.width * 0.03, canvas.height * 0.03); // Adjust font size based on canvas width (2% of canvas width)
     const textX = 20; // X position for the text on the left side
-    let textY = imageY + imageHeight + textPadding + 0.5; // Y position for the text below the image
+    let textY = imageY + imageHeight + textPadding + 2; // Y position for the text below the image
 
     ctx.font = `bold ${resultFontSize * 1.4}px Arial`; // Bold and larger text
     ctx.fillStyle = '#000';
