@@ -436,21 +436,22 @@ function _displayQuestion() {
           // Draw the image on the canvas
           ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
-          // Display the quiz question at the bottom of the canvas
-          questionFontSize = Math.min(canvas.width * 0.07, canvas.height * 0.07); // Adjust font size based on canvas width and height
+          // Display the quiz question below the image
+          questionFontSize = Math.min(canvas.width * 0.05, canvas.height * 0.05); // Adjust font size based on canvas width and height
           ctx.font = "bold ".concat(questionFontSize, "px Arial");
           ctx.textAlign = 'center';
           ctx.fillStyle = '#0f5e74';
           // Wrap the question text
           questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8); // Calculate vertical position for the wrapped text
           lineHeight = questionFontSize * 1.2; // Line height including padding
-          textY = canvas.height - canvas.height * 0.47 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
+          textY = imageY + imageHeight + padding + questionFontSize; // Position below the image
+          // Draw each line of the wrapped text
           questionLines.forEach(function (line, index) {
             ctx.fillText(line, canvas.width / 2, textY + index * lineHeight);
           });
 
           // Calculate button positions and draw buttons
-          drawButtons(question);
+          drawButtons(question, textY + lineHeight * questionLines.length + padding);
         case 20:
         case "end":
           return _context3.stop();
@@ -459,8 +460,8 @@ function _displayQuestion() {
   }));
   return _displayQuestion.apply(this, arguments);
 }
-function drawButtons(question) {
-  var buttonSpacing = canvas.height * 0.01; // Define spacing between buttons
+function drawButtons(question, startY) {
+  var buttonSpacing = canvas.height * 0.02; // Define spacing between buttons
 
   // Calculate total height of all buttons including spacing
   var totalHeight = 0;
@@ -472,20 +473,24 @@ function drawButtons(question) {
     totalHeight += buttonHeight + buttonSpacing;
   });
 
-  // Adjust starting Y position to center the buttons
-  var startY = (canvas.height - totalHeight + buttonSpacing) / 1.1;
+  // Adjust starting Y position to fit all buttons within canvas
+  var adjustedStartY = startY;
+  if (adjustedStartY + totalHeight > canvas.height) {
+    // If buttons don't fit, adjust start position
+    adjustedStartY = canvas.height - totalHeight - buttonSpacing;
+  }
   question.answers.forEach(function (answer, index) {
     // Calculate button position
     var buttonWidth = canvas.width * 0.8;
     var buttonHeight = canvas.height * 0.05; // Initial height
     var buttonX = (canvas.width - buttonWidth) / 2;
     var padding = canvas.width * 0.02; // Padding between button and text
-    var buttonFontSize = Math.min(canvas.width * 0.02, canvas.height * 0.02); // Adjust font size based on canvas width and height
+    var buttonFontSize = Math.min(canvas.width * 0.03, canvas.height * 0.03); // Adjust font size based on canvas width and height
     ctx.font = "bold ".concat(buttonFontSize, "px Arial");
     var lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2);
     buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
 
-    var buttonY = startY; // Use updated startY for this button's Y position
+    var buttonY = adjustedStartY; // Use updated startY for this button's Y position
 
     // Draw button background with rounded corners
     var cornerRadius = 20; // Adjust corner radius as needed
@@ -520,7 +525,7 @@ function drawButtons(question) {
     };
 
     // Update startY for the next button
-    startY += buttonHeight + buttonSpacing;
+    adjustedStartY += buttonHeight + buttonSpacing;
   });
 }
 
@@ -608,7 +613,7 @@ function showResult(personalityType) {
   textY += resultFontSize + textPadding;
   ctx.font = "normal ".concat(resultFontSize, "px Arial"); // Normal font style for stat text
   ctx.fillText((0, _playfabManager.CalcPersonaRate)(personalityType) + '% people also this type', textX, textY);
-  textY = imageY + imageHeight + textPadding;
+  textY = imageY + imageHeight + textPadding + 0.1;
 
   // Draw the explanation text on the right bottom half
   var explanation = explanationData.find(function (item) {
@@ -622,7 +627,7 @@ function showResult(personalityType) {
     ctx.font = "bold ".concat(headingFontSize, "px Arial");
     ctx.fillStyle = '#000';
     ctx.textAlign = 'left';
-    var headingX = canvas.width * 0.5; // Align to the right half
+    var headingX = canvas.width * 0.57; // Align to the right half
     var headingY = textY; // Start from where the previous text ended
     var headingLines = wrapText(ctx, explanation.Heading, textAreaWidth);
     headingLines.forEach(function (line, index) {

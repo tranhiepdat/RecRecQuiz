@@ -286,8 +286,8 @@ async function displayQuestion(questionIndex) {
     // Draw the image on the canvas
     ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
-    // Display the quiz question at the bottom of the canvas
-    const questionFontSize = Math.min(canvas.width * 0.07, canvas.height * 0.07); // Adjust font size based on canvas width and height
+    // Display the quiz question below the image
+    const questionFontSize = Math.min(canvas.width * 0.05, canvas.height * 0.05); // Adjust font size based on canvas width and height
     ctx.font = `bold ${questionFontSize}px Arial`;
     ctx.textAlign = 'center';
     ctx.fillStyle = '#0f5e74';
@@ -296,7 +296,7 @@ async function displayQuestion(questionIndex) {
 
     // Calculate vertical position for the wrapped text
     const lineHeight = questionFontSize * 1.2; // Line height including padding
-    const textY = canvas.height - canvas.height * 0.47 - (lineHeight * (questionLines.length - 1)) / 2;
+    const textY = imageY + imageHeight + padding + questionFontSize; // Position below the image
 
     // Draw each line of the wrapped text
     questionLines.forEach((line, index) => {
@@ -304,12 +304,13 @@ async function displayQuestion(questionIndex) {
     });
 
     // Calculate button positions and draw buttons
-    drawButtons(question);
+    drawButtons(question, textY + (lineHeight * questionLines.length) + padding);
 }
 
 
-function drawButtons(question) {
-    const buttonSpacing = canvas.height * 0.01; // Define spacing between buttons
+
+function drawButtons(question, startY) {
+    const buttonSpacing = canvas.height * 0.02; // Define spacing between buttons
 
     // Calculate total height of all buttons including spacing
     let totalHeight = 0;
@@ -321,8 +322,12 @@ function drawButtons(question) {
         totalHeight += buttonHeight + buttonSpacing;
     });
 
-    // Adjust starting Y position to center the buttons
-    let startY = (canvas.height - totalHeight + buttonSpacing) / 1.1;
+    // Adjust starting Y position to fit all buttons within canvas
+    let adjustedStartY = startY;
+    if (adjustedStartY + totalHeight > canvas.height) {
+        // If buttons don't fit, adjust start position
+        adjustedStartY = canvas.height - totalHeight - buttonSpacing;
+    }
 
     question.answers.forEach((answer, index) => {
         // Calculate button position
@@ -330,12 +335,12 @@ function drawButtons(question) {
         let buttonHeight = canvas.height * 0.05; // Initial height
         const buttonX = (canvas.width - buttonWidth) / 2;
         const padding = canvas.width * 0.02; // Padding between button and text
-        const buttonFontSize = Math.min(canvas.width * 0.02, canvas.height * 0.02); // Adjust font size based on canvas width and height
+        const buttonFontSize = Math.min(canvas.width * 0.03, canvas.height * 0.03); // Adjust font size based on canvas width and height
         ctx.font = `bold ${buttonFontSize}px Arial`;
         const lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2);
         buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
 
-        const buttonY = startY; // Use updated startY for this button's Y position
+        const buttonY = adjustedStartY; // Use updated startY for this button's Y position
 
         // Draw button background with rounded corners
         const cornerRadius = 20; // Adjust corner radius as needed
@@ -370,9 +375,10 @@ function drawButtons(question) {
         };
 
         // Update startY for the next button
-        startY += buttonHeight + buttonSpacing;
+        adjustedStartY += buttonHeight + buttonSpacing;
     });
 }
+
 
 
 // Function to redraw buttons with hover effect
@@ -466,7 +472,7 @@ function showResult(personalityType) {
 
     ctx.font = `normal ${resultFontSize}px Arial`; // Normal font style for stat text
     ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', textX, textY);
-    textY = imageY + imageHeight + textPadding;
+    textY = imageY + imageHeight + textPadding + 0.1;
 
     // Draw the explanation text on the right bottom half
     const explanation = explanationData.find(item => item.Type === personalityType);
@@ -478,7 +484,7 @@ function showResult(personalityType) {
         ctx.font = `bold ${headingFontSize}px Arial`;
         ctx.fillStyle = '#000';
         ctx.textAlign = 'left';
-        const headingX = canvas.width * 0.5; // Align to the right half
+        const headingX = canvas.width * 0.57; // Align to the right half
         let headingY = textY; // Start from where the previous text ended
         const headingLines = wrapText(ctx, explanation.Heading, textAreaWidth);
         headingLines.forEach((line, index) => {
