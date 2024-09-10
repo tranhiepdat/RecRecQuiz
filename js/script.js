@@ -466,7 +466,7 @@ function showResult(personalityType) {
 
     ctx.font = `normal ${resultFontSize}px Arial`; // Normal font style for stat text
     ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', textX, textY);
-    textY += resultFontSize + textPadding;
+    textY = imageY + imageHeight + textPadding;
 
     // Draw the explanation text on the right bottom half
     const explanation = explanationData.find(item => item.Type === personalityType);

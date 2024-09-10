@@ -608,7 +608,7 @@ function showResult(personalityType) {
   textY += resultFontSize + textPadding;
   ctx.font = "normal ".concat(resultFontSize, "px Arial"); // Normal font style for stat text
   ctx.fillText((0, _playfabManager.CalcPersonaRate)(personalityType) + '% people also this type', textX, textY);
-  textY += resultFontSize + textPadding;
+  textY = imageY + imageHeight + textPadding;
 
   // Draw the explanation text on the right bottom half
   var explanation = explanationData.find(function (item) {
