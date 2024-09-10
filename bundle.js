@@ -605,7 +605,9 @@ function showResult(personalityType) {
   ctx.fillText('Hello, ' + _playfabManager.nameFromDatabase, textX, textY);
   textY += resultFontSize * 1.4 + textPadding;
   ctx.font = "bold ".concat(resultFontSize, "px Arial"); // Regular font size for result text
-  ctx.fillText('Your Personality Type:\n' + getPersonalityTypeLabel(personalityType), textX, textY);
+  ctx.fillText('Your Personality Type: ', textX, textY);
+  textY += resultFontSize + textPadding;
+  ctx.fillText(getPersonalityTypeLabel(personalityType), textX, textY);
   textY += resultFontSize + textPadding;
   ctx.font = "normal ".concat(resultFontSize, "px Arial"); // Normal font style for stat text
   ctx.fillText((0, _playfabManager.CalcPersonaRate)(personalityType) + '% people also this type', textX, textY);

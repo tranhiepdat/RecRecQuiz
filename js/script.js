@@ -463,9 +463,10 @@ function showResult(personalityType) {
     textY += resultFontSize * 1.4 + textPadding;
 
     ctx.font = `bold ${resultFontSize}px Arial`; // Regular font size for result text
-    ctx.fillText('Your Personality Type:\n' + getPersonalityTypeLabel(personalityType), textX, textY);
+    ctx.fillText('Your Personality Type: ', textX, textY);
     textY += resultFontSize + textPadding;
-
+    ctx.fillText(getPersonalityTypeLabel(personalityType), textX, textY);
+    textY += resultFontSize + textPadding;
     ctx.font = `normal ${resultFontSize}px Arial`; // Normal font style for stat text
     ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', textX, textY);
     textY = imageY + imageHeight + textPadding + 30;
