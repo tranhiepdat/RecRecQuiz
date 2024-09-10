@@ -1,0 +1,52 @@
+[
+    {
+        "Type": 0,
+        "Heading": "You're a free spirit who loves to capture the moment.",
+        "Explanation": "Spontaneity is your guide, and you're drawn to the beauty in the world, often noticing the little things others overlook. You have a romantic heart and a deep appreciation for the fleeting moments that make life magical."
+    },
+    {
+        "Type": 1,
+        "Heading": "Order and precision are your best friends.",
+        "Explanation": "You have a logical mind that thrives on structure and simplicity. You value clarity and balance in everything you do, always seeking to bring harmony to the chaos around you."
+    },
+    {
+        "Type": 2,
+        "Heading": "Your imagination knows no bounds.",
+        "Explanation": "You're a visionary with a penchant for the fantastical and the abstract. You see the world through a unique lens, finding meaning in dreams and exploring the depths of the subconscious mind."
+    },
+    {
+        "Type": 3,
+        "Heading": "You're a rebel with a cause, always challenging the status quo.",
+        "Explanation": "Innovation is your playground, and you thrive on breaking conventions and pushing boundaries. You see the world as a place for experimentation and love to think outside the box."
+    },
+    {
+        "Type": 4,
+        "Heading": "Elegance and nature inspire your every move.",
+        "Explanation": "You have an artistic soul that gravitates towards beauty in all forms, especially when it’s intertwined with the natural world. Harmony, fluidity, and a deep connection to the organic are central to your being."
+    },
+    {
+        "Type": 5,
+        "Heading": "You’re an analytical thinker who loves to see things from multiple angles.",
+        "Explanation": "Experimentation is at the core of your approach, and you enjoy deconstructing and reassembling ideas to gain new perspectives. You value intellectual challenges and are always looking for new ways to understand the world."
+    },
+    {
+        "Type": 6,
+        "Heading": "Pragmatism and functionality define your approach to life.",
+        "Explanation": "You believe in the beauty of simplicity and are focused on achieving practical solutions that serve a purpose. Your minimalist mindset ensures that everything has its place, and nothing is wasted."
+    },
+    {
+        "Type": 7,
+        "Heading": "You’re a passionate soul who wears your emotions on your sleeve.",
+        "Explanation": "Intensity drives you, and you’re not afraid to delve deep into the emotional currents that shape your experiences. You express yourself boldly, often channeling your feelings into creative outlets."
+    },
+    {
+        "Type": 8,
+        "Heading": "You're a provocateur who loves to shake things up.",
+        "Explanation": "Unorthodox and playful, you challenge traditional norms and find joy in the absurd. For you, life is a canvas for experimentation, and you’re always ready to defy expectations with humor and wit."
+    },
+    {
+        "Type": 9,
+        "Heading": "You’re a practical thinker with a focus on purpose and impact.",
+        "Explanation": "Socially conscious and utilitarian, you believe in creating things that serve the greater good. You thrive on contributing to society and prefer function over form, always aiming to make a difference."
+    }
+]

@@ -142,6 +142,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var currentQuestion = 0;
 var userChoices = [];
 var questionsData;
+var explanationData;
 var canvas = document.getElementById('quiz-canvas');
 var ctx = canvas.getContext('2d');
 var aspectRatio = 9 / 16;
@@ -150,10 +151,9 @@ var allAnswered = false;
 var isLoading = true;
 var playerName = exports.playerName = null;
 var riveAnimLoaded = false;
-var inputs = null;
 
 // Create a separate canvas for Rive animation
-var riveCanvas = document.createElement('canvas');
+// const riveCanvas = document.createElement('canvas');
 // const riveCtx = riveCanvas.getContext('2d');
 
 function setCanvasSize() {
@@ -177,10 +177,10 @@ function setCanvasSize() {
   if (riveAnimLoaded) {
     loadingscreenRive.resizeDrawingSurfaceToCanvas();
   }
-  riveCanvas.width = canvasWidth;
-  riveCanvas.height = screenHeight; // Set canvas height to full screen height
-  riveCanvas.style.width = canvasWidth / devicePixelRatio + 'px'; // Set display width and height
-  riveCanvas.style.height = screenHeight / devicePixelRatio + 'px'; // Set display height to full screen height
+  // riveCanvas.width = canvasWidth;
+  // riveCanvas.height = screenHeight; // Set canvas height to full screen height
+  // riveCanvas.style.width = (canvasWidth / devicePixelRatio) + 'px'; // Set display width and height
+  // riveCanvas.style.height = (screenHeight / devicePixelRatio) + 'px'; // Set display height to full screen height
 
   // Redraw content after resizing
   if (!_playfabManager.playerNameInput && !isLoading) {
@@ -244,19 +244,34 @@ function initialize() {
     loadingscreenRive.play("Logo");
   }
 
-  // Preload images
+  // Preload question images
   preloadImages().then(function (images) {
     preloadImages.images = images; // Store preloaded images
-    console.log("images preload success");
+    console.log("question images preload success");
   })["catch"](function (error) {
-    return console.error('Error preloading images:', error);
+    return console.error('Error preloading question images:', error);
+  });
+
+  //preload result images
+  preloadResultImages().then(function (images) {
+    preloadResultImages.images = images;
+    console.log("result images preload success");
+  })["catch"](function (error) {
+    return console.error('Error preloading result images:', error);
   });
   fetch('questions.json').then(function (response) {
     return response.json();
   }).then(function (data) {
     questionsData = data;
-    document.body.appendChild(riveCanvas);
-    riveCanvas.className = 'rive-canvas';
+    // document.body.appendChild(riveCanvas);
+    // riveCanvas.className = 'rive-canvas';
+  })["catch"](function (error) {
+    return console.error('Error fetching questions:', error);
+  });
+  fetch('result-explanation.json').then(function (response) {
+    return response.json();
+  }).then(function (data) {
+    explanationData = data;
   })["catch"](function (error) {
     return console.error('Error fetching questions:', error);
   });
@@ -337,7 +352,7 @@ function wrapText(context, text, maxWidth) {
 // Function to preload all images
 function preloadImages() {
   return _preloadImages.apply(this, arguments);
-} // Function to preload an image
+}
 function _preloadImages() {
   _preloadImages = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
     var imagePromises, i, imageUrl;
@@ -347,7 +362,7 @@ function _preloadImages() {
           imagePromises = [];
           for (i = 1; i <= 10; i++) {
             // Assuming there are 10 images numbered from 1.png to 10.png
-            imageUrl = "images/".concat(i, ".png");
+            imageUrl = "images/questions/".concat(i, ".png");
             imagePromises.push(preloadImage(imageUrl));
           }
           return _context.abrupt("return", Promise.all(imagePromises));
@@ -358,6 +373,30 @@ function _preloadImages() {
     }, _callee);
   }));
   return _preloadImages.apply(this, arguments);
+}
+function preloadResultImages() {
+  return _preloadResultImages.apply(this, arguments);
+} // Function to preload an image
+function _preloadResultImages() {
+  _preloadResultImages = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    var imagePromises, i, imageUrl;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          imagePromises = [];
+          for (i = 0; i < 10; i++) {
+            // Assuming there are 10 images numbered from 1.png to 10.png
+            imageUrl = "images/results/".concat(i, ".png");
+            imagePromises.push(preloadImage(imageUrl));
+          }
+          return _context2.abrupt("return", Promise.all(imagePromises));
+        case 3:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2);
+  }));
+  return _preloadResultImages.apply(this, arguments);
 }
 function preloadImage(url) {
   return new Promise(function (resolve, reject) {
@@ -371,60 +410,12 @@ function preloadImage(url) {
 }
 function displayQuestion(_x) {
   return _displayQuestion.apply(this, arguments);
-} // // Function to calculate button positions and draw buttons
-// function drawButtons(question) {
-//     const buttonSpacing = canvas.height * -0.15; // Define spacing between buttons
-//     let startY = canvas.height - canvas.height * 0.45; // Starting Y position for buttons
-//     question.answers.forEach((answer, index) => {
-//         // Calculate button position
-//         const buttonWidth = canvas.width * 0.8;
-//         let buttonHeight = canvas.height * 0.05; // Initial height
-//         const buttonX = (canvas.width - buttonWidth) / 2;
-//         const buttonY = startY - (index + 1) * (buttonHeight + buttonSpacing);
-//         // Calculate text dimensions
-//         const padding = canvas.width * 0.02; // Padding between button and text
-//         const buttonFontSize = canvas.width * 0.03; // Adjust font size based on canvas width
-//         ctx.font = `bold ${buttonFontSize}px Arial`;
-//         const lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2)
-//         buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
-//         // // Draw button background
-//         // ctx.fillStyle = answer.hover ? '#bbb' : '#ddd';
-//         // ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
-//         const cornerRadius = 20; // Adjust corner radius as needed
-//         ctx.beginPath();
-//         ctx.moveTo(buttonX + cornerRadius, buttonY);
-//         ctx.lineTo(buttonX + buttonWidth - cornerRadius, buttonY);
-//         ctx.arcTo(buttonX + buttonWidth, buttonY, buttonX + buttonWidth, buttonY + cornerRadius, cornerRadius);
-//         ctx.lineTo(buttonX + buttonWidth, buttonY + buttonHeight - cornerRadius);
-//         ctx.arcTo(buttonX + buttonWidth, buttonY + buttonHeight, buttonX + buttonWidth - cornerRadius, buttonY + buttonHeight, cornerRadius);
-//         ctx.lineTo(buttonX + cornerRadius, buttonY + buttonHeight);
-//         ctx.arcTo(buttonX, buttonY + buttonHeight, buttonX, buttonY + buttonHeight - cornerRadius, cornerRadius);
-//         ctx.lineTo(buttonX, buttonY + cornerRadius);
-//         ctx.arcTo(buttonX, buttonY, buttonX + cornerRadius, buttonY, cornerRadius);
-//         ctx.closePath();
-//         ctx.fillStyle = answer.hover ? '#bbb' : 'black';
-//         ctx.fill();
-//         // Draw button text
-//         ctx.fillStyle = 'white';
-//         ctx.textAlign = 'center'; // Align text to the center
-//         const textY = buttonY + buttonHeight / 2; // Center vertically
-//         lines.forEach((line, index) => {
-//             ctx.fillText(line, buttonX + buttonWidth / 2, textY + (index - (lines.length - 1) / 2) * (canvas.height * 0.02));
-//         });
-//         // Save button details for click detection
-//         answer.button = {
-//             x: buttonX,
-//             y: buttonY,
-//             width: buttonWidth,
-//             height: buttonHeight
-//         };
-//     });
-// }
+}
 function _displayQuestion() {
-  _displayQuestion = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(questionIndex) {
+  _displayQuestion = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(questionIndex) {
     var question, padding, backgroundImage, imageAspectRatio, imageWidth, imageHeight, imageX, imageY, questionFontSize, questionLines, lineHeight, textY;
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
         case 0:
           question = questionsData[questionIndex];
           ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -455,7 +446,7 @@ function _displayQuestion() {
           // Wrap the question text
           questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8); // Calculate vertical position for the wrapped text
           lineHeight = questionFontSize * 1.2; // Line height including padding
-          textY = canvas.height - canvas.height * 0.5 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
+          textY = canvas.height - canvas.height * 0.4 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
           questionLines.forEach(function (line, index) {
             ctx.fillText(line, canvas.width / 2, textY + index * lineHeight);
           });
@@ -464,9 +455,9 @@ function _displayQuestion() {
           drawButtons(question);
         case 20:
         case "end":
-          return _context2.stop();
+          return _context3.stop();
       }
-    }, _callee2);
+    }, _callee3);
   }));
   return _displayQuestion.apply(this, arguments);
 }
@@ -599,128 +590,244 @@ function selectAnswer(answerIndex) {
 //     }
 // });
 
-// Function to show the result
+// // Function to show the result
+// function showResult(personalityType) {
+//     // Clear the canvas
+
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+//     SendUserPersonality(personalityType);
+//     // Draw the personality result text
+//     const resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
+//     ctx.font = `${resultFontSize}px Arial`;
+//     ctx.fillStyle = '#000';
+//     ctx.textAlign = 'center';
+//     let result = '';
+
+//     // Determine the result based on personality type
+//     switch (personalityType) {
+//         case 0:
+//             result = 'Impressionism';
+//             break;
+//         case 1:
+//             result = 'De Stijl';
+//             break;
+//         case 2:
+//             result = 'Surrealism';
+//             break;
+//         case 3:
+//             result = 'Post-modern';
+//             break;
+//         case 4:
+//             result = 'Art Nouveau';
+//             break;
+//         case 5:
+//             result = 'Cubism';
+//             break;
+//         case 6:
+//             result = 'Bauhaus';
+//             break;
+//         case 7:
+//             result = 'Expressionism';
+//             break;
+//         case 8:
+//             result = 'Dadaism';
+//             break;
+//         case 9:
+//             result = 'Constructivism';
+//             break;
+//         default:
+//             result = 'Unknown';
+//             break;
+//     }
+
+//     // riveInstance.resizeDrawingSurfaceToCanvas();
+//     // // Play the Rive animation corresponding to the result
+//     // riveInstance.play("ResultStateMachine");
+//     // if (inputs) {
+//     //     const inputName = result;
+//     //     const triggerInput = inputs.find(i => i.name === inputName);
+//     //     if (triggerInput) {
+//     //         triggerInput.fire(); // Trigger the input to play the animation
+//     //         console.log('Trigger input successful:', inputName);
+//     //     } else {
+//     //         console.log('Trigger input not found:', inputName);
+//     //     }
+//     // } else {
+//     //     console.log('State machine inputs not loaded or state machine not found');
+//     // }
+
+//     // const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
+//     const padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
+
+//     // Get the background image
+//     const backgroundImage = preloadResultImages.images[personalityType];
+
+//     // Calculate the aspect ratio of the image
+//     const imageAspectRatio = backgroundImage.width / backgroundImage.height;
+
+//     // Calculate the new dimensions to fit the image inside the canvas
+//     let imageWidth = canvas.width;
+//     let imageHeight = canvas.width / imageAspectRatio;
+
+//     // Check if the image height exceeds the canvas height minus padding
+//     if (imageHeight > canvas.height - padding) {
+//         imageHeight = canvas.height - padding;
+//         imageWidth = imageHeight * imageAspectRatio;
+//     }
+
+//     // Calculate the position (centered horizontally, aligned to the top with padding)
+//     const imageX = (canvas.width - imageWidth) / 2;
+//     const imageY = padding; // Align to the top with padding
+
+//     // Draw the image on the canvas
+//     ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
+
+//     // Draw the result text on the canvas
+//     const statTextX = canvas.width * 0.75;
+//     const statTextY = canvas.height - canvas.height * 0.07;
+//     const resultTextX = canvas.width * 0.75;
+//     const resultTextY = canvas.height - canvas.height * 0.09;
+//     const nameTextX = canvas.width * 0.75;
+//     const nameTextY = canvas.height - canvas.height * 0.11;
+//     const originalFont = ctx.font;
+
+//     // Set the font style for the bold and larger text
+//     ctx.font = `bold ${resultFontSize * 1.5}px Arial`; // Adjust font size as needed
+
+//     // Draw the bold and larger text for 'Hello, ' + playerName
+//     ctx.fillText('Hello, ' + nameFromDatabase, nameTextX, nameTextY);
+
+//     // Revert back to the original font style
+//     ctx.font = originalFont;
+
+//     // Draw the regular text for 'Your Personality Type: ' + result
+//     ctx.fillText('Your Personality Type: ' + result, resultTextX, resultTextY);
+//     ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', statTextX, statTextY);
+
+//     // Draw the screenshot button
+//     screenshotButtonVisible = true;
+//     drawScreenshotButton();
+// }
+
 function showResult(personalityType) {
   // Clear the canvas
-
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   (0, _playfabManager.SendUserPersonality)(personalityType);
-  // Draw the personality result text
-  var resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
-  ctx.font = "".concat(resultFontSize, "px Arial");
-  ctx.fillStyle = '#000';
-  ctx.textAlign = 'center';
-  var result = '';
 
-  // Determine the result based on personality type
-  switch (personalityType) {
-    case 0:
-      result = 'Impressionism';
-      break;
-    case 1:
-      result = 'De Stijl';
-      break;
-    case 2:
-      result = 'Surrealism';
-      break;
-    case 3:
-      result = 'Post-modern';
-      break;
-    case 4:
-      result = 'Art Nouveau';
-      break;
-    case 5:
-      result = 'Cubism';
-      break;
-    case 6:
-      result = 'Bauhaus';
-      break;
-    case 7:
-      result = 'Expressionism';
-      break;
-    case 8:
-      result = 'Dadaism';
-      break;
-    case 9:
-      result = 'Constructivism';
-      break;
-    default:
-      result = 'Unknown';
-      break;
+  // Draw the background image
+  var padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
+  var backgroundImage = preloadResultImages.images[personalityType];
+  var imageAspectRatio = backgroundImage.width / backgroundImage.height;
+  var imageWidth = canvas.width;
+  var imageHeight = canvas.width / imageAspectRatio;
+  if (imageHeight > canvas.height - padding) {
+    imageHeight = canvas.height - padding;
+    imageWidth = imageHeight * imageAspectRatio;
   }
+  var imageX = (canvas.width - imageWidth) / 2;
+  var imageY = padding;
+  ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
-  // riveInstance.resizeDrawingSurfaceToCanvas();
-  // // Play the Rive animation corresponding to the result
-  // riveInstance.play("ResultStateMachine");
-  // if (inputs) {
-  //     const inputName = result;
-  //     const triggerInput = inputs.find(i => i.name === inputName);
-  //     if (triggerInput) {
-  //         triggerInput.fire(); // Trigger the input to play the animation
-  //         console.log('Trigger input successful:', inputName);
-  //     } else {
-  //         console.log('Trigger input not found:', inputName);
-  //     }
-  // } else {
-  //     console.log('State machine inputs not loaded or state machine not found');
-  // }
+  // Draw the result text
+  var resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
+  ctx.font = "bold ".concat(resultFontSize * 1.5, "px Arial"); // Bold and larger text
+  ctx.fillStyle = '#000';
+  ctx.textAlign = 'left'; // Align text to the left
 
-  // Draw the result text on the canvas
-  var statTextX = canvas.width * 0.75;
-  var statTextY = canvas.height - canvas.height * 0.07;
-  var resultTextX = canvas.width * 0.75;
-  var resultTextY = canvas.height - canvas.height * 0.09;
-  var nameTextX = canvas.width * 0.75;
-  var nameTextY = canvas.height - canvas.height * 0.11;
-  var originalFont = ctx.font;
+  // Draw the name, result, and stat text
+  var nameTextX = 20;
+  var resultTextX = 20;
+  var statTextX = 20;
+  var textYStart = canvas.height - canvas.height * 0.12;
+  var textYSpacing = resultFontSize * 1.5;
+  ctx.fillText('Hello, ' + _playfabManager.nameFromDatabase, nameTextX, textYStart);
+  ctx.font = "bold ".concat(resultFontSize, "px Arial"); // Regular font size for result text
+  ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), resultTextX, textYStart + textYSpacing);
+  ctx.font = "normal ".concat(resultFontSize, "px Arial"); // Normal font style for stat text
+  ctx.fillText((0, _playfabManager.CalcPersonaRate)(personalityType) + '% people also this type', statTextX, textYStart + textYSpacing * 2);
 
-  // Set the font style for the bold and larger text
-  ctx.font = "bold ".concat(resultFontSize * 1.5, "px Arial"); // Adjust font size as needed
-
-  // Draw the bold and larger text for 'Hello, ' + playerName
-  ctx.fillText('Hello, ' + _playfabManager.nameFromDatabase, nameTextX, nameTextY);
-
-  // Revert back to the original font style
-  ctx.font = originalFont;
-
-  // Draw the regular text for 'Your Personality Type: ' + result
-  ctx.fillText('Your Personality Type: ' + result, resultTextX, resultTextY);
-  ctx.fillText((0, _playfabManager.CalcPersonaRate)(personalityType) + '% people also this type', statTextX, statTextY);
+  // Draw the explanation text on the right bottom half
+  var explanation = explanationData.find(function (item) {
+    return item.Type === personalityType;
+  });
+  if (explanation) {
+    var headingFontSize = resultFontSize * 1.2;
+    var explanationFontSize = resultFontSize;
+    ctx.font = "bold ".concat(headingFontSize, "px Arial");
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'left';
+    var headingX = canvas.width * 0.55; // Align to the right half
+    var headingY = canvas.height - canvas.height * 0.4; // Start from bottom
+    ctx.fillText(explanation.Heading, headingX, headingY);
+    ctx.font = "normal ".concat(explanationFontSize, "px Arial");
+    var maxExplanationWidth = canvas.width * 0.4; // Limit text width for explanation
+    var explanationLines = wrapText(ctx, explanation.Explanation, maxExplanationWidth);
+    explanationLines.forEach(function (line, index) {
+      ctx.fillText(line, headingX, headingY + headingFontSize + index * explanationFontSize * 1.2);
+    });
+  }
 
   // Draw the screenshot button
   screenshotButtonVisible = true;
   drawScreenshotButton();
+}
+function getPersonalityTypeLabel(type) {
+  switch (type) {
+    case 0:
+      return 'Impressionism';
+    case 1:
+      return 'De Stijl';
+    case 2:
+      return 'Surrealism';
+    case 3:
+      return 'Post-modern';
+    case 4:
+      return 'Art Nouveau';
+    case 5:
+      return 'Cubism';
+    case 6:
+      return 'Bauhaus';
+    case 7:
+      return 'Expressionism';
+    case 8:
+      return 'Dadaism';
+    case 9:
+      return 'Constructivism';
+    default:
+      return 'Unknown';
+  }
 }
 
 // Function to determine the final result
 function getResult() {
   var mostCommonChoices = findMostCommonChoice(userChoices);
   var result = mostCommonChoices[0];
-  if (mostCommonChoices.length > 1) {
-    switch (mostCommonChoices[0]) {
-      case 0:
-        if (mostCommonChoices[1] == 1) {
-          result = 3;
-        } else if (mostCommonChoices[1] == 2) {
-          result = 4;
-        }
-        break;
-      case 1:
-        if (mostCommonChoices[1] == 0) {
-          result = 3;
-        } else if (mostCommonChoices[1] == 2) {
-          result = 5;
-        }
-        break;
-      case 2:
-        if (mostCommonChoices[1] == 0) {
-          result = 4;
-        } else if (mostCommonChoices[1] == 1) {
-          result = 5;
-        }
-        break;
-    }
-  }
+  // if (mostCommonChoices.length > 1) {
+  //     switch (mostCommonChoices[0]) {
+  //         case 0:
+  //             if (mostCommonChoices[1] == 1) {
+  //                 result = 3;
+  //             } else if (mostCommonChoices[1] == 2) {
+  //                 result = 4;
+  //             }
+  //             break;
+  //         case 1:
+  //             if (mostCommonChoices[1] == 0) {
+  //                 result = 3;
+  //             } else if (mostCommonChoices[1] == 2) {
+  //                 result = 5;
+  //             }
+  //             break;
+  //         case 2:
+  //             if (mostCommonChoices[1] == 0) {
+  //                 result = 4;
+  //             } else if (mostCommonChoices[1] == 1) {
+  //                 result = 5;
+  //             }
+  //             break;
+  //     }
+  // }
   return result;
 }
 
@@ -761,8 +868,8 @@ function takeScreenshot() {
   tempCanvas.width = canvas.width;
   tempCanvas.height = canvas.height;
 
-  // Draw the riveCanvas onto the temporary canvas
-  tempCtx.drawImage(riveCanvas, 0, 0);
+  // // Draw the riveCanvas onto the temporary canvas
+  // tempCtx.drawImage(riveCanvas, 0, 0);
 
   // Draw the main canvas onto the temporary canvas
   tempCtx.drawImage(canvas, 0, 0);
