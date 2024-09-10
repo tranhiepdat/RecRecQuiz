@@ -256,11 +256,11 @@ function preloadImage(url) {
         image.src = url;
     });
 }
+
 async function displayQuestion(questionIndex) {
     const question = questionsData[questionIndex];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
     const padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
 
     // Get the background image
@@ -269,7 +269,7 @@ async function displayQuestion(questionIndex) {
     // Calculate the aspect ratio of the image
     const imageAspectRatio = backgroundImage.width / backgroundImage.height;
 
-    // Calculate the new dimensions to fit the image inside the canvas
+    // Calculate new dimensions to fit the image inside the canvas
     let imageWidth = canvas.width;
     let imageHeight = canvas.width / imageAspectRatio;
 
@@ -287,7 +287,7 @@ async function displayQuestion(questionIndex) {
     ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
     // Display the quiz question at the bottom of the canvas
-    const questionFontSize = canvas.width * 0.07; // Adjust font size based on canvas width
+    const questionFontSize = Math.min(canvas.width * 0.07, canvas.height * 0.07); // Adjust font size based on canvas width and height
     ctx.font = `bold ${questionFontSize}px Arial`;
     ctx.textAlign = 'center';
     ctx.fillStyle = '#0f5e74';
@@ -307,13 +307,14 @@ async function displayQuestion(questionIndex) {
     drawButtons(question);
 }
 
+
 function drawButtons(question) {
     const buttonSpacing = canvas.height * 0.01; // Define spacing between buttons
 
     // Calculate total height of all buttons including spacing
     let totalHeight = 0;
     question.answers.forEach(answer => {
-        const buttonFontSize = canvas.width * 0.03; // Adjust font size based on canvas width
+        const buttonFontSize = Math.min(canvas.width * 0.03, canvas.height * 0.03); // Adjust font size based on canvas width and height
         ctx.font = `bold ${buttonFontSize}px Arial`;
         const lines = wrapText(ctx, answer.answerText, canvas.width * 0.8 - canvas.width * 0.02 * 2);
         let buttonHeight = canvas.height * 0.05 + (lines.length - 1) * (canvas.height * 0.02);
@@ -329,7 +330,7 @@ function drawButtons(question) {
         let buttonHeight = canvas.height * 0.05; // Initial height
         const buttonX = (canvas.width - buttonWidth) / 2;
         const padding = canvas.width * 0.02; // Padding between button and text
-        const buttonFontSize = canvas.width * 0.03; // Adjust font size based on canvas width
+        const buttonFontSize = Math.min(canvas.width * 0.03, canvas.height * 0.03); // Adjust font size based on canvas width and height
         ctx.font = `bold ${buttonFontSize}px Arial`;
         const lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2);
         buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
@@ -420,147 +421,6 @@ function selectAnswer(answerIndex) {
     }
 }
 
-// // Load Rive animation
-// const riveInstance = new rive.Rive({
-//     src: 'personalitytest.riv',
-//     canvas: riveCanvas,
-//     autoplay: false,
-//     shouldDisableRiveListeners: true,
-
-//     stateMachines: 'ResultStateMachine', // Ensure this matches the name in your Rive file
-//     onLoad: () => {
-//         console.log('Rive file loaded and state machine ready');
-//         // Get the inputs for the state machine
-//         inputs = riveInstance.stateMachineInputs('ResultStateMachine');
-//         riveInstance.resizeDrawingSurfaceToCanvas();
-//     },
-//     onError: (error) => {
-//         console.error('Error loading the Rive file:', error);
-//     }
-// });
-
-// // Function to show the result
-// function showResult(personalityType) {
-//     // Clear the canvas
-    
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-//     SendUserPersonality(personalityType);
-//     // Draw the personality result text
-//     const resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
-//     ctx.font = `${resultFontSize}px Arial`;
-//     ctx.fillStyle = '#000';
-//     ctx.textAlign = 'center';
-//     let result = '';
-
-//     // Determine the result based on personality type
-//     switch (personalityType) {
-//         case 0:
-//             result = 'Impressionism';
-//             break;
-//         case 1:
-//             result = 'De Stijl';
-//             break;
-//         case 2:
-//             result = 'Surrealism';
-//             break;
-//         case 3:
-//             result = 'Post-modern';
-//             break;
-//         case 4:
-//             result = 'Art Nouveau';
-//             break;
-//         case 5:
-//             result = 'Cubism';
-//             break;
-//         case 6:
-//             result = 'Bauhaus';
-//             break;
-//         case 7:
-//             result = 'Expressionism';
-//             break;
-//         case 8:
-//             result = 'Dadaism';
-//             break;
-//         case 9:
-//             result = 'Constructivism';
-//             break;
-//         default:
-//             result = 'Unknown';
-//             break;
-//     }
-
-    
-
-//     // riveInstance.resizeDrawingSurfaceToCanvas();
-//     // // Play the Rive animation corresponding to the result
-//     // riveInstance.play("ResultStateMachine");
-//     // if (inputs) {
-//     //     const inputName = result;
-//     //     const triggerInput = inputs.find(i => i.name === inputName);
-//     //     if (triggerInput) {
-//     //         triggerInput.fire(); // Trigger the input to play the animation
-//     //         console.log('Trigger input successful:', inputName);
-//     //     } else {
-//     //         console.log('Trigger input not found:', inputName);
-//     //     }
-//     // } else {
-//     //     console.log('State machine inputs not loaded or state machine not found');
-//     // }
-
-//     // const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
-//     const padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
-
-//     // Get the background image
-//     const backgroundImage = preloadResultImages.images[personalityType];
-
-//     // Calculate the aspect ratio of the image
-//     const imageAspectRatio = backgroundImage.width / backgroundImage.height;
-
-//     // Calculate the new dimensions to fit the image inside the canvas
-//     let imageWidth = canvas.width;
-//     let imageHeight = canvas.width / imageAspectRatio;
-
-//     // Check if the image height exceeds the canvas height minus padding
-//     if (imageHeight > canvas.height - padding) {
-//         imageHeight = canvas.height - padding;
-//         imageWidth = imageHeight * imageAspectRatio;
-//     }
-
-//     // Calculate the position (centered horizontally, aligned to the top with padding)
-//     const imageX = (canvas.width - imageWidth) / 2;
-//     const imageY = padding; // Align to the top with padding
-
-//     // Draw the image on the canvas
-//     ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
-
-//     // Draw the result text on the canvas
-//     const statTextX = canvas.width * 0.75;
-//     const statTextY = canvas.height - canvas.height * 0.07;
-//     const resultTextX = canvas.width * 0.75;
-//     const resultTextY = canvas.height - canvas.height * 0.09;
-//     const nameTextX = canvas.width * 0.75;
-//     const nameTextY = canvas.height - canvas.height * 0.11;
-//     const originalFont = ctx.font;
-
-//     // Set the font style for the bold and larger text
-//     ctx.font = `bold ${resultFontSize * 1.5}px Arial`; // Adjust font size as needed
-
-//     // Draw the bold and larger text for 'Hello, ' + playerName
-//     ctx.fillText('Hello, ' + nameFromDatabase, nameTextX, nameTextY);
-
-//     // Revert back to the original font style
-//     ctx.font = originalFont;
-
-//     // Draw the regular text for 'Your Personality Type: ' + result
-//     ctx.fillText('Your Personality Type: ' + result, resultTextX, resultTextY);
-//     ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', statTextX, statTextY);
-
-//     // Draw the screenshot button
-//     screenshotButtonVisible = true;
-//     drawScreenshotButton();
-// }
-
 function showResult(personalityType) {
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -568,7 +428,7 @@ function showResult(personalityType) {
     SendUserPersonality(personalityType);
 
     // Draw the background image
-    const padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
+    const padding = canvas.height * 0.03; // Define top padding (3% of canvas height for smaller canvas)
     const backgroundImage = preloadResultImages.images[personalityType];
     const imageAspectRatio = backgroundImage.width / backgroundImage.height;
     let imageWidth = canvas.width;
@@ -584,21 +444,21 @@ function showResult(personalityType) {
     ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
     // Calculate the space below the image for text
-    const textPadding = canvas.height * 0.02; // Padding between image and text
-    const textAreaWidth = canvas.width * 0.4; // Width of the text area for heading and explanation
+    const textPadding = canvas.height * 0.015; // Padding between image and text (1.5% of canvas height)
+    const textAreaWidth = canvas.width * 0.45; // Width of the text area for heading and explanation (45% of canvas width)
 
     // Draw the result text (name, result, stat) on the left
-    const resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
+    const resultFontSize = Math.min(canvas.width * 0.03, canvas.height * 0.03); // Adjust font size based on canvas width (2% of canvas width)
     const textX = 20; // X position for the text on the left side
     let textY = imageY + imageHeight + textPadding; // Y position for the text below the image
 
-    ctx.font = `bold ${resultFontSize * 1.5}px Arial`; // Bold and larger text
+    ctx.font = `bold ${resultFontSize * 1.4}px Arial`; // Bold and larger text
     ctx.fillStyle = '#000';
     ctx.textAlign = 'left'; // Align text to the left
 
     // Draw the name, result, and stat text
     ctx.fillText('Hello, ' + nameFromDatabase, textX, textY);
-    textY += resultFontSize * 1.5 + textPadding;
+    textY += resultFontSize * 1.4 + textPadding;
 
     ctx.font = `bold ${resultFontSize}px Arial`; // Regular font size for result text
     ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), textX, textY);
@@ -613,7 +473,7 @@ function showResult(personalityType) {
     if (explanation) {
         const headingFontSize = resultFontSize * 1.2;
         const explanationFontSize = resultFontSize;
-        
+
         // Draw the heading
         ctx.font = `bold ${headingFontSize}px Arial`;
         ctx.fillStyle = '#000';
@@ -640,7 +500,6 @@ function showResult(personalityType) {
     screenshotButtonVisible = true;
     drawScreenshotButton();
 }
-
 
 function getPersonalityTypeLabel(type) {
     switch (type) {
@@ -812,13 +671,6 @@ function drawScreenshotButton(mouseX, mouseY) {
         canvas.style.cursor = isHover ? 'pointer' : 'default';
     }
 }
-// Function to clear the canvas excluding the screenshot button area
-function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (screenshotButtonVisible && screenshotButtonPos) {
-        drawScreenshotButton();
-    }
-}
 
 // Function to handle mouse movement over buttons
 canvas.addEventListener('mousemove', function (e) {
@@ -917,7 +769,3 @@ function handleInput(posX, posY) {
 }
 // Initialize the quiz when the DOM content is loaded
 document.addEventListener('DOMContentLoaded', initialize);
-
-
-
-
