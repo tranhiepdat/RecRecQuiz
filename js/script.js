@@ -241,7 +241,7 @@ async function displayQuestion(questionIndex) {
     const padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
 
     // Get the background image
-    const backgroundImage = preloadImages.images[questionIndex];
+    const backgroundImage = preloadImages.images[questionIndex+1];
 
     // Calculate the aspect ratio of the image
     const imageAspectRatio = backgroundImage.width / backgroundImage.height;

@@ -432,7 +432,7 @@ function _displayQuestion() {
           // const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
           padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
           // Get the background image
-          backgroundImage = preloadImages.images[questionIndex]; // Calculate the aspect ratio of the image
+          backgroundImage = preloadImages.images[questionIndex + 1]; // Calculate the aspect ratio of the image
           imageAspectRatio = backgroundImage.width / backgroundImage.height; // Calculate the new dimensions to fit the image inside the canvas
           imageWidth = canvas.width;
           imageHeight = canvas.width / imageAspectRatio; // Check if the image height exceeds the canvas height minus padding
