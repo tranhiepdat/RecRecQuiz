@@ -480,7 +480,7 @@ function drawButtons(question) {
     var buttonHeight = canvas.height * 0.05; // Initial height
     var buttonX = (canvas.width - buttonWidth) / 2;
     var padding = canvas.width * 0.02; // Padding between button and text
-    var buttonFontSize = Math.min(canvas.width * 0.03, canvas.height * 0.03); // Adjust font size based on canvas width and height
+    var buttonFontSize = Math.min(canvas.width * 0.02, canvas.height * 0.02); // Adjust font size based on canvas width and height
     ctx.font = "bold ".concat(buttonFontSize, "px Arial");
     var lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2);
     buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
@@ -588,7 +588,7 @@ function showResult(personalityType) {
   ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
   // Calculate the space below the image for text
-  var textPadding = canvas.height * 0.015; // Padding between image and text (1.5% of canvas height)
+  var textPadding = canvas.height * 0.01; // Padding between image and text (1.5% of canvas height)
   var textAreaWidth = canvas.width * 0.45; // Width of the text area for heading and explanation (45% of canvas width)
 
   // Draw the result text (name, result, stat) on the left
@@ -622,7 +622,7 @@ function showResult(personalityType) {
     ctx.font = "bold ".concat(headingFontSize, "px Arial");
     ctx.fillStyle = '#000';
     ctx.textAlign = 'left';
-    var headingX = canvas.width * 0.55; // Align to the right half
+    var headingX = canvas.width * 0.5; // Align to the right half
     var headingY = textY; // Start from where the previous text ended
     var headingLines = wrapText(ctx, explanation.Heading, textAreaWidth);
     headingLines.forEach(function (line, index) {
