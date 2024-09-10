@@ -583,48 +583,38 @@ function showResult(personalityType) {
     const imageY = padding;
     ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
-    // Draw the result text
-    const resultFontSize = canvas.width * 0.03; // Increase font size for better readability
-    const textYStart = canvas.height - canvas.height * 0.12;
-    const textYSpacing = resultFontSize * 1.5;
+    // Calculate text area dimensions based on image height
+    const textAreaHeight = canvas.height - imageHeight - padding * 2;
+    const textAreaWidth = canvas.width;
 
-    // Draw the name and result text
-    const nameTextX = 20;
-    const resultTextX = 20;
-    const statTextX = 20;
+    // Adjust font sizes based on text area dimensions
+    const resultFontSize = textAreaHeight * 0.04;
+    const headingFontSize = resultFontSize * 1.2;
+    const explanationFontSize = resultFontSize * 0.8;
 
-    ctx.font = `bold ${resultFontSize * 1.5}px Arial`; // Bold and larger text for name
-    ctx.fillText('Hello, ' + nameFromDatabase, nameTextX, textYStart);
+    // Draw the result text with improved alignment and spacing
+    const textX = padding;
+    const textY = imageHeight + padding;
+    const textLineHeight = resultFontSize * 1.5;
 
-    ctx.font = `bold ${resultFontSize}px Arial`; // Regular font size for result text
-    ctx.fillStyle = '#333'; // Darker text color for better contrast
-    ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), resultTextX, textYStart + textYSpacing);
+    ctx.font = `bold ${resultFontSize}px Arial`;
+    ctx.fillText('Hello, ' + nameFromDatabase, textX, textY);
+    ctx.font = `bold ${resultFontSize * 1.2}px Arial`;
+    ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), textX, textY + textLineHeight);
+    ctx.font = `normal ${resultFontSize}px Arial`;
+    ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', textX, textY + textLineHeight * 2);
 
-    ctx.font = `normal ${resultFontSize}px Arial`; // Normal font style for stat text
-    ctx.fillStyle = '#666'; // Lighter text color for stat
-    ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', statTextX, textYStart + textYSpacing * 2);
-
-    // Draw the explanation text on the right bottom half
+    // Draw the explanation text with improved alignment and spacing
     const explanation = explanationData.find(item => item.Type === personalityType);
     if (explanation) {
-        const headingFontSize = resultFontSize * 1.2;
-        const explanationFontSize = resultFontSize;
-
         ctx.font = `bold ${headingFontSize}px Arial`;
-        ctx.fillStyle = '#333'; // Darker text color for heading
-        ctx.textAlign = 'left';
-        const headingX = canvas.width * 0.55; // Align to the right half
-        let headingY = canvas.height - canvas.height * 0.4; // Start from bottom
-
-        // Adjust heading position for better spacing
-        ctx.fillText(explanation.Heading, headingX, headingY - 10);
+        ctx.fillText(explanation.Heading, textX, textY + textLineHeight * 3);
 
         ctx.font = `normal ${explanationFontSize}px Arial`;
-        ctx.fillStyle = '#666'; // Lighter text color for explanation
-        const maxExplanationWidth = canvas.width * 0.4; // Limit text width for explanation
+        const maxExplanationWidth = textAreaWidth - padding * 2;
         const explanationLines = wrapText(ctx, explanation.Explanation, maxExplanationWidth);
         explanationLines.forEach((line, index) => {
-            ctx.fillText(line, headingX, headingY + headingFontSize + (index * explanationFontSize * 1.2));
+            ctx.fillText(line, textX, textY + textLineHeight * 4 + (index * explanationFontSize * 1.2));
         });
     }
 

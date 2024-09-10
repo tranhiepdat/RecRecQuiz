@@ -729,45 +729,38 @@ function showResult(personalityType) {
   var imageY = padding;
   ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
-  // Draw the result text
-  var resultFontSize = canvas.width * 0.03; // Increase font size for better readability
-  var textYStart = canvas.height - canvas.height * 0.12;
-  var textYSpacing = resultFontSize * 1.5;
+  // Calculate text area dimensions based on image height
+  var textAreaHeight = canvas.height - imageHeight - padding * 2;
+  var textAreaWidth = canvas.width;
 
-  // Draw the name and result text
-  var nameTextX = 20;
-  var resultTextX = 20;
-  var statTextX = 20;
-  ctx.font = "bold ".concat(resultFontSize * 1.5, "px Arial"); // Bold and larger text for name
-  ctx.fillText('Hello, ' + _playfabManager.nameFromDatabase, nameTextX, textYStart);
-  ctx.font = "bold ".concat(resultFontSize, "px Arial"); // Regular font size for result text
-  ctx.fillStyle = '#333'; // Darker text color for better contrast
-  ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), resultTextX, textYStart + textYSpacing);
-  ctx.font = "normal ".concat(resultFontSize, "px Arial"); // Normal font style for stat text
-  ctx.fillStyle = '#666'; // Lighter text color for stat
-  ctx.fillText((0, _playfabManager.CalcPersonaRate)(personalityType) + '% people also this type', statTextX, textYStart + textYSpacing * 2);
+  // Adjust font sizes based on text area dimensions
+  var resultFontSize = textAreaHeight * 0.04;
+  var headingFontSize = resultFontSize * 1.2;
+  var explanationFontSize = resultFontSize * 0.8;
 
-  // Draw the explanation text on the right bottom half
+  // Draw the result text with improved alignment and spacing
+  var textX = padding;
+  var textY = imageHeight + padding;
+  var textLineHeight = resultFontSize * 1.5;
+  ctx.font = "bold ".concat(resultFontSize, "px Arial");
+  ctx.fillText('Hello, ' + _playfabManager.nameFromDatabase, textX, textY);
+  ctx.font = "bold ".concat(resultFontSize * 1.2, "px Arial");
+  ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), textX, textY + textLineHeight);
+  ctx.font = "normal ".concat(resultFontSize, "px Arial");
+  ctx.fillText((0, _playfabManager.CalcPersonaRate)(personalityType) + '% people also this type', textX, textY + textLineHeight * 2);
+
+  // Draw the explanation text with improved alignment and spacing
   var explanation = explanationData.find(function (item) {
     return item.Type === personalityType;
   });
   if (explanation) {
-    var headingFontSize = resultFontSize * 1.2;
-    var explanationFontSize = resultFontSize;
     ctx.font = "bold ".concat(headingFontSize, "px Arial");
-    ctx.fillStyle = '#333'; // Darker text color for heading
-    ctx.textAlign = 'left';
-    var headingX = canvas.width * 0.55; // Align to the right half
-    var headingY = canvas.height - canvas.height * 0.4; // Start from bottom
-
-    // Adjust heading position for better spacing
-    ctx.fillText(explanation.Heading, headingX, headingY - 10);
+    ctx.fillText(explanation.Heading, textX, textY + textLineHeight * 3);
     ctx.font = "normal ".concat(explanationFontSize, "px Arial");
-    ctx.fillStyle = '#666'; // Lighter text color for explanation
-    var maxExplanationWidth = canvas.width * 0.4; // Limit text width for explanation
+    var maxExplanationWidth = textAreaWidth - padding * 2;
     var explanationLines = wrapText(ctx, explanation.Explanation, maxExplanationWidth);
     explanationLines.forEach(function (line, index) {
-      ctx.fillText(line, headingX, headingY + headingFontSize + index * explanationFontSize * 1.2);
+      ctx.fillText(line, textX, textY + textLineHeight * 4 + index * explanationFontSize * 1.2);
     });
   }
 
