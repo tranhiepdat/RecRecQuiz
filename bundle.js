@@ -438,7 +438,7 @@ function _displayQuestion() {
           ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
           // Calculate space below the image for the question and buttons
-          availableHeight = canvas.height - imageHeight - padding - canvas.height * 0.02; // Space below image and padding
+          availableHeight = canvas.height - imageHeight - padding - canvas.height * 0.01; // Space below image and padding
           // Display the quiz question at the bottom of the available space
           questionFontSize = Math.min(canvas.width * 0.05, availableHeight * 0.1); // Adjust font size based on canvas width and available height
           ctx.font = "bold ".concat(questionFontSize, "px Arial");
@@ -452,7 +452,7 @@ function _displayQuestion() {
           questionLines.forEach(function (line, index) {
             ctx.fillText(line, canvas.width / 2, questionTextY + index * lineHeight);
           });
-          buttonStartY = questionTextY + questionLines.length * lineHeight + canvas.height * 0.03;
+          buttonStartY = questionTextY + questionLines.length * lineHeight + canvas.height * 0.04;
           // Draw buttons below the question
           drawButtons(question, buttonStartY);
         case 22:
@@ -594,7 +594,7 @@ function showResult(personalityType) {
   // Draw the result text (name, result, stat) on the left
   var resultFontSize = Math.min(canvas.width * 0.03, canvas.height * 0.03); // Adjust font size based on canvas width (2% of canvas width)
   var textX = 20; // X position for the text on the left side
-  var textY = imageY + imageHeight + textPadding + 10; // Y position for the text below the image
+  var textY = imageY + imageHeight + textPadding + 30; // Y position for the text below the image
 
   ctx.font = "bold ".concat(resultFontSize * 1.4, "px Arial"); // Bold and larger text
   ctx.fillStyle = '#000';
