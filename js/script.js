@@ -263,7 +263,7 @@ async function displayQuestion(questionIndex) {
     const question = questionsData[questionIndex];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
+    let padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
 
     // Get the background image
     const backgroundImage = preloadImages.images[questionIndex];
@@ -287,6 +287,7 @@ async function displayQuestion(questionIndex) {
 
     // Draw the image on the canvas
     ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
+    padding = canvas.height * 0.02;
 
     // Calculate space below the image for the question and buttons
     const availableHeight = canvas.height - imageHeight - padding - (canvas.height * 0.01); // Space below image and padding
@@ -462,7 +463,7 @@ function showResult(personalityType) {
     textY += resultFontSize * 1.4 + textPadding;
 
     ctx.font = `bold ${resultFontSize}px Arial`; // Regular font size for result text
-    ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), textX, textY);
+    ctx.fillText('Your Personality Type:\n' + getPersonalityTypeLabel(personalityType), textX, textY);
     textY += resultFontSize + textPadding;
 
     ctx.font = `normal ${resultFontSize}px Arial`; // Normal font style for stat text
@@ -479,7 +480,7 @@ function showResult(personalityType) {
         ctx.font = `bold ${headingFontSize}px Arial`;
         ctx.fillStyle = '#000';
         ctx.textAlign = 'left';
-        const headingX = canvas.width * 0.57; // Align to the right half
+        const headingX = canvas.width * 0.5; // Align to the right half
         let headingY = textY; // Start from where the previous text ended
         const headingLines = wrapText(ctx, explanation.Heading, textAreaWidth);
         headingLines.forEach((line, index) => {

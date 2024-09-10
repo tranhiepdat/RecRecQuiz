@@ -436,6 +436,7 @@ function _displayQuestion() {
           imageY = padding; // Align to the top with padding
           // Draw the image on the canvas
           ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
+          padding = canvas.height * 0.02;
 
           // Calculate space below the image for the question and buttons
           availableHeight = canvas.height - imageHeight - padding - canvas.height * 0.01; // Space below image and padding
@@ -455,7 +456,7 @@ function _displayQuestion() {
           buttonStartY = questionTextY + questionLines.length * lineHeight + canvas.height * 0.01;
           // Draw buttons below the question
           drawButtons(question, buttonStartY);
-        case 22:
+        case 23:
         case "end":
           return _context3.stop();
       }
@@ -604,7 +605,7 @@ function showResult(personalityType) {
   ctx.fillText('Hello, ' + _playfabManager.nameFromDatabase, textX, textY);
   textY += resultFontSize * 1.4 + textPadding;
   ctx.font = "bold ".concat(resultFontSize, "px Arial"); // Regular font size for result text
-  ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), textX, textY);
+  ctx.fillText('Your Personality Type:\n' + getPersonalityTypeLabel(personalityType), textX, textY);
   textY += resultFontSize + textPadding;
   ctx.font = "normal ".concat(resultFontSize, "px Arial"); // Normal font style for stat text
   ctx.fillText((0, _playfabManager.CalcPersonaRate)(personalityType) + '% people also this type', textX, textY);
@@ -622,7 +623,7 @@ function showResult(personalityType) {
     ctx.font = "bold ".concat(headingFontSize, "px Arial");
     ctx.fillStyle = '#000';
     ctx.textAlign = 'left';
-    var headingX = canvas.width * 0.57; // Align to the right half
+    var headingX = canvas.width * 0.5; // Align to the right half
     var headingY = textY; // Start from where the previous text ended
     var headingLines = wrapText(ctx, explanation.Heading, textAreaWidth);
     headingLines.forEach(function (line, index) {
