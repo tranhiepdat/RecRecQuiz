@@ -460,8 +460,8 @@ function _displayQuestion() {
   }));
   return _displayQuestion.apply(this, arguments);
 }
-function drawButtons(question, startY) {
-  var buttonSpacing = canvas.height * 0.02; // Define spacing between buttons
+function drawButtons(question) {
+  var buttonSpacing = canvas.height * 0.01; // Define spacing between buttons
 
   // Calculate total height of all buttons including spacing
   var totalHeight = 0;
@@ -473,12 +473,8 @@ function drawButtons(question, startY) {
     totalHeight += buttonHeight + buttonSpacing;
   });
 
-  // Adjust starting Y position to fit all buttons within canvas
-  var adjustedStartY = startY;
-  if (adjustedStartY + totalHeight > canvas.height) {
-    // If buttons don't fit, adjust start position
-    adjustedStartY = canvas.height - totalHeight - buttonSpacing;
-  }
+  // Adjust starting Y position to center the buttons
+  var startY = (canvas.height - totalHeight + buttonSpacing) / 1.2;
   question.answers.forEach(function (answer, index) {
     // Calculate button position
     var buttonWidth = canvas.width * 0.8;
@@ -490,7 +486,7 @@ function drawButtons(question, startY) {
     var lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2);
     buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
 
-    var buttonY = adjustedStartY; // Use updated startY for this button's Y position
+    var buttonY = startY; // Use updated startY for this button's Y position
 
     // Draw button background with rounded corners
     var cornerRadius = 20; // Adjust corner radius as needed
@@ -525,20 +521,21 @@ function drawButtons(question, startY) {
     };
 
     // Update startY for the next button
-    adjustedStartY += buttonHeight + buttonSpacing;
+    startY += buttonHeight + buttonSpacing;
   });
 }
 
 // Function to redraw buttons with hover effect
 function redrawButtons() {
+  // Clear only the region occupied by the buttons
   var question = questionsData[currentQuestion];
-
-  // Clear the region occupied by the buttons
+  // question.answers.forEach((answer) => {
+  //     ctx.clearRect(answer.button.x, answer.button.y, answer.button.width, answer.button.height);
+  // });
   question.answers.forEach(function (answer) {
+    // Set up clipping path to clear only within the rounded rectangle shape
     var cornerRadius = 20; // Adjust corner radius as needed
     ctx.save(); // Save the current drawing state
-
-    // Set up clipping path to clear only within the rounded rectangle shape
     ctx.beginPath();
     ctx.moveTo(answer.button.x + cornerRadius, answer.button.y);
     ctx.lineTo(answer.button.x + answer.button.width - cornerRadius, answer.button.y);
@@ -558,8 +555,6 @@ function redrawButtons() {
     // Reset clipping path
     ctx.restore();
   });
-
-  // Re-draw all buttons with updated states
   drawButtons(question);
 }
 
