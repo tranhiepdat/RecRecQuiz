@@ -286,17 +286,18 @@ async function displayQuestion(questionIndex) {
     // Draw the image on the canvas
     ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
-    // Display the quiz question below the image
-    const questionFontSize = Math.min(canvas.width * 0.05, canvas.height * 0.05); // Adjust font size based on canvas width and height
+    // Display the quiz question at the bottom of the canvas
+    const questionFontSize = Math.min(canvas.width * 0.07, canvas.height * 0.07); // Adjust font size based on canvas width and height
     ctx.font = `bold ${questionFontSize}px Arial`;
     ctx.textAlign = 'center';
     ctx.fillStyle = '#0f5e74';
+
     // Wrap the question text
     const questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8);
 
     // Calculate vertical position for the wrapped text
     const lineHeight = questionFontSize * 1.2; // Line height including padding
-    const textY = imageY + imageHeight + padding + questionFontSize; // Position below the image
+    const textY = imageY + imageHeight + (canvas.height - imageY - imageHeight - (questionLines.length * lineHeight)) / 2;
 
     // Draw each line of the wrapped text
     questionLines.forEach((line, index) => {
@@ -304,34 +305,33 @@ async function displayQuestion(questionIndex) {
     });
 
     // Calculate button positions and draw buttons
-    drawButtons(question, textY + (lineHeight * questionLines.length) + padding);
+    drawButtons(question, textY);
 }
 
-
-
-function drawButtons(question) {
+function drawButtons(question, questionTextY) {
     const buttonSpacing = canvas.height * 0.01; // Define spacing between buttons
+    const maxButtonWidth = canvas.width * 0.8;
+    const buttonFontSize = Math.min(canvas.width * 0.03, canvas.height * 0.03); // Adjust font size based on canvas width and height
+    ctx.font = `bold ${buttonFontSize}px Arial`;
 
     // Calculate total height of all buttons including spacing
     let totalHeight = 0;
     question.answers.forEach(answer => {
-        const buttonFontSize = Math.min(canvas.width * 0.03, canvas.height * 0.03); // Adjust font size based on canvas width and height
-        ctx.font = `bold ${buttonFontSize}px Arial`;
-        const lines = wrapText(ctx, answer.answerText, canvas.width * 0.8 - canvas.width * 0.02 * 2);
+        const lines = wrapText(ctx, answer.answerText, maxButtonWidth - canvas.width * 0.02 * 2);
         let buttonHeight = canvas.height * 0.05 + (lines.length - 1) * (canvas.height * 0.02);
         totalHeight += buttonHeight + buttonSpacing;
     });
 
-    // Adjust starting Y position to center the buttons
-    let startY = (canvas.height - totalHeight + buttonSpacing) / 1.2;
+    // Adjust starting Y position to fit the buttons below the question text
+    let startY = questionTextY + canvas.height * 0.02; // Padding between question and buttons
+    startY += (canvas.height - startY - totalHeight) / 1.5; // Center the buttons
 
     question.answers.forEach((answer, index) => {
         // Calculate button position
-        const buttonWidth = canvas.width * 0.8;
+        const buttonWidth = maxButtonWidth;
         let buttonHeight = canvas.height * 0.05; // Initial height
         const buttonX = (canvas.width - buttonWidth) / 2;
         const padding = canvas.width * 0.02; // Padding between button and text
-        const buttonFontSize = Math.min(canvas.width * 0.03, canvas.height * 0.03); // Adjust font size based on canvas width and height
         ctx.font = `bold ${buttonFontSize}px Arial`;
         const lines = wrapText(ctx, answer.answerText, buttonWidth - padding * 2);
         buttonHeight += (lines.length - 1) * (canvas.height * 0.02); // Increase button height for each additional line
@@ -375,14 +375,10 @@ function drawButtons(question) {
     });
 }
 
-
 // Function to redraw buttons with hover effect
 function redrawButtons() {
     // Clear only the region occupied by the buttons
     const question = questionsData[currentQuestion];
-    // question.answers.forEach((answer) => {
-    //     ctx.clearRect(answer.button.x, answer.button.y, answer.button.width, answer.button.height);
-    // });
     question.answers.forEach((answer) => {
         // Set up clipping path to clear only within the rounded rectangle shape
         const cornerRadius = 20; // Adjust corner radius as needed
@@ -407,7 +403,7 @@ function redrawButtons() {
         ctx.restore();
     });
 
-    drawButtons(question);
+    drawButtons(question, questionTextY);
 }
 
 // Function to handle answer selection
