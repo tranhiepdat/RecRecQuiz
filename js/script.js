@@ -15,7 +15,7 @@ let inputs = null;
 
 // Create a separate canvas for Rive animation
 const riveCanvas = document.createElement('canvas');
-const riveCtx = riveCanvas.getContext('2d');
+// const riveCtx = riveCanvas.getContext('2d');
 
 function setCanvasSize() {
     const devicePixelRatio = window.devicePixelRatio || 1;
@@ -240,7 +240,7 @@ async function displayQuestion(questionIndex) {
     // const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
     const backgroundImage = preloadImages.images[questionIndex];
     const imageX = (canvas.width - canvas.width * 1.366) / 2;
-    const imageY = (canvas.height - canvas.height * 1.024) / 2;
+    const imageY = (canvas.height - canvas.height * 1.024) / 1;
     ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
 
     // Display the quiz question at the bottom of the canvas
@@ -253,7 +253,7 @@ async function displayQuestion(questionIndex) {
 
     // Calculate vertical position for the wrapped text
     const lineHeight = questionFontSize * 1.2; // Line height including padding
-    const textY = canvas.height - canvas.height * 0.85 - (lineHeight * (questionLines.length - 1)) / 2;
+    const textY = canvas.height - canvas.height * 1 - (lineHeight * (questionLines.length - 1)) / 2;
 
     // Draw each line of the wrapped text
     questionLines.forEach((line, index) => {
@@ -429,24 +429,24 @@ function selectAnswer(answerIndex) {
     }
 }
 
-// Load Rive animation
-const riveInstance = new rive.Rive({
-    src: 'personalitytest.riv',
-    canvas: riveCanvas,
-    autoplay: false,
-    shouldDisableRiveListeners: true,
+// // Load Rive animation
+// const riveInstance = new rive.Rive({
+//     src: 'personalitytest.riv',
+//     canvas: riveCanvas,
+//     autoplay: false,
+//     shouldDisableRiveListeners: true,
 
-    stateMachines: 'ResultStateMachine', // Ensure this matches the name in your Rive file
-    onLoad: () => {
-        console.log('Rive file loaded and state machine ready');
-        // Get the inputs for the state machine
-        inputs = riveInstance.stateMachineInputs('ResultStateMachine');
-        riveInstance.resizeDrawingSurfaceToCanvas();
-    },
-    onError: (error) => {
-        console.error('Error loading the Rive file:', error);
-    }
-});
+//     stateMachines: 'ResultStateMachine', // Ensure this matches the name in your Rive file
+//     onLoad: () => {
+//         console.log('Rive file loaded and state machine ready');
+//         // Get the inputs for the state machine
+//         inputs = riveInstance.stateMachineInputs('ResultStateMachine');
+//         riveInstance.resizeDrawingSurfaceToCanvas();
+//     },
+//     onError: (error) => {
+//         console.error('Error loading the Rive file:', error);
+//     }
+// });
 
 // Function to show the result
 function showResult(personalityType) {
@@ -501,21 +501,21 @@ function showResult(personalityType) {
 
     
 
-    riveInstance.resizeDrawingSurfaceToCanvas();
-    // Play the Rive animation corresponding to the result
-    riveInstance.play("ResultStateMachine");
-    if (inputs) {
-        const inputName = result;
-        const triggerInput = inputs.find(i => i.name === inputName);
-        if (triggerInput) {
-            triggerInput.fire(); // Trigger the input to play the animation
-            console.log('Trigger input successful:', inputName);
-        } else {
-            console.log('Trigger input not found:', inputName);
-        }
-    } else {
-        console.log('State machine inputs not loaded or state machine not found');
-    }
+    // riveInstance.resizeDrawingSurfaceToCanvas();
+    // // Play the Rive animation corresponding to the result
+    // riveInstance.play("ResultStateMachine");
+    // if (inputs) {
+    //     const inputName = result;
+    //     const triggerInput = inputs.find(i => i.name === inputName);
+    //     if (triggerInput) {
+    //         triggerInput.fire(); // Trigger the input to play the animation
+    //         console.log('Trigger input successful:', inputName);
+    //     } else {
+    //         console.log('Trigger input not found:', inputName);
+    //     }
+    // } else {
+    //     console.log('State machine inputs not loaded or state machine not found');
+    // }
 
     // Draw the result text on the canvas
     const statTextX = canvas.width * 0.75;

@@ -154,7 +154,8 @@ var inputs = null;
 
 // Create a separate canvas for Rive animation
 var riveCanvas = document.createElement('canvas');
-var riveCtx = riveCanvas.getContext('2d');
+// const riveCtx = riveCanvas.getContext('2d');
+
 function setCanvasSize() {
   var devicePixelRatio = window.devicePixelRatio || 1;
   var screenWidth = window.innerWidth * devicePixelRatio;
@@ -431,7 +432,7 @@ function _displayQuestion() {
           // const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
           backgroundImage = preloadImages.images[questionIndex];
           imageX = (canvas.width - canvas.width * 1.366) / 2;
-          imageY = (canvas.height - canvas.height * 1.024) / 2;
+          imageY = (canvas.height - canvas.height * 1.024) / 1;
           ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
 
           // Display the quiz question at the bottom of the canvas
@@ -442,7 +443,7 @@ function _displayQuestion() {
           // Wrap the question text
           questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8); // Calculate vertical position for the wrapped text
           lineHeight = questionFontSize * 1.2; // Line height including padding
-          textY = canvas.height - canvas.height * 0.85 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
+          textY = canvas.height - canvas.height * 1 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
           questionLines.forEach(function (line, index) {
             ctx.fillText(line, canvas.width / 2, textY + index * lineHeight);
           });
@@ -567,24 +568,24 @@ function selectAnswer(answerIndex) {
   }
 }
 
-// Load Rive animation
-var riveInstance = new rive.Rive({
-  src: 'personalitytest.riv',
-  canvas: riveCanvas,
-  autoplay: false,
-  shouldDisableRiveListeners: true,
-  stateMachines: 'ResultStateMachine',
-  // Ensure this matches the name in your Rive file
-  onLoad: function onLoad() {
-    console.log('Rive file loaded and state machine ready');
-    // Get the inputs for the state machine
-    inputs = riveInstance.stateMachineInputs('ResultStateMachine');
-    riveInstance.resizeDrawingSurfaceToCanvas();
-  },
-  onError: function onError(error) {
-    console.error('Error loading the Rive file:', error);
-  }
-});
+// // Load Rive animation
+// const riveInstance = new rive.Rive({
+//     src: 'personalitytest.riv',
+//     canvas: riveCanvas,
+//     autoplay: false,
+//     shouldDisableRiveListeners: true,
+
+//     stateMachines: 'ResultStateMachine', // Ensure this matches the name in your Rive file
+//     onLoad: () => {
+//         console.log('Rive file loaded and state machine ready');
+//         // Get the inputs for the state machine
+//         inputs = riveInstance.stateMachineInputs('ResultStateMachine');
+//         riveInstance.resizeDrawingSurfaceToCanvas();
+//     },
+//     onError: (error) => {
+//         console.error('Error loading the Rive file:', error);
+//     }
+// });
 
 // Function to show the result
 function showResult(personalityType) {
@@ -635,23 +636,22 @@ function showResult(personalityType) {
       result = 'Unknown';
       break;
   }
-  riveInstance.resizeDrawingSurfaceToCanvas();
-  // Play the Rive animation corresponding to the result
-  riveInstance.play("ResultStateMachine");
-  if (inputs) {
-    var inputName = result;
-    var triggerInput = inputs.find(function (i) {
-      return i.name === inputName;
-    });
-    if (triggerInput) {
-      triggerInput.fire(); // Trigger the input to play the animation
-      console.log('Trigger input successful:', inputName);
-    } else {
-      console.log('Trigger input not found:', inputName);
-    }
-  } else {
-    console.log('State machine inputs not loaded or state machine not found');
-  }
+
+  // riveInstance.resizeDrawingSurfaceToCanvas();
+  // // Play the Rive animation corresponding to the result
+  // riveInstance.play("ResultStateMachine");
+  // if (inputs) {
+  //     const inputName = result;
+  //     const triggerInput = inputs.find(i => i.name === inputName);
+  //     if (triggerInput) {
+  //         triggerInput.fire(); // Trigger the input to play the animation
+  //         console.log('Trigger input successful:', inputName);
+  //     } else {
+  //         console.log('Trigger input not found:', inputName);
+  //     }
+  // } else {
+  //     console.log('State machine inputs not loaded or state machine not found');
+  // }
 
   // Draw the result text on the canvas
   var statTextX = canvas.width * 0.75;
