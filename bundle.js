@@ -455,7 +455,7 @@ function _displayQuestion() {
           // Wrap the question text
           questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8); // Calculate vertical position for the wrapped text
           lineHeight = questionFontSize * 1.2; // Line height including padding
-          textY = canvas.height - canvas.height * 0.2 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
+          textY = canvas.height - canvas.height * 0.5 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
           questionLines.forEach(function (line, index) {
             ctx.fillText(line, canvas.width / 2, textY + index * lineHeight);
           });

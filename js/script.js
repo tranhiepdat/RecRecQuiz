@@ -273,7 +273,7 @@ async function displayQuestion(questionIndex) {
 
     // Calculate vertical position for the wrapped text
     const lineHeight = questionFontSize * 1.2; // Line height including padding
-    const textY = canvas.height - canvas.height * 0.2 - (lineHeight * (questionLines.length - 1)) / 2;
+    const textY = canvas.height - canvas.height * 0.5 - (lineHeight * (questionLines.length - 1)) / 2;
 
     // Draw each line of the wrapped text
     questionLines.forEach((line, index) => {
