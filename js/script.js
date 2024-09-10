@@ -308,7 +308,7 @@ async function displayQuestion(questionIndex) {
         ctx.fillText(line, canvas.width / 2, questionTextY + index * lineHeight);
     });
 
-    buttonStartY = questionTextY + questionLines.length * lineHeight + (canvas.height * 0.04)
+    buttonStartY = questionTextY + questionLines.length * lineHeight + (canvas.height * 0.01)
     // Draw buttons below the question
     drawButtons(question, buttonStartY);
 }
@@ -467,7 +467,7 @@ function showResult(personalityType) {
 
     ctx.font = `normal ${resultFontSize}px Arial`; // Normal font style for stat text
     ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', textX, textY);
-    textY = imageY + imageHeight + textPadding;
+    textY = imageY + imageHeight + textPadding + 30;
 
     // Draw the explanation text on the right bottom half
     const explanation = explanationData.find(item => item.Type === personalityType);
