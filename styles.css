@@ -7,16 +7,17 @@ body, html {
 canvas {
     display: block;
     margin: 0 auto;
+    background-color: #ecfbff; /* Set background color */
 }
 
-.rive-canvas {
+/* .rive-canvas {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -1; /* Ensure it's behind other elements */
-    background-color: #ecfbff; /* Set background color */
-}
+    /*background-color: #ecfbff; /* Set background color */
+/*} */
 
 .input-container {
     position: absolute;

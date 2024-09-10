@@ -296,7 +296,7 @@ async function displayQuestion(questionIndex) {
 
     // Calculate vertical position for the wrapped text
     const lineHeight = questionFontSize * 1.2; // Line height including padding
-    const textY = canvas.height - canvas.height * 0.4 - (lineHeight * (questionLines.length - 1)) / 2;
+    const textY = canvas.height - canvas.height * 0.45 - (lineHeight * (questionLines.length - 1)) / 2;
 
     // Draw each line of the wrapped text
     questionLines.forEach((line, index) => {
@@ -573,33 +573,35 @@ function showResult(personalityType) {
     const imageAspectRatio = backgroundImage.width / backgroundImage.height;
     let imageWidth = canvas.width;
     let imageHeight = canvas.width / imageAspectRatio;
-    
+
     if (imageHeight > canvas.height - padding) {
         imageHeight = canvas.height - padding;
         imageWidth = imageHeight * imageAspectRatio;
     }
-    
+
     const imageX = (canvas.width - imageWidth) / 2;
     const imageY = padding;
     ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
     // Draw the result text
-    const resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
-    ctx.font = `bold ${resultFontSize * 1.5}px Arial`; // Bold and larger text
-    ctx.fillStyle = '#000';
-    ctx.textAlign = 'left'; // Align text to the left
-
-    // Draw the name, result, and stat text
-    const nameTextX = 20;
-    const resultTextX = 20;
-    const statTextX = 20;
+    const resultFontSize = canvas.width * 0.03; // Increase font size for better readability
     const textYStart = canvas.height - canvas.height * 0.12;
     const textYSpacing = resultFontSize * 1.5;
 
+    // Draw the name and result text
+    const nameTextX = 20;
+    const resultTextX = 20;
+    const statTextX = 20;
+
+    ctx.font = `bold ${resultFontSize * 1.5}px Arial`; // Bold and larger text for name
     ctx.fillText('Hello, ' + nameFromDatabase, nameTextX, textYStart);
+
     ctx.font = `bold ${resultFontSize}px Arial`; // Regular font size for result text
+    ctx.fillStyle = '#333'; // Darker text color for better contrast
     ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), resultTextX, textYStart + textYSpacing);
+
     ctx.font = `normal ${resultFontSize}px Arial`; // Normal font style for stat text
+    ctx.fillStyle = '#666'; // Lighter text color for stat
     ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', statTextX, textYStart + textYSpacing * 2);
 
     // Draw the explanation text on the right bottom half
@@ -609,13 +611,16 @@ function showResult(personalityType) {
         const explanationFontSize = resultFontSize;
 
         ctx.font = `bold ${headingFontSize}px Arial`;
-        ctx.fillStyle = '#000';
+        ctx.fillStyle = '#333'; // Darker text color for heading
         ctx.textAlign = 'left';
         const headingX = canvas.width * 0.55; // Align to the right half
         let headingY = canvas.height - canvas.height * 0.4; // Start from bottom
-        ctx.fillText(explanation.Heading, headingX, headingY);
-        
+
+        // Adjust heading position for better spacing
+        ctx.fillText(explanation.Heading, headingX, headingY - 10);
+
         ctx.font = `normal ${explanationFontSize}px Arial`;
+        ctx.fillStyle = '#666'; // Lighter text color for explanation
         const maxExplanationWidth = canvas.width * 0.4; // Limit text width for explanation
         const explanationLines = wrapText(ctx, explanation.Explanation, maxExplanationWidth);
         explanationLines.forEach((line, index) => {

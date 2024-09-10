@@ -446,7 +446,7 @@ function _displayQuestion() {
           // Wrap the question text
           questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8); // Calculate vertical position for the wrapped text
           lineHeight = questionFontSize * 1.2; // Line height including padding
-          textY = canvas.height - canvas.height * 0.4 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
+          textY = canvas.height - canvas.height * 0.45 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
           questionLines.forEach(function (line, index) {
             ctx.fillText(line, canvas.width / 2, textY + index * lineHeight);
           });
@@ -730,21 +730,21 @@ function showResult(personalityType) {
   ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
   // Draw the result text
-  var resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
-  ctx.font = "bold ".concat(resultFontSize * 1.5, "px Arial"); // Bold and larger text
-  ctx.fillStyle = '#000';
-  ctx.textAlign = 'left'; // Align text to the left
+  var resultFontSize = canvas.width * 0.03; // Increase font size for better readability
+  var textYStart = canvas.height - canvas.height * 0.12;
+  var textYSpacing = resultFontSize * 1.5;
 
-  // Draw the name, result, and stat text
+  // Draw the name and result text
   var nameTextX = 20;
   var resultTextX = 20;
   var statTextX = 20;
-  var textYStart = canvas.height - canvas.height * 0.12;
-  var textYSpacing = resultFontSize * 1.5;
+  ctx.font = "bold ".concat(resultFontSize * 1.5, "px Arial"); // Bold and larger text for name
   ctx.fillText('Hello, ' + _playfabManager.nameFromDatabase, nameTextX, textYStart);
   ctx.font = "bold ".concat(resultFontSize, "px Arial"); // Regular font size for result text
+  ctx.fillStyle = '#333'; // Darker text color for better contrast
   ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), resultTextX, textYStart + textYSpacing);
   ctx.font = "normal ".concat(resultFontSize, "px Arial"); // Normal font style for stat text
+  ctx.fillStyle = '#666'; // Lighter text color for stat
   ctx.fillText((0, _playfabManager.CalcPersonaRate)(personalityType) + '% people also this type', statTextX, textYStart + textYSpacing * 2);
 
   // Draw the explanation text on the right bottom half
@@ -755,12 +755,15 @@ function showResult(personalityType) {
     var headingFontSize = resultFontSize * 1.2;
     var explanationFontSize = resultFontSize;
     ctx.font = "bold ".concat(headingFontSize, "px Arial");
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = '#333'; // Darker text color for heading
     ctx.textAlign = 'left';
     var headingX = canvas.width * 0.55; // Align to the right half
     var headingY = canvas.height - canvas.height * 0.4; // Start from bottom
-    ctx.fillText(explanation.Heading, headingX, headingY);
+
+    // Adjust heading position for better spacing
+    ctx.fillText(explanation.Heading, headingX, headingY - 10);
     ctx.font = "normal ".concat(explanationFontSize, "px Arial");
+    ctx.fillStyle = '#666'; // Lighter text color for explanation
     var maxExplanationWidth = canvas.width * 0.4; // Limit text width for explanation
     var explanationLines = wrapText(ctx, explanation.Explanation, maxExplanationWidth);
     explanationLines.forEach(function (line, index) {
