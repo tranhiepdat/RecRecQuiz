@@ -422,7 +422,7 @@ function displayQuestion(_x) {
 // }
 function _displayQuestion() {
   _displayQuestion = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(questionIndex) {
-    var question, backgroundImage, imageX, imageY, questionFontSize, questionLines, lineHeight, textY;
+    var question, padding, backgroundImage, imageAspectRatio, imageWidth, imageHeight, imageX, imageY, questionFontSize, questionLines, lineHeight, textY;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
@@ -430,10 +430,22 @@ function _displayQuestion() {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
           // const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
-          backgroundImage = preloadImages.images[questionIndex + 1];
-          imageX = (canvas.width - canvas.width * 1.366) / 2;
-          imageY = (canvas.height - canvas.height * 1.024) / 1;
-          ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
+          padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
+          // Get the background image
+          backgroundImage = preloadImages.images[questionIndex]; // Calculate the aspect ratio of the image
+          imageAspectRatio = backgroundImage.width / backgroundImage.height; // Calculate the new dimensions to fit the image inside the canvas
+          imageWidth = canvas.width;
+          imageHeight = canvas.width / imageAspectRatio; // Check if the image height exceeds the canvas height minus padding
+          if (imageHeight > canvas.height - padding) {
+            imageHeight = canvas.height - padding;
+            imageWidth = imageHeight * imageAspectRatio;
+          }
+
+          // Calculate the position (centered horizontally, aligned to the top with padding)
+          imageX = (canvas.width - imageWidth) / 2;
+          imageY = padding; // Align to the top with padding
+          // Draw the image on the canvas
+          ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
           // Display the quiz question at the bottom of the canvas
           questionFontSize = canvas.width * 0.07; // Adjust font size based on canvas width
@@ -443,14 +455,14 @@ function _displayQuestion() {
           // Wrap the question text
           questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8); // Calculate vertical position for the wrapped text
           lineHeight = questionFontSize * 1.2; // Line height including padding
-          textY = canvas.height - canvas.height * 1 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
+          textY = canvas.height - canvas.height - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
           questionLines.forEach(function (line, index) {
             ctx.fillText(line, canvas.width / 2, textY + index * lineHeight);
           });
 
           // Calculate button positions and draw buttons
           drawButtons(question);
-        case 15:
+        case 20:
         case "end":
           return _context2.stop();
       }

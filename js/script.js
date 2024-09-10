@@ -238,10 +238,30 @@ async function displayQuestion(questionIndex) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
-    const backgroundImage = preloadImages.images[questionIndex+1];
-    const imageX = (canvas.width - canvas.width * 1.366) / 2;
-    const imageY = (canvas.height - canvas.height * 1.024) / 1;
-    ctx.drawImage(backgroundImage, imageX, imageY, canvas.width * 1.366, canvas.height * 1.024);
+    const padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
+
+    // Get the background image
+    const backgroundImage = preloadImages.images[questionIndex];
+
+    // Calculate the aspect ratio of the image
+    const imageAspectRatio = backgroundImage.width / backgroundImage.height;
+
+    // Calculate the new dimensions to fit the image inside the canvas
+    let imageWidth = canvas.width;
+    let imageHeight = canvas.width / imageAspectRatio;
+
+    // Check if the image height exceeds the canvas height minus padding
+    if (imageHeight > canvas.height - padding) {
+        imageHeight = canvas.height - padding;
+        imageWidth = imageHeight * imageAspectRatio;
+    }
+
+    // Calculate the position (centered horizontally, aligned to the top with padding)
+    const imageX = (canvas.width - imageWidth) / 2;
+    const imageY = padding; // Align to the top with padding
+
+    // Draw the image on the canvas
+    ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
     // Display the quiz question at the bottom of the canvas
     const questionFontSize = canvas.width * 0.07; // Adjust font size based on canvas width
@@ -253,7 +273,7 @@ async function displayQuestion(questionIndex) {
 
     // Calculate vertical position for the wrapped text
     const lineHeight = questionFontSize * 1.2; // Line height including padding
-    const textY = canvas.height - canvas.height * 1 - (lineHeight * (questionLines.length - 1)) / 2;
+    const textY = canvas.height - canvas.height - (lineHeight * (questionLines.length - 1)) / 2;
 
     // Draw each line of the wrapped text
     questionLines.forEach((line, index) => {
