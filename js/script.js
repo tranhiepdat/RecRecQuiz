@@ -296,7 +296,7 @@ async function displayQuestion(questionIndex) {
 
     // Calculate vertical position for the wrapped text
     const lineHeight = questionFontSize * 1.2; // Line height including padding
-    const textY = canvas.height - canvas.height * 0.45 - (lineHeight * (questionLines.length - 1)) / 2;
+    const textY = canvas.height - canvas.height * 0.47 - (lineHeight * (questionLines.length - 1)) / 2;
 
     // Draw each line of the wrapped text
     questionLines.forEach((line, index) => {
@@ -573,48 +573,66 @@ function showResult(personalityType) {
     const imageAspectRatio = backgroundImage.width / backgroundImage.height;
     let imageWidth = canvas.width;
     let imageHeight = canvas.width / imageAspectRatio;
-
+    
     if (imageHeight > canvas.height - padding) {
         imageHeight = canvas.height - padding;
         imageWidth = imageHeight * imageAspectRatio;
     }
-
+    
     const imageX = (canvas.width - imageWidth) / 2;
     const imageY = padding;
     ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
-    // Calculate text area dimensions based on image height
-    const textAreaHeight = canvas.height - imageHeight - padding * 2;
-    const textAreaWidth = canvas.width;
+    // Calculate the space below the image for text
+    const textPadding = canvas.height * 0.02; // Padding between image and text
+    const textAreaWidth = canvas.width * 0.4; // Width of the text area for heading and explanation
 
-    // Adjust font sizes based on text area dimensions
-    const resultFontSize = textAreaHeight * 0.04;
-    const headingFontSize = resultFontSize * 1.2;
-    const explanationFontSize = resultFontSize * 0.8;
+    // Draw the result text (name, result, stat) on the left
+    const resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
+    const textX = 20; // X position for the text on the left side
+    let textY = imageY + imageHeight + textPadding; // Y position for the text below the image
 
-    // Draw the result text with improved alignment and spacing
-    const textX = padding;
-    const textY = imageHeight + padding;
-    const textLineHeight = resultFontSize * 1.5;
+    ctx.font = `bold ${resultFontSize * 1.5}px Arial`; // Bold and larger text
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'left'; // Align text to the left
 
-    ctx.font = `bold ${resultFontSize}px Arial`;
+    // Draw the name, result, and stat text
     ctx.fillText('Hello, ' + nameFromDatabase, textX, textY);
-    ctx.font = `bold ${resultFontSize * 1.2}px Arial`;
-    ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), textX, textY + textLineHeight);
-    ctx.font = `normal ${resultFontSize}px Arial`;
-    ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', textX, textY + textLineHeight * 2);
+    textY += resultFontSize * 1.5 + textPadding;
 
-    // Draw the explanation text with improved alignment and spacing
+    ctx.font = `bold ${resultFontSize}px Arial`; // Regular font size for result text
+    ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), textX, textY);
+    textY += resultFontSize + textPadding;
+
+    ctx.font = `normal ${resultFontSize}px Arial`; // Normal font style for stat text
+    ctx.fillText(CalcPersonaRate(personalityType) + '% people also this type', textX, textY);
+    textY += resultFontSize + textPadding;
+
+    // Draw the explanation text on the right bottom half
     const explanation = explanationData.find(item => item.Type === personalityType);
     if (explanation) {
+        const headingFontSize = resultFontSize * 1.2;
+        const explanationFontSize = resultFontSize;
+        
+        // Draw the heading
         ctx.font = `bold ${headingFontSize}px Arial`;
-        ctx.fillText(explanation.Heading, textX, textY + textLineHeight * 3);
+        ctx.fillStyle = '#000';
+        ctx.textAlign = 'left';
+        const headingX = canvas.width * 0.55; // Align to the right half
+        let headingY = textY; // Start from where the previous text ended
+        const headingLines = wrapText(ctx, explanation.Heading, textAreaWidth);
+        headingLines.forEach((line, index) => {
+            ctx.fillText(line, headingX, headingY);
+            headingY += headingFontSize * 1.2; // Add line height spacing
+        });
+        headingY += textPadding; // Add padding after heading
 
+        // Draw the explanation
         ctx.font = `normal ${explanationFontSize}px Arial`;
-        const maxExplanationWidth = textAreaWidth - padding * 2;
-        const explanationLines = wrapText(ctx, explanation.Explanation, maxExplanationWidth);
+        const explanationLines = wrapText(ctx, explanation.Explanation, textAreaWidth);
         explanationLines.forEach((line, index) => {
-            ctx.fillText(line, textX, textY + textLineHeight * 4 + (index * explanationFontSize * 1.2));
+            ctx.fillText(line, headingX, headingY);
+            headingY += explanationFontSize * 1.2; // Add line height spacing
         });
     }
 
@@ -622,6 +640,7 @@ function showResult(personalityType) {
     screenshotButtonVisible = true;
     drawScreenshotButton();
 }
+
 
 function getPersonalityTypeLabel(type) {
     switch (type) {

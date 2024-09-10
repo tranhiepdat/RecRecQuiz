@@ -446,7 +446,7 @@ function _displayQuestion() {
           // Wrap the question text
           questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8); // Calculate vertical position for the wrapped text
           lineHeight = questionFontSize * 1.2; // Line height including padding
-          textY = canvas.height - canvas.height * 0.45 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
+          textY = canvas.height - canvas.height * 0.47 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
           questionLines.forEach(function (line, index) {
             ctx.fillText(line, canvas.width / 2, textY + index * lineHeight);
           });
@@ -729,38 +729,56 @@ function showResult(personalityType) {
   var imageY = padding;
   ctx.drawImage(backgroundImage, imageX, imageY, imageWidth, imageHeight);
 
-  // Calculate text area dimensions based on image height
-  var textAreaHeight = canvas.height - imageHeight - padding * 2;
-  var textAreaWidth = canvas.width;
+  // Calculate the space below the image for text
+  var textPadding = canvas.height * 0.02; // Padding between image and text
+  var textAreaWidth = canvas.width * 0.4; // Width of the text area for heading and explanation
 
-  // Adjust font sizes based on text area dimensions
-  var resultFontSize = textAreaHeight * 0.04;
-  var headingFontSize = resultFontSize * 1.2;
-  var explanationFontSize = resultFontSize * 0.8;
+  // Draw the result text (name, result, stat) on the left
+  var resultFontSize = canvas.width * 0.025; // Adjust font size based on canvas width
+  var textX = 20; // X position for the text on the left side
+  var textY = imageY + imageHeight + textPadding; // Y position for the text below the image
 
-  // Draw the result text with improved alignment and spacing
-  var textX = padding;
-  var textY = imageHeight + padding;
-  var textLineHeight = resultFontSize * 1.5;
-  ctx.font = "bold ".concat(resultFontSize, "px Arial");
+  ctx.font = "bold ".concat(resultFontSize * 1.5, "px Arial"); // Bold and larger text
+  ctx.fillStyle = '#000';
+  ctx.textAlign = 'left'; // Align text to the left
+
+  // Draw the name, result, and stat text
   ctx.fillText('Hello, ' + _playfabManager.nameFromDatabase, textX, textY);
-  ctx.font = "bold ".concat(resultFontSize * 1.2, "px Arial");
-  ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), textX, textY + textLineHeight);
-  ctx.font = "normal ".concat(resultFontSize, "px Arial");
-  ctx.fillText((0, _playfabManager.CalcPersonaRate)(personalityType) + '% people also this type', textX, textY + textLineHeight * 2);
+  textY += resultFontSize * 1.5 + textPadding;
+  ctx.font = "bold ".concat(resultFontSize, "px Arial"); // Regular font size for result text
+  ctx.fillText('Your Personality Type: ' + getPersonalityTypeLabel(personalityType), textX, textY);
+  textY += resultFontSize + textPadding;
+  ctx.font = "normal ".concat(resultFontSize, "px Arial"); // Normal font style for stat text
+  ctx.fillText((0, _playfabManager.CalcPersonaRate)(personalityType) + '% people also this type', textX, textY);
+  textY += resultFontSize + textPadding;
 
-  // Draw the explanation text with improved alignment and spacing
+  // Draw the explanation text on the right bottom half
   var explanation = explanationData.find(function (item) {
     return item.Type === personalityType;
   });
   if (explanation) {
+    var headingFontSize = resultFontSize * 1.2;
+    var explanationFontSize = resultFontSize;
+
+    // Draw the heading
     ctx.font = "bold ".concat(headingFontSize, "px Arial");
-    ctx.fillText(explanation.Heading, textX, textY + textLineHeight * 3);
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'left';
+    var headingX = canvas.width * 0.55; // Align to the right half
+    var headingY = textY; // Start from where the previous text ended
+    var headingLines = wrapText(ctx, explanation.Heading, textAreaWidth);
+    headingLines.forEach(function (line, index) {
+      ctx.fillText(line, headingX, headingY);
+      headingY += headingFontSize * 1.2; // Add line height spacing
+    });
+    headingY += textPadding; // Add padding after heading
+
+    // Draw the explanation
     ctx.font = "normal ".concat(explanationFontSize, "px Arial");
-    var maxExplanationWidth = textAreaWidth - padding * 2;
-    var explanationLines = wrapText(ctx, explanation.Explanation, maxExplanationWidth);
+    var explanationLines = wrapText(ctx, explanation.Explanation, textAreaWidth);
     explanationLines.forEach(function (line, index) {
-      ctx.fillText(line, textX, textY + textLineHeight * 4 + index * explanationFontSize * 1.2);
+      ctx.fillText(line, headingX, headingY);
+      headingY += explanationFontSize * 1.2; // Add line height spacing
     });
   }
 
