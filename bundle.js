@@ -432,7 +432,7 @@ function _displayQuestion() {
           // const backgroundImage = await preloadImage(`images/${questionIndex + 1}.png`);
           padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
           // Get the background image
-          backgroundImage = preloadImages.images[questionIndex + 1]; // Calculate the aspect ratio of the image
+          backgroundImage = preloadImages.images[questionIndex]; // Calculate the aspect ratio of the image
           imageAspectRatio = backgroundImage.width / backgroundImage.height; // Calculate the new dimensions to fit the image inside the canvas
           imageWidth = canvas.width;
           imageHeight = canvas.width / imageAspectRatio; // Check if the image height exceeds the canvas height minus padding
@@ -455,7 +455,7 @@ function _displayQuestion() {
           // Wrap the question text
           questionLines = wrapText(ctx, question.quiz, canvas.width * 0.8); // Calculate vertical position for the wrapped text
           lineHeight = questionFontSize * 1.2; // Line height including padding
-          textY = canvas.height - canvas.height - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
+          textY = canvas.height - canvas.height * 0.2 - lineHeight * (questionLines.length - 1) / 2; // Draw each line of the wrapped text
           questionLines.forEach(function (line, index) {
             ctx.fillText(line, canvas.width / 2, textY + index * lineHeight);
           });

@@ -241,7 +241,7 @@ async function displayQuestion(questionIndex) {
     const padding = canvas.height * 0.05; // Define top padding (5% of canvas height)
 
     // Get the background image
-    const backgroundImage = preloadImages.images[questionIndex+1];
+    const backgroundImage = preloadImages.images[questionIndex];
 
     // Calculate the aspect ratio of the image
     const imageAspectRatio = backgroundImage.width / backgroundImage.height;
@@ -273,7 +273,7 @@ async function displayQuestion(questionIndex) {
 
     // Calculate vertical position for the wrapped text
     const lineHeight = questionFontSize * 1.2; // Line height including padding
-    const textY = canvas.height - canvas.height - (lineHeight * (questionLines.length - 1)) / 2;
+    const textY = canvas.height - canvas.height * 0.2 - (lineHeight * (questionLines.length - 1)) / 2;
 
     // Draw each line of the wrapped text
     questionLines.forEach((line, index) => {
