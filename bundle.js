@@ -298,21 +298,26 @@ function showInputField() {
   // Disable canvas to prevent interaction
   canvas.disabled = true;
 }
+var isShowed = false;
 function handleSubmitName() {
   exports.playerName = playerName = inputField.value.trim();
   if (playerName !== '') {
     // Process player name (e.g., save to database)
     console.log('Player Name:', playerName);
     (0, _playfabManager.UpdateDisplayName)();
-    setTimeout(function () {
-      console.log("One second has passed!");
-      // Place your code here that you want to execute after one second
-      console.log(playerName);
-      // Hide input field and submit button
-      if (_playfabManager.playerNameInput) {
-        alert("Let" + "'" + "s begin, " + playerName);
-      }
-    }, 1500); // 1000 milliseconds = 1 second
+    if (!isShowed) {
+      alert("Let" + "'" + "s begin, " + playerName);
+      isShowed = true;
+    }
+    // setTimeout(function () {
+    //     console.log("One second has passed!");
+    //     // Place your code here that you want to execute after one second
+    //     console.log(playerName);
+    //     // Hide input field and submit button
+    //     if (playerNameInput) {
+    //         alert("Let" + "'" + "s begin, " + playerName);
+    //     }
+    // }, 1500); // 1000 milliseconds = 1 second
   } else {
     alert('Please enter your name.');
     submitButton.disabled = false;
