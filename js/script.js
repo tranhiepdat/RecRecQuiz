@@ -110,22 +110,22 @@ const loadingInterval = setInterval(handleLoadingComplete, 100);
 
 function initialize() {
     // Play the Rive animation corresponding to the result
-    if (isLoading) {
-        // Preload question images
-        preloadImages()
-            .then(images => {
-                preloadImages.images = images; // Store preloaded images
-                console.log("question images preload success");
-            })
-            .catch(error => console.error('Error preloading question images:', error));
+    // Preload question images
+    preloadImages()
+    .then(images => {
+        preloadImages.images = images; // Store preloaded images
+        console.log("question images preload success");
+    })
+    .catch(error => console.error('Error preloading question images:', error));
 
-        //preload result images
-        preloadResultImages()
-            .then(images => {
-                preloadResultImages.images = images;
-                console.log("result images preload success");
-            })
-            .catch(error => console.error('Error preloading result images:', error));
+    //preload result images
+    preloadResultImages()
+    .then(images => {
+        preloadResultImages.images = images;
+        console.log("result images preload success");
+    })
+    .catch(error => console.error('Error preloading result images:', error));
+    if (isLoading) {
         loadingscreenRive.play("Logo");
     }
         

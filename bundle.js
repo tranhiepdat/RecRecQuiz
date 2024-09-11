@@ -236,22 +236,22 @@ function handleLoadingComplete() {
 var loadingInterval = setInterval(handleLoadingComplete, 100);
 function initialize() {
   // Play the Rive animation corresponding to the result
-  if (isLoading) {
-    // Preload question images
-    preloadImages().then(function (images) {
-      preloadImages.images = images; // Store preloaded images
-      console.log("question images preload success");
-    })["catch"](function (error) {
-      return console.error('Error preloading question images:', error);
-    });
+  // Preload question images
+  preloadImages().then(function (images) {
+    preloadImages.images = images; // Store preloaded images
+    console.log("question images preload success");
+  })["catch"](function (error) {
+    return console.error('Error preloading question images:', error);
+  });
 
-    //preload result images
-    preloadResultImages().then(function (images) {
-      preloadResultImages.images = images;
-      console.log("result images preload success");
-    })["catch"](function (error) {
-      return console.error('Error preloading result images:', error);
-    });
+  //preload result images
+  preloadResultImages().then(function (images) {
+    preloadResultImages.images = images;
+    console.log("result images preload success");
+  })["catch"](function (error) {
+    return console.error('Error preloading result images:', error);
+  });
+  if (isLoading) {
     loadingscreenRive.play("Logo");
   }
   fetch('questions.json').then(function (response) {
