@@ -595,7 +595,7 @@ function takeScreenshot() {
     // Create a temporary canvas to draw the result without the screenshot button
     // Hide the screenshot button
     screenshotButtonVisible = false;
-    ctx.clearRect(screenshotButtonPos.x, screenshotButtonPos.y, screenshotButtonPos.width+1, screenshotButtonPos.height+1);
+    ctx.clearRect(screenshotButtonPos.x, screenshotButtonPos.y, screenshotButtonPos.width+2, screenshotButtonPos.height+1);
     // Create a temporary canvas to draw both canvases
     const tempCanvas = document.createElement('canvas');
     const tempCtx = tempCanvas.getContext('2d');
