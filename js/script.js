@@ -121,13 +121,14 @@ function initialize() {
             preloadResultImages.images = images.resultImages;
             console.log("Images preloaded successfully");
 
-            // If a loading screen or animation is active, handle it
-            if (isLoading) {
-                loadingscreenRive.play("Logo");
-            }
         })
         .catch(error => console.error('Error preloading images:', error));
         
+
+    // If a loading screen or animation is active, handle it
+    if (isLoading) {
+        loadingscreenRive.play("Logo");
+    }
     fetch('questions.json')
         .then(response => response.json())
         .then(data => {

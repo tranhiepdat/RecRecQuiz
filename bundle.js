@@ -255,14 +255,14 @@ function initialize() {
     preloadImages.images = images.questionImages;
     preloadResultImages.images = images.resultImages;
     console.log("Images preloaded successfully");
-
-    // If a loading screen or animation is active, handle it
-    if (isLoading) {
-      loadingscreenRive.play("Logo");
-    }
   })["catch"](function (error) {
     return console.error('Error preloading images:', error);
   });
+
+  // If a loading screen or animation is active, handle it
+  if (isLoading) {
+    loadingscreenRive.play("Logo");
+  }
   fetch('questions.json').then(function (response) {
     return response.json();
   }).then(function (data) {
