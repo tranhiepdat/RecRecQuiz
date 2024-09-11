@@ -110,24 +110,20 @@ const loadingInterval = setInterval(handleLoadingComplete, 100);
 
 function initialize() {
     // Play the Rive animation corresponding to the result
-    // Preload question images
-    preloadImages()
-    .then(images => {
-        preloadImages.images = images; // Store preloaded images
-        console.log("question images preload success");
-    })
-    .catch(error => console.error('Error preloading question images:', error));
+    // Preload all images and store them into separate variables
+    preloadAllImages()
+        .then(images => {
+            // Store preloaded question and result images
+            preloadImages.images = images.questionImages;
+            preloadResultImages.images = images.resultImages;
+            console.log("Images preloaded successfully");
 
-    //preload result images
-    preloadResultImages()
-    .then(images => {
-        preloadResultImages.images = images;
-        console.log("result images preload success");
-    })
-    .catch(error => console.error('Error preloading result images:', error));
-    if (isLoading) {
-        loadingscreenRive.play("Logo");
-    }
+            // If a loading screen or animation is active, handle it
+            if (isLoading) {
+                loadingscreenRive.play("Logo");
+            }
+        })
+        .catch(error => console.error('Error preloading images:', error));
         
     fetch('questions.json')
         .then(response => response.json())
@@ -232,13 +228,29 @@ async function preloadImages() {
     return Promise.all(imagePromises);
 }
 
-async function preloadResultImages() {
-    const imagePromises = [];
-    for (let i = 0; i < 10; i++) { // Assuming there are 10 images numbered from 1.png to 10.png
-        const imageUrl = `images/results/${i}.png`;
-        imagePromises.push(preloadImage(imageUrl));
+// Function to preload all images for both questions and results
+async function preloadAllImages() {
+    const questionImagePromises = [];
+    const resultImagePromises = [];
+    
+    for (let i = 1; i <= 10; i++) {
+        const questionImageUrl = `images/questions/${i}.png`;
+        questionImagePromises.push(preloadImage(questionImageUrl));
+        
+        const resultImageUrl = `images/results/${i - 1}.png`; // Adjusting result image index
+        resultImagePromises.push(preloadImage(resultImageUrl));
     }
-    return Promise.all(imagePromises);
+    
+    // Preload all question and result images
+    const [questionImages, resultImages] = await Promise.all([
+        Promise.all(questionImagePromises),
+        Promise.all(resultImagePromises)
+    ]);
+
+    return {
+        questionImages,
+        resultImages
+    };
 }
 
 // Function to preload an image
