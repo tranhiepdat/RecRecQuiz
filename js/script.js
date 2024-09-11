@@ -238,10 +238,10 @@ async function preloadAllImages() {
     const resultImagePromises = [];
     
     for (let i = 1; i <= 10; i++) {
-        const questionImageUrl = `images/questions/${i}.png`;
+        const questionImageUrl = `images/questions/${i}.jpeg`;
         questionImagePromises.push(preloadImage(questionImageUrl));
         
-        const resultImageUrl = `images/results/${i - 1}.png`; // Adjusting result image index
+        const resultImageUrl = `images/results/${i - 1}.jpeg`; // Adjusting result image index
         resultImagePromises.push(preloadImage(resultImageUrl));
     }
     
