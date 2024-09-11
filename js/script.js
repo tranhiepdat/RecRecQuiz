@@ -12,6 +12,9 @@ let allAnswered = false;
 let isLoading = true;
 export let playerName = null;
 let riveAnimLoaded = false;
+// Declare variables for preloaded images
+const preloadImages = { images: [] };  // For question images
+const preloadResultImages = { images: [] };  // For result images
 
 // Create a separate canvas for Rive animation
 // const riveCanvas = document.createElement('canvas');
@@ -218,15 +221,15 @@ function wrapText(context, text, maxWidth) {
     return lines;
 }
 
-// Function to preload all images
-async function preloadImages() {
-    const imagePromises = [];
-    for (let i = 1; i <= 10; i++) { // Assuming there are 10 images numbered from 1.png to 10.png
-        const imageUrl = `images/questions/${i}.png`;
-        imagePromises.push(preloadImage(imageUrl));
-    }
-    return Promise.all(imagePromises);
-}
+// // Function to preload all images
+// async function preloadImages() {
+//     const imagePromises = [];
+//     for (let i = 1; i <= 10; i++) { // Assuming there are 10 images numbered from 1.png to 10.png
+//         const imageUrl = `images/questions/${i}.png`;
+//         imagePromises.push(preloadImage(imageUrl));
+//     }
+//     return Promise.all(imagePromises);
+// }
 
 // Function to preload all images for both questions and results
 async function preloadAllImages() {
