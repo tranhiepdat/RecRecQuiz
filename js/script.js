@@ -108,30 +108,26 @@ function handleLoadingComplete() {
 }
 const loadingInterval = setInterval(handleLoadingComplete, 100);
 
-// Fetch questions from JSON file
 function initialize() {
-    // Fetch questions from JSON file
-    
     // Play the Rive animation corresponding to the result
     if (isLoading) {
+        // Preload question images
+        preloadImages()
+            .then(images => {
+                preloadImages.images = images; // Store preloaded images
+                console.log("question images preload success");
+            })
+            .catch(error => console.error('Error preloading question images:', error));
+
+        //preload result images
+        preloadResultImages()
+            .then(images => {
+                preloadResultImages.images = images;
+                console.log("result images preload success");
+            })
+            .catch(error => console.error('Error preloading result images:', error));
         loadingscreenRive.play("Logo");
     }
-
-    // Preload question images
-    preloadImages()
-        .then(images => {
-            preloadImages.images = images; // Store preloaded images
-            console.log("question images preload success");
-        })
-        .catch(error => console.error('Error preloading question images:', error));
-
-    //preload result images
-    preloadResultImages()
-        .then(images => {
-            preloadResultImages.images = images;
-            console.log("result images preload success");
-        })
-        .catch(error => console.error('Error preloading result images:', error));
         
     fetch('questions.json')
         .then(response => response.json())

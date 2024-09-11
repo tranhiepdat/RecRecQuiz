@@ -234,31 +234,26 @@ function handleLoadingComplete() {
   }
 }
 var loadingInterval = setInterval(handleLoadingComplete, 100);
-
-// Fetch questions from JSON file
 function initialize() {
-  // Fetch questions from JSON file
-
   // Play the Rive animation corresponding to the result
   if (isLoading) {
+    // Preload question images
+    preloadImages().then(function (images) {
+      preloadImages.images = images; // Store preloaded images
+      console.log("question images preload success");
+    })["catch"](function (error) {
+      return console.error('Error preloading question images:', error);
+    });
+
+    //preload result images
+    preloadResultImages().then(function (images) {
+      preloadResultImages.images = images;
+      console.log("result images preload success");
+    })["catch"](function (error) {
+      return console.error('Error preloading result images:', error);
+    });
     loadingscreenRive.play("Logo");
   }
-
-  // Preload question images
-  preloadImages().then(function (images) {
-    preloadImages.images = images; // Store preloaded images
-    console.log("question images preload success");
-  })["catch"](function (error) {
-    return console.error('Error preloading question images:', error);
-  });
-
-  //preload result images
-  preloadResultImages().then(function (images) {
-    preloadResultImages.images = images;
-    console.log("result images preload success");
-  })["catch"](function (error) {
-    return console.error('Error preloading result images:', error);
-  });
   fetch('questions.json').then(function (response) {
     return response.json();
   }).then(function (data) {
