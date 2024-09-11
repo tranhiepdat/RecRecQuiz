@@ -93,7 +93,8 @@ var leaderboard;
 function GetUserStatistics() {
   var request = {
     StatisticName: "Personalities",
-    StartPosition: 0
+    StartPosition: 0,
+    MaxResultsCount: 100
   };
   PlayFabClientSDK.GetLeaderboard(request, GetUserStatisticsCallback);
 }

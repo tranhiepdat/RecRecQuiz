@@ -101,6 +101,7 @@ function GetUserStatistics(){
     const request = {
         StatisticName: "Personalities",
         StartPosition: 0,
+        MaxResultsCount: 100
     };
 
     PlayFabClientSDK.GetLeaderboard(request, GetUserStatisticsCallback);
