@@ -380,9 +380,9 @@ function _preloadAllImages() {
           questionImagePromises = [];
           resultImagePromises = [];
           for (i = 1; i <= 10; i++) {
-            questionImageUrl = "images/questions/".concat(i, ".jpeg");
+            questionImageUrl = "images/questions/".concat(i, ".webp");
             questionImagePromises.push(preloadImage(questionImageUrl));
-            resultImageUrl = "images/results/".concat(i - 1, ".jpeg"); // Adjusting result image index
+            resultImageUrl = "images/results/".concat(i - 1, ".webp"); // Adjusting result image index
             resultImagePromises.push(preloadImage(resultImageUrl));
           }
 
