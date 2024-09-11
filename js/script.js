@@ -173,17 +173,15 @@ function handleSubmitName() {
         // Process player name (e.g., save to database)
         console.log('Player Name:', playerName);
         UpdateDisplayName();
-        alert("Let" + "'" + "s begin, " + playerName);
-        // setTimeout(function () {
-        //     console.log("One second has passed!");
-        //     // Place your code here that you want to execute after one second
-        //     console.log(playerName);
-        //     // Hide input field and submit button
-        //     if (!playerNameInput) {
-        //         alert('Name is not available');
-        //         submitButton.disabled = false;
-        //     }
-        // }, 1500); // 1000 milliseconds = 1 second
+        setTimeout(function () {
+            console.log("One second has passed!");
+            // Place your code here that you want to execute after one second
+            console.log(playerName);
+            // Hide input field and submit button
+            if (playerNameInput) {
+                alert("Let" + "'" + "s begin, " + playerName);
+            }
+        }, 1500); // 1000 milliseconds = 1 second
     } else {
         alert('Please enter your name.');
         submitButton.disabled = false;
@@ -593,6 +591,8 @@ function takeScreenshot() {
     // // Draw the riveCanvas onto the temporary canvas
     // tempCtx.drawImage(riveCanvas, 0, 0);
 
+    tempCtx.fillStyle = '#ecfbff'; // Set to your desired background color
+    tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
     // Draw the main canvas onto the temporary canvas
     tempCtx.drawImage(canvas, 0, 0);
 
