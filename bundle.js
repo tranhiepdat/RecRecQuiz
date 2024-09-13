@@ -306,19 +306,22 @@ function handleSubmitName() {
     // Process player name (e.g., save to database)
     console.log('Player Name:', playerName);
     (0, _playfabManager.UpdateDisplayName)();
-    setTimeout(function () {
-      if (_playfabManager.playerNameInput && !isShowed) {
-        alert("Let" + "'" + "s begin, " + playerName);
-        isShowed = true;
-      } else if (!_playfabManager.playerNameInput) {
-        alert('An error occurred while entering your name, please try again');
-        submitButton.disabled = false;
-      }
-    }, 2000); // 1000 milliseconds = 1 second
+    checkInputName();
   } else {
     alert('Please enter your name.');
     submitButton.disabled = false;
   }
+}
+function checkInputName() {
+  setTimeout(function () {
+    if (_playfabManager.playerNameInput && !isShowed) {
+      alert("Let" + "'" + "s begin, " + playerName);
+      isShowed = true;
+    } else if (!_playfabManager.playerNameInput) {
+      alert('An error occurred while entering your name, please try again');
+      submitButton.disabled = false;
+    }
+  }, 2000); // 1000 milliseconds = 1 second
 }
 
 // Function to hide the input field and submit button
@@ -326,17 +329,12 @@ function hideInputField() {
   inputContainer.classList.add('hidden');
 }
 function RemoveNameForm() {
-  if (_playfabManager.playerNameInput && !isShowed && inputField && submitButton) {
-    alert("Let" + "'" + "s begin, " + playerName);
-    isShowed = true;
+  if (_playfabManager.playerNameInput && inputField && submitButton) {
     hideInputField();
     displayQuestion(currentQuestion);
     (0, _playfabManager.GetUserStatistics)();
     canvas.disabled = false;
     clearInterval(removeNameFormInterval); // Clear the interval
-  } else if (!_playfabManager.playerNameInput) {
-    alert('An error occurred while entering your name, please try again');
-    submitButton.disabled = false;
   }
 }
 var removeNameFormInterval = setInterval(RemoveNameForm, 100);

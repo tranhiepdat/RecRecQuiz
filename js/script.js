@@ -169,19 +169,23 @@ function handleSubmitName() {
         // Process player name (e.g., save to database)
         console.log('Player Name:', playerName);
         UpdateDisplayName();
-        setTimeout(function () {
-            if (playerNameInput && !isShowed) {
-                alert("Let" + "'" + "s begin, " + playerName);
-                isShowed = true;
-            } else if (!playerNameInput) {
-                alert('An error occurred while entering your name, please try again');
-                submitButton.disabled = false;
-            }
-        }, 2000); // 1000 milliseconds = 1 second
+        checkInputName();
     } else {
         alert('Please enter your name.');
         submitButton.disabled = false;
     }
+}
+
+function checkInputName(){
+    setTimeout(function () {
+        if (playerNameInput && !isShowed) {
+            alert("Let" + "'" + "s begin, " + playerName);
+            isShowed = true;
+        } else if (!playerNameInput) {
+            alert('An error occurred while entering your name, please try again');
+            submitButton.disabled = false;
+        }
+    }, 2000); // 1000 milliseconds = 1 second
 }
 
 // Function to hide the input field and submit button
@@ -190,17 +194,12 @@ function hideInputField() {
 }
 
 function RemoveNameForm() {
-    if (playerNameInput && !isShowed && inputField && submitButton) {
-        alert("Let" + "'" + "s begin, " + playerName);
-        isShowed = true;
+    if (playerNameInput && inputField && submitButton) {
         hideInputField();
         displayQuestion(currentQuestion);
         GetUserStatistics();
         canvas.disabled = false;
         clearInterval(removeNameFormInterval); // Clear the interval
-    } else if (!playerNameInput) {
-        alert('An error occurred while entering your name, please try again');
-        submitButton.disabled = false;
     }
 }
 const removeNameFormInterval = setInterval(RemoveNameForm, 100);
