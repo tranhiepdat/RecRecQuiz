@@ -314,14 +314,11 @@ function handleSubmitName() {
 }
 function checkInputName() {
   setTimeout(function () {
-    if (_playfabManager.playerNameInput && !isShowed) {
-      alert("Let" + "'" + "s begin, " + playerName);
-      isShowed = true;
-    } else if (!_playfabManager.playerNameInput) {
+    if (!isShowed) {
       alert('An error occurred while entering your name, please try again');
       submitButton.disabled = false;
     }
-  }, 2000); // 1000 milliseconds = 1 second
+  }, 3500); // 1000 milliseconds = 1 second
 }
 
 // Function to hide the input field and submit button
@@ -330,6 +327,10 @@ function hideInputField() {
 }
 function RemoveNameForm() {
   if (_playfabManager.playerNameInput && inputField && submitButton) {
+    if (!isShowed) {
+      alert("Let" + "'" + "s begin, " + playerName);
+      isShowed = true;
+    }
     hideInputField();
     displayQuestion(currentQuestion);
     (0, _playfabManager.GetUserStatistics)();
