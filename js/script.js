@@ -173,15 +173,15 @@ function handleSubmitName() {
             alert("Let" + "'" + "s begin, " + playerName);
             isShowed = true;
         }
-        // setTimeout(function () {
-        //     console.log("One second has passed!");
-        //     // Place your code here that you want to execute after one second
-        //     console.log(playerName);
-        //     // Hide input field and submit button
-        //     if (playerNameInput) {
-        //         alert("Let" + "'" + "s begin, " + playerName);
-        //     }
-        // }, 1500); // 1000 milliseconds = 1 second
+        setTimeout(function () {
+            if (playerNameInput && !isShowed) {
+                alert("Let" + "'" + "s begin, " + playerName);
+                isShowed = true;
+            } else if (!playerNameInput) {
+                alert('An error occurred while entering your name, please try again');
+                submitButton.disabled = false;
+            }
+        }, 2000); // 1000 milliseconds = 1 second
     } else {
         alert('Please enter your name.');
         submitButton.disabled = false;

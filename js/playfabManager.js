@@ -70,6 +70,7 @@ var UpdateDisplayNameCallback = function (result, error){
         playerNameInput = true;
     } else if (error !== null) {
         console.log(PlayFab.GenerateErrorReport(error));
+        playerNameInput = false;
     }
 }
 
