@@ -169,10 +169,6 @@ function handleSubmitName() {
         // Process player name (e.g., save to database)
         console.log('Player Name:', playerName);
         UpdateDisplayName();
-        if (!isShowed) {
-            alert("Let" + "'" + "s begin, " + playerName);
-            isShowed = true;
-        }
         setTimeout(function () {
             if (playerNameInput && !isShowed) {
                 alert("Let" + "'" + "s begin, " + playerName);

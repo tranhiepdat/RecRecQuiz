@@ -306,10 +306,6 @@ function handleSubmitName() {
     // Process player name (e.g., save to database)
     console.log('Player Name:', playerName);
     (0, _playfabManager.UpdateDisplayName)();
-    if (!isShowed) {
-      alert("Let" + "'" + "s begin, " + playerName);
-      isShowed = true;
-    }
     setTimeout(function () {
       if (_playfabManager.playerNameInput && !isShowed) {
         alert("Let" + "'" + "s begin, " + playerName);
