@@ -326,12 +326,17 @@ function hideInputField() {
   inputContainer.classList.add('hidden');
 }
 function RemoveNameForm() {
-  if (_playfabManager.playerNameInput && inputField && submitButton) {
+  if (_playfabManager.playerNameInput && !isShowed && inputField && submitButton) {
+    alert("Let" + "'" + "s begin, " + playerName);
+    isShowed = true;
     hideInputField();
     displayQuestion(currentQuestion);
     (0, _playfabManager.GetUserStatistics)();
     canvas.disabled = false;
     clearInterval(removeNameFormInterval); // Clear the interval
+  } else if (!_playfabManager.playerNameInput) {
+    alert('An error occurred while entering your name, please try again');
+    submitButton.disabled = false;
   }
 }
 var removeNameFormInterval = setInterval(RemoveNameForm, 100);

@@ -190,12 +190,17 @@ function hideInputField() {
 }
 
 function RemoveNameForm() {
-    if (playerNameInput && inputField && submitButton) {
+    if (playerNameInput && !isShowed && inputField && submitButton) {
+        alert("Let" + "'" + "s begin, " + playerName);
+        isShowed = true;
         hideInputField();
         displayQuestion(currentQuestion);
         GetUserStatistics();
         canvas.disabled = false;
         clearInterval(removeNameFormInterval); // Clear the interval
+    } else if (!playerNameInput) {
+        alert('An error occurred while entering your name, please try again');
+        submitButton.disabled = false;
     }
 }
 const removeNameFormInterval = setInterval(RemoveNameForm, 100);
