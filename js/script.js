@@ -147,10 +147,12 @@ function initialize() {
 const inputContainer = document.querySelector('.input-container');
 const inputField = document.getElementById('nameInput');
 const submitButton = document.getElementById('submitButton');
+let beginChecking = false;
 
 // Function to show the input field and submit button
 function showInputField() {
     inputContainer.classList.remove('hidden');
+    beginChecking = true;
     // Click event for submit button
     submitButton.addEventListener('click', (event) => {
         event.preventDefault(); // Prevent default form submission behavior
@@ -192,7 +194,7 @@ function hideInputField() {
 
 function RemoveNameForm() {
     if (playerNameInput && inputField && submitButton) {
-        if (!isShowed) {
+        if (!isShowed && beginChecking) {
             alert("Let" + "'" + "s begin, " + playerName);
             isShowed = true;
         }

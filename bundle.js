@@ -285,10 +285,12 @@ function initialize() {
 var inputContainer = document.querySelector('.input-container');
 var inputField = document.getElementById('nameInput');
 var submitButton = document.getElementById('submitButton');
+var beginChecking = false;
 
 // Function to show the input field and submit button
 function showInputField() {
   inputContainer.classList.remove('hidden');
+  beginChecking = true;
   // Click event for submit button
   submitButton.addEventListener('click', function (event) {
     event.preventDefault(); // Prevent default form submission behavior
@@ -327,7 +329,7 @@ function hideInputField() {
 }
 function RemoveNameForm() {
   if (_playfabManager.playerNameInput && inputField && submitButton) {
-    if (!isShowed) {
+    if (!isShowed && beginChecking) {
       alert("Let" + "'" + "s begin, " + playerName);
       isShowed = true;
     }
