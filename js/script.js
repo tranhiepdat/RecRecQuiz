@@ -171,7 +171,7 @@ function handleSubmitName() {
         // Process player name (e.g., save to database)
         console.log('Player Name:', playerName);
         UpdateDisplayName();
-        checkInputName();
+        // checkInputName();
     } else {
         alert('Please enter your name.');
         submitButton.disabled = false;
